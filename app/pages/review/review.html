@@ -1,0 +1,101 @@
+﻿<div ng-controller="PaymentController">
+
+    <form name="form" novalidate>
+
+        <div class="dropdown pull-right spacer-r10" uib-dropdown ng-if="settings.app.enable_languages">
+            <button class="btn btn-default btn-sm dropdown-toggle" type="button" uib-dropdown-toggle>
+                <i class="fa fa-globe"></i> <span class="pointer">{{language}}</span> <i class="caret"></i>
+            </button>
+            <ul class="dropdown-menu" language-select as-dropdown></ul>
+        </div>
+
+        <div class="row"></div>
+
+        <div class="page-header">
+            <h1 translate>Review Your Payment</h1>
+        </div>
+
+        <div class="alert alert-danger" ng-if="data.error">
+            {{data.error.message}}
+        </div>
+
+        <!-- For certain payment error types, present an option to retry the payment -->
+        <div class="alert alert-info" ng-show="data.error.meta.payment.payment_method.type == 'paypal'">
+            <i class="fa fa-external-link"></i> <a ng-href="{{data.error.meta.payment.response_data.redirect_url}}"><strong translate>Return to PayPal to try your payment again.</strong></a>
+        </div>
+
+        <div class="col-xs-12 col-sm-6 spacer-b20">
+            <span><strong translate>Billing Address</strong><br /></span>
+            <span ng-if="data.payment.customer.company_name">{{data.payment.customer.company_name}}<br /></span>
+            <span ng-if="data.payment.customer.name">{{data.payment.customer.name}}<br /></span>
+            <span ng-if="data.payment.customer.billing_address.address_1">{{data.payment.customer.billing_address.address_1}}<br /></span>
+            <span ng-if="data.payment.customer.billing_address.address_2">{{data.payment.customer.billing_address.address_2}}<br /></span>
+            <span ng-if="data.payment.customer.billing_address.city">{{data.payment.customer.billing_address.city}}</span>
+            <span ng-if="data.payment.customer.billing_address.state_prov">{{data.payment.customer.billing_address.state_prov}}</span>
+            <span ng-if="data.payment.customer.billing_address.postal_code">{{data.payment.customer.billing_address.postal_code}}</span><br />
+            <span ng-if="data.payment.customer.billing_address.country">{{data.payment.customer.billing_address.formatted.country}}<br /></span>
+            <span ng-if="data.payment.customer.email">{{data.payment.customer.email}}</span>
+        </div>
+
+        <div class="col-xs-12 col-md-6 spacer-b20" ng-if="data.payment.customer.shipping_address.address_1">
+            <span><strong translate>Shipping Address</strong><br /></span>
+            <span ng-if="data.payment.customer.shipping_address.name">{{data.payment.customer.shipping_address.name}}<br /></span>
+            <span ng-if="data.payment.customer.shipping_address.address_1">{{data.payment.customer.shipping_address.address_1}}<br /></span>
+            <span ng-if="data.payment.customer.shipping_address.address_2">{{data.payment.customer.shipping_address.address_2}}<br /></span>
+            <span ng-if="data.payment.customer.shipping_address.city || data.payment.customer.shipping_address.state_prov || data.payment.customer.shipping_address.postal_code">{{data.payment.customer.shipping_address.city}} {{data.payment.customer.shipping_address.state_prov}} {{data.payment.customer.shipping_address.postal_code}}<br /></span>
+            <span ng-if="data.payment.customer.shipping_address.country">{{data.payment.customer.shipping_address.formatted.country}}<br /></span>
+        </div>
+
+        <div class="row"></div>
+
+        <!-- Custom fields -->
+        <fields fieldlist="settings.app.fields" sale="data.payment" ng-if="options.isCartPayment"></fields>
+
+        <div class="row"></div>
+
+        <div class="section-header">
+            <span translate>Payment Details</span>
+        </div>
+
+        <table class="cart">
+            <thead>
+                <tr>
+                    <th style="width:130px" translate>Reference</th>
+                    <th style="min-width:250px" translate>Description</th>
+                    <th class="text-right" style="max-width:100px" translate>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-left" style="width:130px" data-label="{{ 'Reference' | translate}}">
+                        <div class="form-group">
+                            <span>{{data.payment.reference}}</span>
+                        </div>
+                    </td>
+                    <td style="min-width:250px" data-label="{{ 'Description' | translate}}">
+                        <div class="form-group">
+                            <span>{{data.payment.description}}</span>
+                        </div>
+                    </td>
+                    <td class="text-right" style="max-width:100px" data-label="{{ 'Total' | translate}}" show-errors>
+                        <div class="form-group">
+                            <span>{{data.payment.formatted.total}} {{data.payment.currency}}</span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!--Spacer-->
+        <div class="row">&nbsp;</div>
+
+        <div class="col-xs-12 spacer-b20 spacer-t20 text-right">
+            <button type="button" class="btn btn-success btn-lg right" validate-on-submit commit-payment="data.payment_id" sale="data.payment" sale-type="{{data.payment.object}}" on-success="onPaymentSuccess" error="data.error" translate>Complete Payment</button>
+        </div>
+
+        <!--Spacer-->
+        <div class="row">&nbsp;</div>
+
+    </form>
+
+</div>

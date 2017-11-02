@@ -1,0 +1,337 @@
+﻿<div ng-controller="PayController">
+
+    <form name="form" shipping-is-billing="data.shipping_is_billing" params="data.params" novalidate>
+
+        <div class="dropdown pull-right currency-button spacer-b10" uib-dropdown ng-if="settings.account.currencies.length > 1">
+            <button class="btn btn-default btn-sm dropdown-toggle" type="button" uib-dropdown-toggle>
+                <span class="pointer">{{currency}}</span> <i class="caret"></i>
+            </button>
+            <ul class="dropdown-menu" currency-select payment="data.payment" as-dropdown error="data.error" params="data.params"></ul>
+        </div>
+
+        <div class="dropdown pull-right spacer-r10" uib-dropdown ng-if="settings.app.enable_languages">
+            <button class="btn btn-default btn-sm dropdown-toggle" type="button" uib-dropdown-toggle>
+                <i class="fa fa-globe"></i> <span class="pointer">{{language}}</span> <i class="caret"></i>
+            </button>
+            <ul class="dropdown-menu" language-select as-dropdown></ul>
+        </div>
+
+        <div class="row"></div>
+
+        <div class="page-header">
+            <h1 translate>Your Payment</h1>
+        </div>
+
+        <div class="alert alert-danger" ng-if="data.error">
+            {{data.error.message}}
+        </div>
+
+        <table class="cart">
+            <thead>
+                <tr>
+                    <th style="width:130px" translate>Reference</th>
+                    <th style="min-width:250px" translate>Description</th>
+                    <th style="max-width:100px"><span translate>Amount</span> <span style="font-weight: normal;">{{data.payment.currency}}</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-left" style="width:130px" data-label="{{ 'Reference' | translate}}">
+                        <div class="form-group">
+                            <input type="text" name="reference" ng-model="data.payment.reference" class="form-control" maxlength="75" />
+                        </div>
+                    </td>
+                    <td style="min-width:250px" data-label="{{ 'Description' | translate}}">
+                        <div class="form-group">
+                            <input type="text" name="description" ng-model="data.payment.description" class="form-control" maxlength="255" />
+                        </div>
+                    </td>
+                    <td class="has-input" style="max-width:100px" data-label="{{ 'Amount' | translate}}" show-errors>
+                        <div class="form-group">
+                            <input type="text" name="subtotal" ng-model="data.payment.subtotal" class="form-control" is-valid-number min="0" maxlength="14" number  ng-model-options="{ updateOn: 'blur' }" clean-price />
+                            <p class="error-block hidden" translate>Please provide an amount</p>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- PayPal -->
+        <div class="row spacer-t20" ng-show="helpers.supportsPaymentMethod('paypal', data.options)">
+            <div class="col-xs-12 text-right">
+                <input type="image" submit-payment="data.paypal" payment="data.payment" shipping-is-billing="data.shipping_is_billing" on-success="onPaymentSuccess" error="data.error" src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/checkout-logo-small.png" />
+            </div>
+        </div>
+
+        <div class="row"></div>
+
+        <div class="section-header">
+            <span translate>Your Information</span>
+        </div>
+
+        <!-- Login option -->
+        <div customer-signin customer="data.payment.customer" options="data.options" payment-method="data.card" error="data.error" params="data.params">
+
+            <div class="well header clearfix ask-signin">
+                <strong><span translate>Have an account?</span></strong>
+                <strong><a class="pointer pull-right show-signin" translate>Sign In</a></strong>
+            </div>
+
+            <div class="well header clearfix supply-signin">
+                <div class="col-xs-12 col-md-6" id="un">
+                    <div class="form-group">
+                        <label class="control-label" for="un" translate>Username</label>
+                        <div class="inner-addon left-addon">
+                            <i class="fa fa-user"></i>
+                            <input class="form-control signin-username" name="un" type="text">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-6" id="pw">
+                    <div class="form-group">
+                        <label class="control-label" for="pw" translate>Password</label>
+                        <div class="inner-addon left-addon">
+                            <i class="fa fa-lock"></i>
+                            <input class="form-control signin-password" name="pw" type="password">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 text-right">
+                    <button class="btn btn-default btn-sm cancel-signin" translate>Cancel</button>
+                    <button type="submit" class="btn btn-info btn-sm submit-signin" customer-login customer="data.payment.customer" username="data.un" password="data.pw" error="data.error" translate>Sign In</button>
+                </div>
+
+            </div>
+
+            <div class="well header signed-in">
+                <span>Signed in as {{data.payment.customer.username}}</span><strong><a class="pointer pull-right submit-signout" customer-logout customer="data.payment.customer" error="data.error" translate>Sign out</a></strong>
+            </div>
+
+        </div>
+
+        <div class="col-xs-12 col-md-6" ng-show="helpers.isCustomerField('name', data.options)">
+            <div class="form-group" show-errors="data.options">
+                <label class="control-label" for="name" translate>Full Name</label>
+                <input class="form-control" name="name" type="text" ng-model="data.payment.customer.name" ng-required="helpers.isRequiredCustomerField('name', data.options)">
+                <p class="error-block hidden" translate>Please provide a name</p>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-md-6" ng-show="helpers.isCustomerField('email', data.options)">
+            <div class="form-group" show-errors="data.options">
+                <label class="control-label" for="email" translate>Email</label>
+                <input class="form-control" name="email" type="email" ng-model="data.payment.customer.email" ng-required="helpers.isRequiredCustomerField('email', data.options)">
+                <p class="error-block hidden" translate>Please provide a valid email address</p>
+            </div>
+        </div>
+
+        <div class="row"></div>
+
+        <div class="col-xs-12" ng-show="helpers.isCustomerField('company_name', data.options)">
+            <div class="form-group" show-errors="data.options">
+                <label class="control-label" for="company_name" translate>Company Name</label>
+                <input class="form-control" name="company_name" type="text" ng-model="data.payment.customer.company_name" ng-required="helpers.isRequiredCustomerField('company_name', data.options)">
+                <p class="error-block hidden" translate>Please provide a company name</p>
+            </div>
+        </div>
+
+        <div class="col-xs-12" ng-show="helpers.isCustomerField('phone', data.options)">
+            <div class="form-group" show-errors="data.options">
+                <label class="control-label" for="phone" translate>Phone</label>
+                <input class="form-control" name="phone" type="text" ng-model="data.payment.customer.phone" ng-required="helpers.isRequiredCustomerField('phone', data.options)">
+                <p class="error-block hidden" translate>Please provide a phone</p>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-md-6" ng-show="helpers.isCustomerField('billing_address.address_1', data.options)">
+            <div class="form-group" show-errors="data.options">
+                <label class="control-label" for="billing_address[address_1]" translate>Address</label>
+                <input class="form-control" name="billing_address[address_1]" type="text" ng-model="data.payment.customer.billing_address.address_1" ng-required="helpers.isRequiredCustomerField('billing_address.address_1', data.options)">
+                <p class="error-block hidden" translate>Please provide an address</p>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-md-6" ng-show="helpers.isCustomerField('billing_address.address_2', data.options)">
+            <div class="form-group" show-errors="data.options">
+                <label class="control-label" for="billing_address[address_2]" translate>Address 2</label>
+                <input class="form-control" name="billing_address[address_2]" type="text" ng-model="data.payment.customer.billing_address.address_2" ng-required="helpers.isRequiredCustomerField('billing_address.address_2', data.options)">
+                <p class="error-block hidden" translate>Please provide an address</p>
+            </div>
+        </div>
+
+        <div class="row"></div>
+
+        <div class="col-xs-12" ng-show="helpers.isCustomerField('billing_address.city', data.options)">
+            <div class="form-group" show-errors="data.options">
+                <label class="control-label" for="billing_address[city]" translate>City</label>
+                <input class="form-control" name="billing_address[city]" type="text" ng-model="data.payment.customer.billing_address.city" ng-required="helpers.isRequiredCustomerField('billing_address.city', data.options)">
+                <p class="error-block hidden" translate>Please provide a city</p>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-md-6" ng-show="helpers.isCustomerField('billing_address.state_prov', data.options)">
+            <div class="form-group" ng-if="geoService.getStatesProvs(data.payment.customer.billing_address.country) != null" show-errors refresh-on-change="helpers.isRequiredCustomerField('billing_address.state_prov', data.options)">
+                <label class="control-label" for="billing_address[state_prov]" translate>State / Province</label>
+                <select select-state-prov class="form-control" name="billing_address[state_prov]" ng-model="data.payment.customer.billing_address.state_prov" country="data.payment.customer.billing_address.country" ng-required="helpers.isRequiredCustomerField('billing_address.state_prov', data.options) && geoService.getStatesProvs(data.payment.customer.billing_address.country) != null"></select>
+                <p class="error-block hidden" translate>Please provide a state / province</p>
+            </div>
+
+            <div class="form-group" ng-if="geoService.getStatesProvs(data.payment.customer.billing_address.country) == null" show-errors refresh-on-change="helpers.isRequiredCustomerField('billing_address.state_prov', data.options)">
+                <label class="control-label" for="billing_address[state_prov]" translate>Region / Province</label>
+                <input type="text" class="form-control" name="billing_address[state_prov]" ng-model="data.payment.customer.billing_address.state_prov" country="data.payment.customer.billing_address.country" ng-required="helpers.isRequiredCustomerField('billing_address.state_prov', data.options) && geoService.getStatesProvs(data.payment.customer.billing_address.country) != null">
+                <p class="error-block hidden" translate>Please provide a region / province</p>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-md-6" ng-show="helpers.isCustomerField('billing_address.postal_code', data.options)">
+            <div class="form-group" show-errors="data.options">
+                <label class="control-label" for="billing_address[postal_code]" translate>Zip / Postal Code</label>
+                <input class="form-control" name="billing_address[postal_code]" type="text" ng-model="data.payment.customer.billing_address.postal_code" ng-required="helpers.isRequiredCustomerField('billing_address.postal_code', data.options)">
+                <p class="error-block hidden" translate>Please provide a zip / postal code</p>
+            </div>
+        </div>
+
+        <div class="row"></div>
+        <div class="col-xs-12" ng-show="helpers.isCustomerField('billing_address.country', data.options)">
+            <div class="form-group" show-errors="data.options">
+                <label class="control-label" for="billing_address[country]" translate>Country</label>
+                <select class="form-control" name="billing_address[country]" ng-options="country.code as country.name for country in data.countries" ng-model="data.payment.customer.billing_address.country" ng-required="helpers.isRequiredCustomerField('billing_address.country', data.options)"></select>
+                <p class="error-block hidden" translate>Please provide a country</p>
+            </div>
+        </div>
+
+        <!--Spacer-->
+        <div class="row"></div>
+
+        <div class="section-header">
+            <span translate>Payment Summary</span>
+        </div>
+
+        <!--<table class="tight cart">
+            <tbody>
+                <tr ng-if="!data.cart.tax_inclusive">
+                    <td class="text-left hidden-xs" translate>Subtotal</td>
+                    <td class="text-right" data-label="{{ 'Subtotal' | translate}}"><span class="has-price">{{data.cart.formatted.subtotal}}</span></td>
+                </tr>
+            </tbody>
+            <tbody ng-show="data.cart.shipping_item">
+                <tr>
+                    <td ng-if="data.options.shipping_quotes.length > 1" class="text-left hidden-xs" translate>Shipping</td>
+                    <td ng-if="data.options.shipping_quotes.length <= 1" class="text-left hidden-xs">{{data.cart.shipping_item.name}}</td>
+                    <td class="text-right" data-label="{{data.cart.shipping_item.name}}"><span ng-show="data.cart.shipping_item.price_original > data.cart.shipping_item.price"><del class="discount text-danger">{{data.cart.tax_inclusive ? data.cart.shipping_item.formatted.total_original : data.cart.shipping_item.formatted.subtotal_original}}</del>&nbsp;</span><span class="has-price">{{data.cart.tax_inclusive ? data.cart.shipping_item.formatted.total : data.cart.shipping_item.formatted.subtotal}}</span></td>
+                </tr>
+            </tbody>
+            <tbody ng-show="data.cart.discount > 0">
+                <tr>
+                    <td class="text-left hidden-xs" translate>Discount</td>
+                    <td class="text-right text-danger" data-label="{{ 'Discount' | translate}}"><span class="has-price">-{{data.cart.formatted.discount}}</span></td>
+                </tr>
+            </tbody>
+            <tbody ng-show="data.cart.tax > 0 && !data.cart.tax_inclusive">
+                <tr>
+                    <td class="text-left hidden-xs" translate>Tax</td>
+                    <td class="text-right" data-label="{{ 'Tax' | translate}}"><span class="has-price">{{data.cart.formatted.tax}}</span></td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr>
+                    <td class="text-left text-lg hidden-xs"><strong translate>Total</strong></td>
+                    <td class="text-right text-lg" data-label="{{ 'Total' | translate}}"><span class="text-lg has-price">{{data.cart.formatted.total}} {{data.cart.currency}}</span></td>
+                </tr>
+                <tr ng-if="data.cart.tax_inclusive">
+                    <td class="text-right text-sm" colspan="2" translate>Your total includes {{data.cart.formatted.tax}} tax</td>
+                </tr>
+            </tbody>
+        </table>-->
+
+        <!-- Custom fields -->
+        <fields fieldlist="settings.app.fields" sale="data.payment"></fields>
+
+        <!--Payment Info-->
+        <div class="section-header">
+            <span translate>Payment Details</span>
+        </div>
+
+        <!-- If a logged in customer -->
+        <div ng-show="data.payment.customer.payment_methods.data.length > 0">
+            <h4 translate>Choose a Payment Method</h4>
+
+            <div class="well clearfix" ng-repeat="method in data.payment.customer.payment_methods.data" ng-show="method.type == 'credit_card'">
+                <span class="radio-group inline" ng-if="method.type == 'credit_card'">
+                    <input type="radio" class="radio" name="payment_method" id="payment_method-{{method.payment_method_id}}" ng-model="data.card.payment_method_id" value="{{method.payment_method_id}}" ng-checked="data.card.payment_method_id == method.payment_method_id" />
+                    <label for="payment_method-{{method.payment_method_id}}" class="radio-label strong">{{method.data.label}} (<span>exp.</span> {{method.data.exp_month}}/{{method.data.exp_year}})</label>
+                    <span class="pull-right credit-card-image" credit-card-image="method.data.type"></span>
+                </span>
+
+            </div>
+
+            <div class="well clearfix">
+                <span class="radio-group inline">
+                    <input type="radio" class="radio" name="payment_method" id="payment_method-new" ng-model="data.card.payment_method_id" ng-checked="data.card.payment_method_id == null" />
+                    <label for="payment_method-new" class="radio-label strong" translate>Pay with a new card</label>
+                </span>
+            </div>
+
+        </div>
+
+        <div ng-show="!data.card.payment_method_id">
+            <div class="col-xs-12">
+                <div class="form-group" show-errors="data.options">
+                    <label class="control-label required" for="card_number" translate>Card Number</label>
+                    <div class="inner-addon left-addon">
+                        <i class="fa fa-credit-card"></i>
+                        <input class="form-control" name="card_number" type="tel" ng-model="data.card.data.number" validate-card ng-required="!data.card.payment_method_id">
+                    </div>
+                    <p class="error-block hidden" translate>Please provide a valid card number</p>
+                </div>
+            </div>
+
+            <div class="col-xs-12 credit-cards" credit-cards="data.options.card_types"></div>
+
+            <div class="col-xs-6 col-sm-4">
+                <div class="form-group" show-errors="data.options">
+                    <label class="control-label required" for="exp_month" translate>Expiration Month</label>
+                    <input ng-if="!settings.app.exp_select" class="form-control" name="exp_month" type="tel" ng-model="data.card.data.exp_month" placeholder="MM" validate-exp-month ng-required="!data.card.payment_method_id">
+                    <select ng-if="settings.app.exp_select" name="exp_month" class="form-control" ng-model="data.card.data.exp_month" ng-options="n for n in [] | range:1:12:true" validate-exp-month ng-required="!data.card.payment_method_id"></select>
+                    <p class="error-block hidden" translate>Please provide a valid expiration month</p>
+                </div>
+            </div>
+
+            <div class="col-xs-6 col-sm-4">
+                <div class="form-group" show-errors="data.options">
+                    <label class="control-label required" for="exp_year" translate>Expiration Year</label>
+                    <input ng-if="!settings.app.exp_select" class="form-control" name="exp_year" type="tel" ng-model="data.card.data.exp_year" placeholder="YY" validate-exp-year ng-required="!data.card.payment_method_id">
+                    <select ng-if="settings.app.exp_select" name="exp_year" class="form-control" ng-model="data.card.data.exp_year" ng-options="n for n in [] | range:settings.account.year:(settings.account.year + 15)" validate-exp-year ng-required="!data.payment_method.payment_method_id"></select>
+                    <p class="error-block hidden" translate>Please provide a valid expiration year</p>
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-sm-4">
+                <div class="form-group" show-errors="data.options">
+                    <label class="control-label required" for="cvv" translate>Security Code</label>
+                    <input class="form-control" name="cvv" type="tel" ng-model="data.card.data.cvv" validate-cvv ng-required="!data.card.payment_method_id">
+                    <p class="error-block hidden" translate>Please provide a valid security code</p>
+                </div>
+            </div>
+
+            <div class="col-xs-12" ng-show="settings.account.allow_save_cards == true && settings.app.ask_save_cards == true && data.payment.customer.username != null">
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="save-card" class="checkbox" name="save-card" ng-model="data.card.save">
+                    <label for="save-card" class="checkbox-label" translate>Save this card to my account</label>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="col-xs-12 spacer-b20 spacer-t20 text-right">
+            <button type="button" class="btn btn-success btn-lg right" validate-on-submit submit-payment="data.card" payment="data.payment" shipping-is-billing="data.shipping_is_billing" on-success="onPaymentSuccess" error="data.error" translate>Complete Payment</button>
+        </div>
+
+        <!--Spacer-->
+        <div class="row">&nbsp;</div>
+
+    </form>
+
+</div>
