@@ -9,6 +9,12 @@ var sequence = require("run-sequence");
 var fs = require("fs");
 var header = require('gulp-header');
 
+gulp.task("concat-libraries", function () {
+    return gulp.src(["./app/libraries/*.js"])
+      .pipe(concat("libraries.js"))
+      .pipe(gulp.dest("./dist/js/"));
+});
+
 gulp.task("concat-pages-js", function () {
     return gulp.src(["./app/pages/**/*.js"])
       .pipe(concat("pages.js"))
@@ -38,13 +44,13 @@ gulp.task("sourcemap", function () {
 });
 
 gulp.task('dist', function (done) {
-    sequence('concat-pages-js', 'compress', 'sourcemap', 'sass', function () {
+    sequence('concat-libraries', 'concat-pages-js', 'compress', 'sourcemap', 'sass', function () {
 
         // Read the version number
         var version = fs.readFileSync("./version.html", "utf8");
 
         // Add headers with the release number to each of the distribution files.
-        gulp.src(['./dist/js/pages.js', './dist/js/pages.min.js']).pipe(header("/*\nComecero Cart version: " + version + "\nhttps://comecero.com\nhttps://github.com/comecero/cart\nCopyright Comecero and other contributors. Released under MIT license. See LICENSE for details.\n*/\n\n")).pipe(gulp.dest('./dist/js/'));
+        gulp.src(['./dist/js/pages.js', './dist/js/pages.min.js']).pipe(header("/*\nComecero Hosted Payment Page version: " + version + "\nhttps://comecero.com\nhttps://github.com/comecero/cart\nCopyright Comecero and other contributors. Released under MIT license. See LICENSE for details.\n*/\n\n")).pipe(gulp.dest('./dist/js/'));
         done();
     });
 });

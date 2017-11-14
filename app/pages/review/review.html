@@ -24,6 +24,36 @@
             <i class="fa fa-external-link"></i> <a ng-href="{{data.error.meta.payment.response_data.redirect_url}}"><strong translate>Return to PayPal to try your payment again.</strong></a>
         </div>
 
+        <table class="cart">
+            <thead>
+                <tr>
+                    <th ng-show="settings.app.show_reference" translate>{{ settings.app.reference_label || ('Reference' | translate)}}</th>
+                    <th style="min-width:250px" ng-show="settings.app.show_description" translate>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td data-label="{{ settings.app.reference_label || ('Reference' | translate)}}" show-errors ng-show="settings.app.show_reference">
+                        <div class="form-group has-input" ng-show="!data.paymentOrig.reference">
+                            <input type="text" name="reference" ng-model="data.payment.reference" class="form-control" maxlength="75" ng-required="settings.app.reference_required" />
+                            <p class="error-block hidden" translate>Please provide a value</p>
+                        </div>
+                        <div class="form-group has-input" ng-show="data.paymentOrig.reference">
+                            <span>{{data.paymentOrig.reference}}</span>
+                        </div>
+                    </td>
+                    <td style="min-width:250px" data-label="{{ 'Description' | translate}}" ng-show="settings.app.show_description">
+                        <div class="form-group has-input" ng-show="!data.paymentOrig.description">
+                            <input type="text" name="description" ng-model="data.payment.description" class="form-control" maxlength="255" />
+                        </div>
+                        <div class="form-group has-input" ng-show="data.paymentOrig.description">
+                            <span>{{data.paymentOrig.description}}</span>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
         <div class="col-xs-12 col-sm-6 spacer-b20">
             <span><strong translate>Billing Address</strong><br /></span>
             <span ng-if="data.payment.customer.company_name">{{data.payment.customer.company_name}}<br /></span>
@@ -54,43 +84,57 @@
         <div class="row"></div>
 
         <div class="section-header">
-            <span translate>Payment Details</span>
+            <span translate>Review & Finish</span>
         </div>
 
-        <table class="cart">
+        <table class="tight cart" ng-if="(settings.app.show_reference || settings.app.show_description) && (data.payment.reference || data.payment.description)">
             <thead>
                 <tr>
-                    <th style="width:130px" translate>Reference</th>
-                    <th style="min-width:250px" translate>Description</th>
-                    <th class="text-right" style="max-width:100px" translate>Amount</th>
+                    <th ng-if="settings.app.show_reference" translate>{{ settings.app.reference_label || ('Reference' | translate)}}</th>
+                    <th ng-if="settings.app.show_description" translate>Description</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td class="text-left" style="width:130px" data-label="{{ 'Reference' | translate}}">
-                        <div class="form-group">
-                            <span>{{data.payment.reference}}</span>
-                        </div>
+                    <td ng-if="settings.app.show_reference" data-label="{{ settings.app.reference_label || ('Reference' | translate)}}">
+                        <span>{{data.payment.reference}}</span>
                     </td>
-                    <td style="min-width:250px" data-label="{{ 'Description' | translate}}">
-                        <div class="form-group">
-                            <span>{{data.payment.description}}</span>
-                        </div>
-                    </td>
-                    <td class="text-right" style="max-width:100px" data-label="{{ 'Total' | translate}}" show-errors>
-                        <div class="form-group">
-                            <span>{{data.payment.formatted.total}} {{data.payment.currency}}</span>
-                        </div>
+                    <td ng-if="settings.app.show_description" data-label="{{ 'Description' | translate}}">
+                        <span>{{data.payment.description}}</span>
                     </td>
                 </tr>
             </tbody>
         </table>
 
-        <!--Spacer-->
-        <div class="row">&nbsp;</div>
+        <table class="tight cart">
+            <tbody>
+                <tr ng-show="data.payment.subtotal != data.payment.total">
+                    <td class="text-left hidden-xs" translate>Subtotal</td>
+                    <td class="text-right" data-label="{{ 'Subtotal' | translate}}"><span class="has-price">{{data.payment.formatted.subtotal}}</span></td>
+                </tr>
+            </tbody>
+            <tbody ng-show="data.payment.shipping">
+                <tr>
+                    <td class="text-left hidden-xs" translate>Shipping</td>
+                    <td class="text-right" data-label="{{ 'Shipping' | translate}}"><span class="has-price">{{data.payment.formatted.shipping}}</span></td>
+                </tr>
+            </tbody>
+            <tbody ng-show="data.payment.tax">
+                <tr>
+                    <td class="text-left hidden-xs" translate>Tax</td>
+                    <td class="text-right" data-label="{{ 'Tax' | translate}}"><span class="has-price">{{data.payment.formatted.tax}}</span></td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr>
+                    <td class="text-left text-lg hidden-xs"><strong translate>Total</strong></td>
+                    <td class="text-right text-lg" data-label="{{ 'Total' | translate}}"><span class="text-lg has-price">{{data.payment.formatted.total}} {{data.payment.currency}}</span></td>
+                </tr>
+            </tbody>
+        </table>
 
         <div class="col-xs-12 spacer-b20 spacer-t20 text-right">
-            <button type="button" class="btn btn-success btn-lg right" validate-on-submit commit-payment="data.payment_id" sale="data.payment" sale-type="{{data.payment.object}}" on-success="onPaymentSuccess" error="data.error" translate>Complete Payment</button>
+            <button type="button" class="btn btn-success btn-lg right" validate-on-submit commit-payment="data.payment_id" on-submit="onPaymentSubmit" on-success="onPaymentSuccess" error="data.error" translate>Complete Payment</button>
         </div>
 
         <!--Spacer-->

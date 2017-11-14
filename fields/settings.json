@@ -92,32 +92,49 @@
     ]
   },
   {
-    "name": "show_promo_code",
+    "name": "show_reference",
     "type": "boolean",
-    "label": "Show Promo Code",
-    "description": "Do you want to provide an option for a user to supply a promotion / discount code? If you don't use promo codes, it is recommended to not display this field.",
+    "label": "Show Reference",
+    "description": "Indicates if you want to show the payment 'reference' field. The reference helps you identify the payment. If you select to show the reference and do not provide the reference as a page parameter, the user will be able to type in a value for the payment reference.",
     "section": "Features",
     "required": true,
-    "default_value": false
+    "default_value": true
   },
   {
-    "name": "promo_code_name",
+    "name": "reference_required",
+    "type": "boolean",
+    "label": "Is the Reference Required?",
+    "description": "Indicates if the user must provide a payment reference to make a payment. If the reference is provided as a page paramter, the user will not be required to supply a value for the reference.",
+    "section": "Features",
+    "required": true,
+    "default_value": true
+  },
+  {
+    "name": "reference_label",
     "type": "string",
-    "label": "Promo Code Name",
-    "description": "The name you use to refer to promo codes, i.e. Discount Code, Coupon Code, etc.",
+    "label": "Reference Label",
+    "description": "The label to use for the payment reference field, such as 'PO Number', 'Invoice ID' or any other value that your user should provide to help you identify the payment. If you don't supply a value, 'Reference' will be used.",
     "section": "Features",
-    "required": true,
-    "default_value": "Promo Code"
+    "required": false
   },
   {
-    "name": "hide_quantity",
+    "name": "show_description",
     "type": "boolean",
-    "label": "Hide Quantity Selection",
-    "description": "Enable if you don't want users to be able to manually change the quantity of items in their cart.",
+    "label": "Show Description",
+    "description": "Indicates if you want to show the payment 'description' field. If you select to show the description and do not provide the description as a page parameter, the user will be able to type in a value for the payment description.",
     "section": "Features",
     "required": true,
-    "default_value": false
-  },  
+    "default_value": true
+  },
+  {
+    "name": "additional_payment_prompt",
+    "type": "boolean",
+    "label": "Prompt for Additional Payment?",
+    "description": "Upon completion of an order, indicates if the receipt should show a button to submit another payment.",
+    "section": "Features",
+    "required": true,
+    "default_value": true
+  },
   {
     "name": "exp_select",
     "type": "boolean",
@@ -137,15 +154,6 @@
     "default_value": false
   },
   {
-    "name": "show_digital_delivery",
-    "type": "boolean",
-    "label": "Show Digital Delivery",
-    "description": "For items that are fulfilled digitally, this indicates if you want to present delivery items (such as file download links or license codes) on the receipt page. If not, they will be provided in the email confirmation only.",
-    "section": "Features",
-    "required": true,
-    "default_value": true
-  },
-  {
     "name": "enable_languages",
     "type": "boolean",
     "label": "Enable Languages",
@@ -155,27 +163,10 @@
     "default_value": false
   },
   {
-    "name": "main_shopping_url",
-    "type": "string",
-    "label": "Main Shopping URL",
-    "description": "The page you want to direct users to when they are invited to 'Continue Shopping'. Also used to direct users who arrive with invalid cart or session values (such as an expired shopping session or cart).",
-    "section": "Routing",
-    "required": false
-  },
-  {
-    "name": "show_continue_shopping",
-    "type": "boolean",
-    "label": "Show 'Continue Shopping' Button",
-    "description": "Indicates if you want to show a 'Continue Shopping' button below the cart summary.",
-    "section": "Features",
-    "required": false,
-    "default_value": false
-  },
-  {
     "name": "not_found_url",
     "type": "string",
-    "label": "Not Found (404) Redirect URL",
-    "description": "The page you want to direct users to when an invalid website address is supplied. If not provided, the Main Shopping URL will be used.",
+    "label": "Error Redirect URL",
+    "description": "The page you want to direct users to when an invalid website address is supplied. If not provided, the Main Site URL will be used.",
     "section": "Routing",
     "required": false
   },

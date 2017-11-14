@@ -1,6 +1,6 @@
-var app = angular.module("checkout", ['ngRoute', 'ngSanitize', 'ui.bootstrap', 'angular-loading-bar', 'gettext', 'duScroll']);
+var app = angular.module("checkout", ['ngRoute', 'ngSanitize', 'ui.bootstrap', 'angular-loading-bar', 'gettext', 'duScroll', 'tmh.dynamicLocale']);
 
-app.config(['$httpProvider', '$routeProvider', '$locationProvider', '$provide', 'cfpLoadingBarProvider', function ($httpProvider, $routeProvider, $locationProvider, $provide, cfpLoadingBarProvider) {
+app.config(['$httpProvider', '$routeProvider', '$locationProvider', '$provide', 'cfpLoadingBarProvider', 'tmhDynamicLocaleProvider', function ($httpProvider, $routeProvider, $locationProvider, $provide, cfpLoadingBarProvider, tmhDynamicLocaleProvider) {
 
     // Define routes
     $routeProvider.when("/pay", { templateUrl: "app/pages/pay/pay.html", reloadOnSearch: false });
@@ -29,6 +29,9 @@ app.config(['$httpProvider', '$routeProvider', '$locationProvider', '$provide', 
     cfpLoadingBarProvider.latencyThreshold = 300;
     cfpLoadingBarProvider.includeSpinner = false;
 
+    // Dynamically load locale files
+    tmhDynamicLocaleProvider.localeLocationPattern("https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.5.5/angular-locale_{{locale}}.js");
+
     // Set the favicon
     if (window.__settings.app.favicon_full) {
         var favicon = document.createElement("link");
@@ -41,7 +44,7 @@ app.config(['$httpProvider', '$routeProvider', '$locationProvider', '$provide', 
 }]);
 
 // Bootstrap settings
-app.run(['$rootScope', 'SettingsService', function ($rootScope, SettingsService) {
+app.run(['$rootScope', 'SettingsService', 'tmhDynamicLocale', 'StorageService', function ($rootScope, SettingsService, tmhDynamicLocale, StorageService) {
 
     // This defines the languages supported by the app. Each supported language must have an associated translation file in the languages folder. It ain't magic.
 
@@ -74,6 +77,20 @@ app.run(['$rootScope', 'SettingsService', function ($rootScope, SettingsService)
             window.__pageview.recordPageLoad();
         }
     });
+
+    // Define default locale
+    var language = "en-US";
+
+    // See if we have the user's locale in the browser info and if so, set it on the app.
+    try {
+        var locale = StorageService.get("locale");
+        if (locale && locale != "en-US") {
+            tmhDynamicLocale.set(locale.toLowerCase());
+        }
+    }
+    catch (err) {
+        console.log("Could not parse browser info, using the default locale.");
+    }
 
 }]);
 

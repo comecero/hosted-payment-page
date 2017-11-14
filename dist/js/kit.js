@@ -1225,6 +1225,39 @@ app.directive('submitPayment', ['CartService', 'InvoiceService', 'PaymentService
                     return;
                 }
 
+                // If a direct payment (i.e. hosted payment page - no cart or invoice) and PayPal, total, subtotal and / or shipping must be provided.
+                if (scope.paymentMethod.type == "paypal" && !scope.cart && !scope.invoice) {
+
+                    if (!scope.payment.total && !scope.payment.subtotal && !scope.payment.shipping) {
+                        scope.$apply(function () {
+                            scope.error = { type: "bad_request", reference: "eiptRbg", code: "invalid_input", message: gettextCatalog.getString("Please provide an amount for your payment."), status: 400 };
+                        });
+
+                        // Fire the error event
+                        if (scope.onError) {
+                            scope.onError(error);
+                        }
+
+                        return;
+                    }
+
+                }
+
+                // Make sure numeric values, if supplied, are not strings. This ensures that the JSON sent to the API will be in numeric format and not string, which the API will reject as invalid.
+                if (scope.payment) {
+                    if (scope.payment.total)
+                        scope.payment.total = Number(scope.payment.total);
+
+                    if (scope.payment.subtotal)
+                        scope.payment.subtotal = Number(scope.payment.subtotal);
+
+                    if (scope.payment.shipping)
+                        scope.payment.shipping = Number(scope.payment.shipping);
+
+                    if (scope.payment.tax)
+                        scope.payment.tax = Number(scope.payment.tax);
+                }
+
                 // Disable the clicked element
                 elem.prop("disabled", true);
 
@@ -1355,7 +1388,6 @@ app.directive('commitPayment', ['CartService', 'InvoiceService', 'PaymentService
         require: '^form',
         scope: {
             paymentId: '=commitPayment',
-            paymentMethod: '=?',
             sale: '=?',
             invoice: '=?',
             params: '=?',
@@ -1399,9 +1431,9 @@ app.directive('commitPayment', ['CartService', 'InvoiceService', 'PaymentService
                 params = utils.mergeParams(params, null, "order");
 
                 // Define the commit function.
-                var commit = function (payment_id, payment_method, params) {
+                var commit = function (payment_id, params) {
 
-                    PaymentService.commit(payment_id, payment_method, params).then(function (payment) {
+                    PaymentService.commit(payment_id, params).then(function (payment) {
 
                         // Fire the success event
                         if (scope.onSuccess) {
@@ -1430,7 +1462,7 @@ app.directive('commitPayment', ['CartService', 'InvoiceService', 'PaymentService
                 if (attrs.saleType == "cart") {
 
                     CartService.update(scope.sale).then(function (cart) {
-                        commit(scope.paymentId, scope.paymentMethod, params);
+                        commit(scope.paymentId, params);
                     }, function (error) {
 
                         scope.error = error;
@@ -1446,8 +1478,8 @@ app.directive('commitPayment', ['CartService', 'InvoiceService', 'PaymentService
                     });
 
                 } else {
-                    // An invoice, which isn't updated by the customer. Just run the commit.
-                    commit(scope.paymentId, scope.paymentMethod, params);
+                    // An invoice or direct payment. Nothing to update in advance, just run the commit.
+                    commit(scope.paymentId, params);
                 }
 
             });
@@ -3776,17 +3808,6 @@ app.directive('validateField', ['gettextCatalog', '$timeout', function (gettextC
     };
 }]);
 
-app.directive('number', function () {
-    return {
-        require: 'ngModel',
-        link: function (scope, ele, attr, ctrl) {
-            ctrl.$parsers.unshift(function (viewValue) {
-                return parseFloat(viewValue, 2);
-            });
-        }
-    };
-});
-
 app.directive('cleanPrice', [function () {
     return {
         restrict: 'A',
@@ -3885,7 +3906,7 @@ app.service("ApiService", ['$http', '$q', '$location', 'SettingsService', 'Helpe
         var settings = SettingsService.get();
 
         if (settings.account.account_id && settings.config.development == true) {
-            parameters = { account_id: settings.account.account_id };
+            parameters = { account_id: settings.account.account_id, browser_info: true };
         }
 
         // Prepare the url
@@ -3906,6 +3927,8 @@ app.service("ApiService", ['$http', '$q', '$location', 'SettingsService', 'Helpe
         request.then(function (response) {
 
             StorageService.set("token", response.data.token, response.headers("X-Token-Expires-In-Seconds"));
+            StorageService.set("locale", response.data.browser_info.locale);
+            StorageService.set("language", response.data.browser_info.language);
 
             // If you got a new token, delete any cart_id or invoice_id cookie. The new token won't be bound to them and letting them remain will cause a conflict when the new token tries to access a cart_id that it's not associated with.
             StorageService.remove("cart_id");
@@ -4930,6 +4953,7 @@ app.service("PaymentService", ['$http', '$q', 'ApiService', 'SettingsService', '
         create: create,
         createDirect: createDirect,
         get: get,
+        update: update,
         getOptions: getOptions,
         commit: commit,
         fromParams: fromParams
@@ -4944,6 +4968,22 @@ app.service("PaymentService", ['$http', '$q', 'ApiService', 'SettingsService', '
         var data = { payment_method: payment_method };
 
         ApiService.create(data, url, parameters, quiet).then(function (response) {
+            var payment = response.data;
+            deferred.resolve(payment);
+        }, function (error) {
+            deferred.reject(error);
+        });
+
+        return deferred.promise;
+
+    }
+
+    function update(data, parameters, quiet) {
+
+        var deferred = $q.defer();
+        parameters = setDefaultParameters(parameters);
+
+        ApiService.update(data, "/payments/" + data.payment_id, parameters, quiet).then(function (response) {
             var payment = response.data;
             deferred.resolve(payment);
         }, function (error) {
@@ -5011,7 +5051,7 @@ app.service("PaymentService", ['$http', '$q', 'ApiService', 'SettingsService', '
 
     }
 
-    function commit(payment_id, data, parameters, quiet) {
+    function commit(payment_id, parameters, quiet) {
 
         // This is used for payment methods such as PayPal and Amazon Pay that need to be tiggered for completion after they have been reviewed by the customer.
 
@@ -5020,7 +5060,7 @@ app.service("PaymentService", ['$http', '$q', 'ApiService', 'SettingsService', '
         var deferred = $q.defer();
         parameters = setDefaultParameters(parameters);
 
-        ApiService.create(data, url, parameters, quiet).then(function (response) {
+        ApiService.create(null, url, parameters, quiet).then(function (response) {
             var payment = response.data;
 
             // If the payment status is completed or pending, delete the cart_id and / or invoice_id. Attempting to interact with a closed cart or invoice (due to a successful payment) will result in errors.
@@ -5047,34 +5087,51 @@ app.service("PaymentService", ['$http', '$q', 'ApiService', 'SettingsService', '
 
         // This is designed to be used for a "hosted payment page", where the customer makes an arbitrary payment not associated with a cart or invoice. Parameters such as amount, currency, description, reference and customer details can be passed as URL params.
 
-        if (params.subtotal) {
-            payment.subtotal = params.subtotal;
-            delete params.subtotal;
-        }
-
-        if (params.shipping) {
-            payment.shipping = params.shipping;
-            delete params.shipping;
-        }
-
-        if (params.tax) {
-            payment.tax = params.tax;
-            delete params.tax;
-        }
-
         if (params.currency) {
             payment.currency = params.currency;
             delete params.currency;
+            location.search("currency", null);
+        }
+
+        if (params.total && utils.isValidNumber(params.total)) {
+            payment.total = params.total;
+            delete params.total;
+            location.search("total", null);
+        }
+
+        // If the total is not supplied, look for subtotal, shipping, tax.
+        if (!payment.total) {
+
+            if (params.subtotal && utils.isValidNumber(params.subtotal)) {
+                payment.subtotal = params.subtotal;
+                delete params.subtotal;
+                location.search("subtotal", null);
+            }
+
+            if (params.shipping && utils.isValidNumber(params.shipping)) {
+                payment.shipping = params.shipping;
+                delete params.shipping;
+                location.search("shipping", null);
+            }
+
+            if (params.tax && utils.isValidNumber(params.tax)) {
+                payment.tax = params.tax;
+                delete params.tax;
+                location.search("tax", null);
+            }
+
         }
 
         if (params.reference) {
             payment.reference = params.reference;
             delete params.reference;
+            location.search("reference", null);
         }
 
         if (params.description) {
             payment.description = params.description;
             delete params.description;
+            location.search("description", null);
         }
 
         payment.customer = payment.customer || {};
@@ -5318,7 +5375,8 @@ app.service("GeoService", [function () {
     return {
         getData: getData,
         getStatesProvs: getStatesProvs,
-        isEu: isEu
+        isEu: isEu,
+        getCurrencySymbol: getCurrencySymbol
     };
 
     function getData() {
@@ -5358,6 +5416,13 @@ app.service("GeoService", [function () {
 
         return false;
 
+    }
+
+    function getCurrencySymbol(code) {
+
+        var currencies = { "AED": "د.إ", "AFN": "؋", "ALL": "L", "AMD": "֏", "ANG": "ƒ", "AOA": "Kz", "ARS": "$", "AUD": "$", "AWG": "ƒ", "AZN": "ман", "BAM": "KM", "BBD": "$", "BDT": "৳", "BGN": "лв", "BHD": ".د.ب", "BIF": "FBu", "BMD": "$", "BND": "$", "BOB": "$b", "BRL": "R$", "BSD": "$", "BTC": "฿", "BTN": "Nu.", "BWP": "P", "BYR": "p.", "BZD": "BZ$", "CAD": "$", "CDF": "FC", "CHF": "CHF", "CLP": "$", "CNY": "¥", "COP": "$", "CRC": "₡", "CUC": "$", "CUP": "₱", "CVE": "$", "CZK": "Kč", "DJF": "Fdj", "DKK": "kr", "DOP": "RD$", "DZD": "دج", "EEK": "kr", "EGP": "£", "ERN": "Nfk", "ETB": "Br", "ETH": "Ξ", "EUR": "€", "FJD": "$", "FKP": "£", "GBP": "£", "GEL": "₾", "GGP": "£", "GHC": "₵", "GHS": "GH₵", "GIP": "£", "GMD": "D", "GNF": "FG", "GTQ": "Q", "GYD": "$", "HKD": "$", "HNL": "L", "HRK": "kn", "HTG": "G", "HUF": "Ft", "IDR": "Rp", "ILS": "₪", "IMP": "£", "INR": "₹", "IQD": "ع.د", "IRR": "﷼", "ISK": "kr", "JEP": "£", "JMD": "J$", "JOD": "JD", "JPY": "¥", "KES": "KSh", "KGS": "лв", "KHR": "៛", "KMF": "CF", "KPW": "₩", "KRW": "₩", "KWD": "KD", "KYD": "$", "KZT": "лв", "LAK": "₭", "LBP": "£", "LKR": "₨", "LRD": "$", "LSL": "M", "LTC": "Ł", "LTL": "Lt", "LVL": "Ls", "LYD": "LD", "MAD": "MAD", "MDL": "lei", "MGA": "Ar", "MKD": "ден", "MMK": "K", "MNT": "₮", "MOP": "MOP$", "MRO": "UM", "MUR": "₨", "MVR": "Rf", "MWK": "MK", "MXN": "$", "MYR": "RM", "MZN": "MT", "NAD": "$", "NGN": "₦", "NIO": "C$", "NOK": "kr", "NPR": "₨", "NZD": "$", "OMR": "﷼", "PAB": "B/.", "PEN": "S/.", "PGK": "K", "PHP": "₱", "PKR": "₨", "PLN": "zł", "PYG": "Gs", "QAR": "﷼", "RMB": "￥", "RON": "lei", "RSD": "Дин.", "RUB": "₽", "RWF": "R₣", "SAR": "﷼", "SBD": "$", "SCR": "₨", "SDG": "ج.س.", "SEK": "kr", "SGD": "$", "SHP": "£", "SLL": "Le", "SOS": "S", "SRD": "$", "SSP": "£", "STD": "Db", "SVC": "$", "SYP": "£", "SZL": "E", "THB": "฿", "TJS": "SM", "TMT": "T", "TND": "د.ت", "TOP": "T$", "TRL": "₤", "TRY": "₺", "TTD": "TT$", "TVD": "$", "TWD": "NT$", "TZS": "TSh", "UAH": "₴", "UGX": "USh", "USD": "$", "UYU": "$U", "UZS": "лв", "VEF": "Bs", "VND": "₫", "VUV": "VT", "WST": "WS$", "XAF": "FCFA", "XBT": "Ƀ", "XCD": "$", "XOF": "CFA", "XPF": "₣", "YER": "﷼", "ZAR": "R", "ZWD": "Z$" }
+
+        return currencies[code] || "";
     }
 
 }]);

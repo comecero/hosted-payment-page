@@ -2,7 +2,7 @@
 
     <form name="form" shipping-is-billing="data.shipping_is_billing" params="data.params" novalidate>
 
-        <div class="dropdown pull-right currency-button spacer-b10" uib-dropdown ng-if="settings.account.currencies.length > 1">
+        <div class="dropdown pull-right currency-button spacer-b10" uib-dropdown ng-if="settings.account.currencies.length > 1 && !data.payment.subtotal">
             <button class="btn btn-default btn-sm dropdown-toggle" type="button" uib-dropdown-toggle>
                 <span class="pointer">{{currency}}</span> <i class="caret"></i>
             </button>
@@ -29,26 +29,33 @@
         <table class="cart">
             <thead>
                 <tr>
-                    <th style="width:130px" translate>Reference</th>
-                    <th style="min-width:250px" translate>Description</th>
-                    <th style="max-width:100px"><span translate>Amount</span> <span style="font-weight: normal;">{{data.payment.currency}}</span></th>
+                    <th ng-if="settings.app.show_reference" translate>{{ settings.app.reference_label || ('Reference' | translate)}}</th>
+                    <th style="min-width:250px" ng-if="settings.app.show_description" translate>Description</th>
+                    <th style="max-width:140px" class="text-right" ng-if="!data.payment.subtotal"><span translate>Amount</span> <span style="font-weight: normal;">{{data.payment.currency}}</span></th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td class="text-left" style="width:130px" data-label="{{ 'Reference' | translate}}">
-                        <div class="form-group">
-                            <input type="text" name="reference" ng-model="data.payment.reference" class="form-control" maxlength="75" />
+                    <td data-label="{{ settings.app.reference_label || ('Reference' | translate)}}" show-errors  ng-if="settings.app.show_reference">
+                        <div class="form-group has-input" ng-if="data.referenceEditable">
+                            <input type="text" name="reference" ng-model="data.payment.reference" class="form-control" maxlength="75" ng-required="settings.app.reference_required" />
+                            <p class="error-block hidden" translate>Please provide a value</p>
+                        </div>
+                        <div class="form-group has-input" ng-if="!data.referenceEditable">
+                            <span>{{data.payment.reference}}</span>
                         </div>
                     </td>
-                    <td style="min-width:250px" data-label="{{ 'Description' | translate}}">
-                        <div class="form-group">
+                    <td style="min-width:250px" data-label="{{ 'Description' | translate}}" ng-if="settings.app.show_description">
+                        <div class="form-group has-input" ng-if="data.descriptionEditable">
                             <input type="text" name="description" ng-model="data.payment.description" class="form-control" maxlength="255" />
                         </div>
+                        <div class="form-group has-input" ng-if="!data.descriptionEditable">
+                            <span>{{data.payment.description}}</span>
+                        </div>
                     </td>
-                    <td class="has-input" style="max-width:100px" data-label="{{ 'Amount' | translate}}" show-errors>
-                        <div class="form-group">
-                            <input type="text" name="subtotal" ng-model="data.payment.subtotal" class="form-control" is-valid-number min="0" maxlength="14" number  ng-model-options="{ updateOn: 'blur' }" clean-price />
+                    <td style="max-width:140px" data-label="{{ 'Amount' | translate}}" ng-if="!data.payment.subtotal" show-errors>
+                        <div class="form-group has-input pull-right">
+                            <input type="text" name="total" ng-model="data.payment.total" class="form-control" style="text-align: right; max-width: 140px" is-valid-number min="0" maxlength="14" />
                             <p class="error-block hidden" translate>Please provide an amount</p>
                         </div>
                     </td>
@@ -56,10 +63,37 @@
             </tbody>
         </table>
 
+        <table class="tight cart">
+            <tbody>
+                <tr ng-show="data.payment.subtotal && data.payment.subtotal != data.payment.total">
+                    <td class="text-left hidden-xs" translate>Subtotal</td>
+                    <td class="text-right" data-label="{{ 'Subtotal' | translate}}"><span class="has-price">{{data.payment.subtotal | currency: geoService.getCurrencySymbol(data.payment.currency)}}</span></td>
+                </tr>
+            </tbody>
+            <tbody ng-show="data.payment.shipping">
+                <tr>
+                    <td class="text-left hidden-xs" translate>Shipping</td>
+                    <td class="text-right" data-label="{{ 'Shipping' | translate}}"><span class="has-price">{{data.payment.shipping | currency: geoService.getCurrencySymbol(data.payment.currency)}}</span></td>
+                </tr>
+            </tbody>
+            <tbody ng-show="data.payment.tax">
+                <tr>
+                    <td class="text-left hidden-xs" translate>Tax</td>
+                    <td class="text-right" data-label="{{ 'Tax' | translate}}"><span class="has-price">{{data.payment.tax | currency: geoService.getCurrencySymbol(data.payment.currency)}}</span></td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr>
+                    <td class="text-left text-lg hidden-xs"><strong translate>Total</strong></td>
+                    <td class="text-right text-lg" data-label="{{ 'Total' | translate}}"><span class="text-lg has-price">{{calculateTotal(data.payment) | currency: geoService.getCurrencySymbol(data.payment.currency)}}</span> <span ng-show="data.payment.total || data.payment.subtotal">{{data.payment.currency}}</span></td>
+                </tr>
+            </tbody>
+        </table>
+
         <!-- PayPal -->
         <div class="row spacer-t20" ng-show="helpers.supportsPaymentMethod('paypal', data.options)">
             <div class="col-xs-12 text-right">
-                <input type="image" submit-payment="data.paypal" payment="data.payment" shipping-is-billing="data.shipping_is_billing" on-success="onPaymentSuccess" error="data.error" src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/checkout-logo-small.png" />
+                <img class="pointer" submit-payment="data.paypal" payment="data.payment" shipping-is-billing="data.shipping_is_billing" on-success="onPaymentSuccess" error="data.error" src="https://www.paypalobjects.com/webstatic/en_US/i/buttons/checkout-logo-small.png" />
             </div>
         </div>
 
@@ -205,47 +239,6 @@
         <!--Spacer-->
         <div class="row"></div>
 
-        <div class="section-header">
-            <span translate>Payment Summary</span>
-        </div>
-
-        <!--<table class="tight cart">
-            <tbody>
-                <tr ng-if="!data.cart.tax_inclusive">
-                    <td class="text-left hidden-xs" translate>Subtotal</td>
-                    <td class="text-right" data-label="{{ 'Subtotal' | translate}}"><span class="has-price">{{data.cart.formatted.subtotal}}</span></td>
-                </tr>
-            </tbody>
-            <tbody ng-show="data.cart.shipping_item">
-                <tr>
-                    <td ng-if="data.options.shipping_quotes.length > 1" class="text-left hidden-xs" translate>Shipping</td>
-                    <td ng-if="data.options.shipping_quotes.length <= 1" class="text-left hidden-xs">{{data.cart.shipping_item.name}}</td>
-                    <td class="text-right" data-label="{{data.cart.shipping_item.name}}"><span ng-show="data.cart.shipping_item.price_original > data.cart.shipping_item.price"><del class="discount text-danger">{{data.cart.tax_inclusive ? data.cart.shipping_item.formatted.total_original : data.cart.shipping_item.formatted.subtotal_original}}</del>&nbsp;</span><span class="has-price">{{data.cart.tax_inclusive ? data.cart.shipping_item.formatted.total : data.cart.shipping_item.formatted.subtotal}}</span></td>
-                </tr>
-            </tbody>
-            <tbody ng-show="data.cart.discount > 0">
-                <tr>
-                    <td class="text-left hidden-xs" translate>Discount</td>
-                    <td class="text-right text-danger" data-label="{{ 'Discount' | translate}}"><span class="has-price">-{{data.cart.formatted.discount}}</span></td>
-                </tr>
-            </tbody>
-            <tbody ng-show="data.cart.tax > 0 && !data.cart.tax_inclusive">
-                <tr>
-                    <td class="text-left hidden-xs" translate>Tax</td>
-                    <td class="text-right" data-label="{{ 'Tax' | translate}}"><span class="has-price">{{data.cart.formatted.tax}}</span></td>
-                </tr>
-            </tbody>
-            <tbody>
-                <tr>
-                    <td class="text-left text-lg hidden-xs"><strong translate>Total</strong></td>
-                    <td class="text-right text-lg" data-label="{{ 'Total' | translate}}"><span class="text-lg has-price">{{data.cart.formatted.total}} {{data.cart.currency}}</span></td>
-                </tr>
-                <tr ng-if="data.cart.tax_inclusive">
-                    <td class="text-right text-sm" colspan="2" translate>Your total includes {{data.cart.formatted.tax}} tax</td>
-                </tr>
-            </tbody>
-        </table>-->
-
         <!-- Custom fields -->
         <fields fieldlist="settings.app.fields" sale="data.payment"></fields>
 
@@ -324,6 +317,23 @@
             </div>
 
         </div>
+
+        <!--Spacer-->
+        <div class="row"></div>
+
+        <!--Payment Info-->
+        <div class="section-header">
+            <span translate>Review & Finish</span>
+        </div>
+
+        <table class="tight cart" ng-show="data.payment.total || data.payment.subtotal">
+            <tbody>
+                <tr>
+                    <td class="text-left text-lg hidden-xs"><strong translate>Total</strong></td>
+                    <td class="text-right text-lg" data-label="{{ 'Total' | translate}}"><span class="text-lg has-price">{{calculateTotal(data.payment) | currency: geoService.getCurrencySymbol(data.payment.currency)}} {{data.payment.currency}}</span></td>
+                </tr>
+            </tbody>
+        </table>
 
         <div class="col-xs-12 spacer-b20 spacer-t20 text-right">
             <button type="button" class="btn btn-success btn-lg right" validate-on-submit submit-payment="data.card" payment="data.payment" shipping-is-billing="data.shipping_is_billing" on-success="onPaymentSuccess" error="data.error" translate>Complete Payment</button>

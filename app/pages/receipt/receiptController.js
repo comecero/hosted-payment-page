@@ -1,4 +1,4 @@
-﻿app.controller("ReceiptController", ['$scope', '$routeParams', 'PaymentService', 'OrderService', 'SettingsService', 'HelperService', '$document', function ($scope, $routeParams, PaymentService, OrderService, SettingsService, HelperService, $document) {
+﻿app.controller("ReceiptController", ['$scope', '$routeParams', 'PaymentService', 'OrderService', 'SettingsService', 'HelperService', 'StorageService', '$document', function ($scope, $routeParams, PaymentService, OrderService, SettingsService, HelperService, StorageService, $document) {
 
     // Define a place to hold your data
     $scope.data = {};
@@ -9,6 +9,7 @@
     $scope.data.params = {};
     $scope.data.params.expand = "payment_method,payment_method.data,customer";
     $scope.data.params.formatted = true;
+    $scope.settings = SettingsService.get();
 
     $scope.data.params.options = true;
     $scope.data.params.formatted = true;
@@ -22,8 +23,11 @@
         // Make the payment available to the view.
         $scope.data.payment = payment;
 
+        // Delete anything in the cache
+        StorageService.remove("hpp_payment");
+
     }, function (error) {
-        $scope.exception = error;
+        $scope.data.error = error;
     });
 
     // Get the payment options to see if you should offer the customer to create an account.
