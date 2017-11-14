@@ -1,5 +1,5 @@
 /*
-Comecero Kit version: ﻿1.0.4
+Comecero Kit version: ﻿1.0.5
 https://comecero.com
 https://github.com/comecero/kit
 Copyright Comecero and other contributors. Released under MIT license. See LICENSE for details.
@@ -2896,7 +2896,7 @@ app.directive('customerSignin', ['CartService', 'CustomerService', '$timeout', f
 
                         // Fire the success event
                         if (scope.onSignoutSuccess) {
-                            scope.onSignoutSuccess(cart);
+                            scope.onSignoutSuccess();
                         }
                     }
 
