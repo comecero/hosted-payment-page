@@ -39,6 +39,11 @@ app.controller("PayController", ['$scope', '$location', 'PaymentService', 'GeoSe
         }
     }
 
+    // Fix if the user has applied conflicting settings
+    if ($scope.settings.app.reference_required && !$scope.settings.app.reference_required.show_reference) {
+        $scope.settings.app.reference_required = false;
+    }
+
     // Get the payment options
     PaymentService.getOptions().then(function (options) {
 
@@ -53,10 +58,20 @@ app.controller("PayController", ['$scope', '$location', 'PaymentService', 'GeoSe
         // Create a list of countries from the customer allowed country codes for the country drop down.
         $scope.data.countries = [];
         _.each(options.allowed_customer_countries, function (country) {
-            $scope.data.countries.push(_.findWhere($scope.geoService.getData().countries, { code: country }));
+            var find = _.findWhere($scope.geoService.getData().countries, { code: country });
+            if (find) {
+                $scope.data.countries.push(find);
+            }
         });
 
+        // Sort by country name
+        $scope.data.countries = _.sortBy($scope.data.countries, "name");
+
+        // Set the default country
+        $scope.data.payment.customer.billing_address.country = options.customer_default_country;
+
         $scope.data.payment.currency = options.customer_default_currency;
+        CurrencyService.setCurrency(options.customer_default_currency);
 
         // If the reference and description are not provided as params, the user can edit them.
         if (!$location.search().reference) {

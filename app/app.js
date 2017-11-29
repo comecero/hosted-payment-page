@@ -128,7 +128,7 @@ app.directive('customHtml', ['SettingsService', function (SettingsService) {
 app.controller("TitleController", ['$scope', 'SettingsService', function ($scope, SettingsService) {
 
     var settings = SettingsService.get().app;
-    $scope.title = settings.page_title || "Checkout";
+    $scope.title = settings.page_title || "Make Payment";
 
 }]);
 

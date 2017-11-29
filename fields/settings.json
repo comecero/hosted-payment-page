@@ -103,11 +103,11 @@
   {
     "name": "reference_required",
     "type": "boolean",
-    "label": "Is the Reference Required?",
+    "label": "Is the Reference required?",
     "description": "Indicates if the user must provide a payment reference to make a payment. If the reference is provided as a page paramter, the user will not be required to supply a value for the reference.",
     "section": "Features",
     "required": true,
-    "default_value": true
+    "default_value": false
   },
   {
     "name": "reference_label",
@@ -133,7 +133,7 @@
     "description": "Upon completion of an order, indicates if the receipt should show a button to submit another payment.",
     "section": "Features",
     "required": true,
-    "default_value": true
+    "default_value": false
   },
   {
     "name": "exp_select",
