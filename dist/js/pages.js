@@ -5,6 +5,20 @@ https://github.com/comecero/cart
 Copyright Comecero and other contributors. Released under MIT license. See LICENSE for details.
 */
 
+app.controller("LinkController", ['$scope', '$location', 'PaymentService', 'StorageService', function ($scope, $location, PaymentService, StorageService) {
+
+    // Build up the payment from the query string, if provided. This loads in totals, currency and other data (such as customer name, email address) that may have been supplied through the query string. If nothing is provided in the query string, then no values are supplied to the payment.
+    var payment = PaymentService.fromParams({}, $location);
+
+    // Save in storage for the payment page to reference. Store for 6 hours.
+    StorageService.set("hpp_payment", JSON.stringify(payment), 21600);
+
+    // Redirect to the payment page.
+    $location.search({});
+    $location.path("/pay");
+    $location.replace();
+
+}]);
 app.controller("MainController", ['$scope', 'SettingsService', 'CurrencyService', function ($scope, SettingsService, CurrencyService) {
  
         $scope.settings = SettingsService.get();
@@ -50,7 +64,7 @@ app.controller("PayController", ['$scope', '$location', 'PaymentService', 'GeoSe
         $scope.data.options = options;
 
         // In the event that page parameters are not present, we'll look in the payment cache to help survive page reloads.
-        var paymentCache;
+        var paymentCache = $scope.data.payment; // Default if not provided
         if (StorageService.get("hpp_payment")) {
             paymentCache = JSON.parse(StorageService.get("hpp_payment"));
         }
@@ -70,64 +84,26 @@ app.controller("PayController", ['$scope', '$location', 'PaymentService', 'GeoSe
         // Set the default country
         $scope.data.payment.customer.billing_address.country = options.customer_default_country;
 
-        $scope.data.payment.currency = options.customer_default_currency;
-        CurrencyService.setCurrency(options.customer_default_currency);
-
-        // If the reference and description are not provided as params, the user can edit them.
-        if (!$location.search().reference) {
+        // If the reference and description are not provided in the payment cache, the user can edit them.
+        if (!paymentCache.reference) {
             $scope.data.referenceEditable = true;
         }
 
-        if (!$location.search().description) {
+        if (!paymentCache.description) {
             $scope.data.descriptionEditable = true;
         }
 
-        // Build up the payment from the query string, if provided. This loads in totals, currency and other data (such as customer name, email address) that may have been supplied through the query string. If nothing is provided in the query string, then no values are supplied to the payment.
-        $scope.data.payment = PaymentService.fromParams($scope.data.payment, $location);
+        // Set the payment data
+        $scope.data.payment = paymentCache;
 
-        // If there's no payment total, subtotal or shipping, load from app cache (used in the case of a page reload).
-        if (!$scope.data.payment.total && !$scope.data.payment.subtotal && !$scope.data.payment.shipping) {
-
-            if (paymentCache) {
-
-                // Set the payment currency as the default payment currency if not recorded in the cache.
-                $scope.data.payment.currency = paymentCache.currency || options.customer_default_currency;
-
-                if (paymentCache.total) {
-                    $scope.data.payment.total = paymentCache.total;
-                } else {
-                    $scope.data.payment.subtotal = paymentCache.subtotal;
-                    $scope.data.payment.shipping = paymentCache.shipping;
-                    $scope.data.payment.tax = paymentCache.tax;
-                }
-            }
-
-            // If no currency has been defined, set to the default for the account.
-            $scope.data.payment.currency = $scope.data.payment.currency || options.customer_default_currency;
-
-            // Tell the application the currency that is being used, which will pouplate the select menus.
-            CurrencyService.setCurrency($scope.data.payment.currency);
-
-        }
-
-        // Populate the reference and description from the cache if not already supplied.
-        if (!$scope.data.payment.reference && paymentCache && paymentCache.reference) {
-            $scope.data.payment.reference = paymentCache.reference;
-            $scope.data.referenceEditable = false;
-        }
-
-        if (!$scope.data.payment.description && paymentCache && paymentCache.description) {
-            $scope.data.payment.description = paymentCache.description;
-            $scope.data.descriptionEditable = false;
-        }
+        // Set the default currency, if not supplied.
+        $scope.data.payment.currency = $scope.data.payment.currency || options.customer_default_currency;
+        CurrencyService.setCurrency($scope.data.payment.currency);
 
         // Format the total since it will be provided in a user-editable input and will not be subject to display filters
         if ($scope.data.payment.total) {
             $scope.data.payment.total = utils.cleanPrice($scope.data.payment.total);
         }
-
-        // Set in the app cache to survive page reloads. We'll use a short expiration (one hour).
-        StorageService.set("hpp_payment", JSON.stringify({ currency: $scope.data.payment.currency, total: $scope.data.payment.total, subtotal: $scope.data.payment.subtotal, shipping: $scope.data.payment.shipping, tax: $scope.data.payment.tax, reference: $scope.data.payment.reference, description: $scope.data.payment.description }), 3600);
 
     }, function (error) {
         // Error getting the cart

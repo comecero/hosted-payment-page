@@ -177,5 +177,14 @@
     "description": "An array of custom field definitions (in JSON format) that allow you to place custom fields onto your order form.",
     "section": "Features",
     "required": false
+  },
+  {
+    "name": "enable_help_redirect",
+    "type": "boolean",
+    "label": "Enable Help Redirect",
+    "description": "When accessing the root of the app, show the Hosted Payment Page help documentation rather than redirecting to the Hosted Payment Page form.",
+    "section": "Other",
+    "required": true,
+    "default_value": true
   }
 ]

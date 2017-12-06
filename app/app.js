@@ -3,18 +3,34 @@ var app = angular.module("checkout", ['ngRoute', 'ngSanitize', 'ui.bootstrap', '
 app.config(['$httpProvider', '$routeProvider', '$locationProvider', '$provide', 'cfpLoadingBarProvider', 'tmhDynamicLocaleProvider', function ($httpProvider, $routeProvider, $locationProvider, $provide, cfpLoadingBarProvider, tmhDynamicLocaleProvider) {
 
     // Define routes
+    $routeProvider.when("/link", { templateUrl: "app/pages/link/link.html", reloadOnSearch: false });
     $routeProvider.when("/pay", { templateUrl: "app/pages/pay/pay.html", reloadOnSearch: false });
     $routeProvider.when("/review/:id", { templateUrl: "app/pages/review/review.html" });
     $routeProvider.when("/receipt/:id", { templateUrl: "app/pages/receipt/receipt.html" });
 
+    // Handle root conditionally based on settings
+    if (window.__settings.app.enable_help_redirect) {
+        $routeProvider.when("/", {
+            redirectTo: function () {
+                window.location.replace("getting-started/#/docs");
+            }
+        });
+    } else {
+        $routeProvider.when("/", {
+            redirectTo: function () {
+                window.location.replace("#/link");
+            }
+        });
+    }
+
     // Non-handled routes.
     var notFoundUrl = window.__settings.app.not_found_url;
 
-    if (notFoundUrl == null) {
+    if (!notFoundUrl) {
         notFoundUrl = window.__settings.app.main_website_url;
     }
 
-    if (notFoundUrl == null) {
+    if (!notFoundUrl) {
         // The support URL
         notFoundUrl = window.__settings.account.support_url;
     }

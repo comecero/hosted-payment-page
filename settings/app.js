@@ -18,6 +18,7 @@ window.__settings.app = {
     "reference_label": "PO Number",
     "additional_payment_prompt": false,
     "page_title": "Submit Payment",
+    "enable_help_redirect": true,
     "favicon_medium": "https://d2czr3b90zl0wc.cloudfront.net/KO0000/0104031097523ImmD8I4TE/md_favicon.ico",
     "favicon_large": "https://d2czr3b90zl0wc.cloudfront.net/KO0000/0104031097523ImmD8I4TE/lg_favicon.ico",
     "favicon_square": "https://d2czr3b90zl0wc.cloudfront.net/KO0000/0104031097523ImmD8I4TE/sq_favicon.ico",

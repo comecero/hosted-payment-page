@@ -65,7 +65,7 @@
 
         <table class="tight cart">
             <tbody>
-                <tr ng-show="data.payment.subtotal && data.payment.subtotal != data.payment.total">
+                <tr ng-show="data.payment.subtotal && (data.payment.shipping || data.payment.tax) && data.payment.subtotal != data.payment.total">
                     <td class="text-left hidden-xs" translate>Subtotal</td>
                     <td class="text-right" data-label="{{ 'Subtotal' | translate}}"><span class="has-price">{{data.payment.subtotal | currency: geoService.getCurrencySymbol(data.payment.currency)}}</span></td>
                 </tr>
