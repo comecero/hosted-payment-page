@@ -27,7 +27,7 @@
     }
 
     // Fix if the user has applied conflicting settings
-    if ($scope.settings.app.reference_required && !$scope.settings.app.reference_required.show_reference) {
+    if ($scope.settings.app.reference_required && !$scope.settings.app.show_reference) {
         $scope.settings.app.reference_required = false;
     }
 
@@ -110,6 +110,11 @@
                 $location.path("/receipt/" + payment.payment_id);
         }
 
+    }
+
+    $scope.resetPaymentMethod = function (id) {
+        // Remove the payment method data such as card number, expiration date, etc. This is used to flush the data when an existing payment method is selected from a logged-in customer.
+        $scope.data.card = { payment_method_id: id };
     }
 
     // Watch for error to be populated, and if so, scroll to it.

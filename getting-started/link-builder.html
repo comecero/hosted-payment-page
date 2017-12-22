@@ -81,7 +81,7 @@
 
             <div class="col-xs-12 col-md-4">
                 <div class="form-group" show-errors>
-                    <label for="reference" class="control-label">{{settings.app.reference_label}}</label>
+                    <label for="reference" class="control-label">{{ settings.app.reference_label || 'Reference'}}</label>
                     <input type="text" class="form-control" name="reference" ng-model="link.reference" placeholder="Optional">
                 </div>
             </div>

@@ -49,13 +49,18 @@ app.config(['$httpProvider', '$routeProvider', '$locationProvider', '$provide', 
     tmhDynamicLocaleProvider.localeLocationPattern("https://cdnjs.cloudflare.com/ajax/libs/angular-i18n/1.5.5/angular-locale_{{locale}}.js");
 
     // Set the favicon
+    var favicon = document.createElement("link");
+    favicon.setAttribute("rel", "icon");
+    favicon.setAttribute("type", "image/x-icon");
+
     if (window.__settings.app.favicon_full) {
-        var favicon = document.createElement("link");
-        favicon.setAttribute("rel", "icon");
-        favicon.setAttribute("type", "image/x-icon");
         favicon.setAttribute("href", window.__settings.app.favicon_full);
-        document.head.appendChild(favicon);
+    } else {
+        favicon.setAttribute("href", "images/default_favicon.png");
     }
+
+    document.head.appendChild(favicon);
+
 
 }]);
 
