@@ -29,9 +29,9 @@
         <table class="cart">
             <thead>
                 <tr>
-                    <th ng-if="settings.app.show_reference" translate>{{ settings.app.reference_label || ('Reference' | translate)}}</th>
-                    <th style="min-width:250px" ng-if="settings.app.show_description" translate>Description</th>
-                    <th style="max-width:140px" class="text-right" ng-if="!data.payment.subtotal"><span translate>Amount</span> <span style="font-weight: normal;">{{data.payment.currency}}</span></th>
+                    <th ng-if="settings.app.show_reference" translate><label ng-class="{required: settings.app.reference_required}">{{ settings.app.reference_label || ('Reference' | translate)}}</label></th>
+                    <th style="min-width:250px" ng-if="settings.app.show_description"><label translate>Description</label></th>
+                    <th style="max-width:140px" class="text-right" ng-if="!data.payment.subtotal"><label><span translate>Amount</span> <span style="font-weight: normal;">{{data.payment.currency}}</span></label></th>
                 </tr>
             </thead>
             <tbody>
@@ -310,7 +310,7 @@
                 </div>
             </div>
 
-            <div class="col-xs-12" ng-show="settings.account.allow_save_cards == true && settings.app.ask_save_cards == true && data.payment.customer.username != null">
+            <div class="col-xs-12" ng-show="settings.account.allow_save_cards == true && settings.app.ask_save_cards == true">
                 <div class="form-group checkbox-group">
                     <input type="checkbox" id="save-card" class="checkbox" name="save-card" ng-model="data.card.save">
                     <label for="save-card" class="checkbox-label" translate>Save this card to my account</label>

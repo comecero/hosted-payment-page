@@ -104,7 +104,7 @@
     "name": "reference_required",
     "type": "boolean",
     "label": "Is the Reference required?",
-    "description": "Indicates if the user must provide a payment reference to make a payment. If the reference is provided as a page paramter, the user will not be required to supply a value for the reference.",
+    "description": "Indicates if the user must provide a payment reference to make a payment. If the reference is provided as a page parameter, the user will not be required to supply a value for the reference.",
     "section": "Features",
     "required": true,
     "default_value": false
