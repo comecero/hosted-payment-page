@@ -144,6 +144,14 @@ app.controller("PayController", ['$scope', '$location', 'PaymentService', 'GeoSe
         $scope.data.card = { payment_method_id: id };
     }
 
+    // If the user logs out
+    $scope.onSignOut = function () {
+        if ($scope.data.card) {
+            $scope.data.card.payment_method_id = null;
+            $scope.data.card.type = "credit_card";
+        }
+    }
+
     // Watch for error to be populated, and if so, scroll to it.
     $scope.$watch("data.error", function (newVal, oldVal) {
         if ($scope.data.error) {

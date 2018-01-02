@@ -105,7 +105,7 @@
 
         <!-- Login option -->
 
-        <div customer-signin customer="data.payment.customer" options="data.options" payment-method="data.card" error="data.error" params="data.params">
+        <div customer-signin customer="data.payment.customer" options="data.options" payment-method="data.card" on-signout-success="onSignOut" error="data.error" params="data.params">
 
             <div class="well header clearfix ask-signin">
                 <strong><span translate>Have an account?</span></strong>
