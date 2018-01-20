@@ -3,12 +3,12 @@
     "name": "company_name",
     "type": "string",
     "label": "Company Name",
-    "description": "The company name that will appear on your cart pages",
+    "description": "The company name that will appear on your payment pages",
     "section": "Design",
     "required": true,
     "default_value": "Your Company Name",
     "min_length": 1,
-    "max_length": 25
+    "max_length": 75
   },
   {
     "name": "logo",

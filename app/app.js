@@ -8,7 +8,6 @@ app.config(['$httpProvider', '$routeProvider', '$locationProvider', '$provide', 
     $routeProvider.when("/review/:id", { templateUrl: "app/pages/review/review.html" });
     $routeProvider.when("/receipt/:id", { templateUrl: "app/pages/receipt/receipt.html" });
 
-    // Handle root conditionally based on settings
     if (window.__settings.app.enable_help_redirect) {
         $routeProvider.when("/", {
             redirectTo: function () {
@@ -16,12 +15,19 @@ app.config(['$httpProvider', '$routeProvider', '$locationProvider', '$provide', 
             }
         });
     } else {
-        $routeProvider.when("/", {
-            redirectTo: function () {
-                window.location.replace("#/link");
-            }
-        });
+        $routeProvider.when("/", { redirectTo: "/link" });
     }
+
+    //// Handle root conditionally based on settings
+    //$routeProvider.when("/", {
+    //    redirectTo: function () {
+    //        if (window.__settings.app.enable_help_redirect) {
+    //            window.location.replace("getting-started/#/docs");
+    //        } else {
+    //             window.location.replace("#/link");
+    //        }
+    //    }
+    //});
 
     // Non-handled routes.
     var notFoundUrl = window.__settings.app.not_found_url;
@@ -65,7 +71,7 @@ app.config(['$httpProvider', '$routeProvider', '$locationProvider', '$provide', 
 }]);
 
 // Bootstrap settings
-app.run(['$rootScope', 'SettingsService', 'tmhDynamicLocale', 'StorageService', function ($rootScope, SettingsService, tmhDynamicLocale, StorageService) {
+app.run(['$rootScope', 'SettingsService', 'tmhDynamicLocale', 'StorageService', '$location', function ($rootScope, SettingsService, tmhDynamicLocale, StorageService, $location) {
 
     // This defines the languages supported by the app. Each supported language must have an associated translation file in the languages folder. It ain't magic.
 
@@ -112,6 +118,12 @@ app.run(['$rootScope', 'SettingsService', 'tmhDynamicLocale', 'StorageService', 
     catch (err) {
         console.log("Could not parse browser info, using the default locale.");
     }
+
+    // If the app is configured to redirect calls to root to the docs, do so here.
+    $rootScope.$on("$routeChangeStart", function (event, next, current) {
+        
+    });
+
 
 }]);
 
