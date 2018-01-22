@@ -1,0 +1,401 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: cart\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.9\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:185
+msgid "Address"
+msgstr "Адрес"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:193
+msgid "Address 2"
+msgstr "Адрес 2"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:34
+#: ../hosted-payment-page/app/pages/pay/pay.html:56
+msgid "Amount"
+msgstr "Сумма"
+
+#: ../hosted-payment-page/dist/js/kit.js:4314
+msgid "An error occured while attempting to process your request. Please try your request again. If the problem persists, please contact support."
+msgstr "Произошла ошибка при попытке обработать ваш запрос. Повторите попытку. Если проблема не устранена, обратитесь в службу поддержки."
+
+#: ../hosted-payment-page/app/pages/review/review.html:58
+msgid "Billing Address"
+msgstr "Адрес оплаты "
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:137
+msgid "Cancel"
+msgstr "Отмена"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:276
+msgid "Card Number"
+msgstr "Номер карты:"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:253
+msgid "Choose a Payment Method"
+msgstr "Выберите способ оплаты"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:203
+msgid "City"
+msgstr "Город"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:169
+msgid "Company Name"
+msgstr "Название компании"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:340
+#: ../hosted-payment-page/app/pages/review/review.html:137
+msgid "Complete Payment"
+msgstr "Полная оплата"
+
+#: ../hosted-payment-page/index.html:76
+msgid "Copyright &copy; {{settings.account.year}} {{settings.app.company_name}}. All Rights Reserved."
+msgstr "Авторское право и копия; {{settings.account.year}} {{settings.app.company_name}}. Все права защищены."
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:234
+msgid "Country"
+msgstr "Страна"
+
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:58
+msgid "Create Account"
+msgstr "Создать учетную запись"
+
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:29
+msgid "Date"
+msgstr "Дата"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:33
+#: ../hosted-payment-page/app/pages/pay/pay.html:48
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:103
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:111
+#: ../hosted-payment-page/app/pages/review/review.html:102
+#: ../hosted-payment-page/app/pages/review/review.html:31
+#: ../hosted-payment-page/app/pages/review/review.html:45
+#: ../hosted-payment-page/app/pages/review/review.html:94
+msgid "Description"
+msgstr "Описание"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:159
+msgid "Email"
+msgstr "Email"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:289
+msgid "Expiration Month"
+msgstr "Месяц"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:298
+msgid "Expiration Year"
+msgstr "Год"
+
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:86
+msgid "Expires"
+msgstr "Истекает"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:151
+msgid "Full Name"
+msgstr "Полное Имя"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:111
+msgid "Have an account?"
+msgstr "У Вас есть аккаунт?"
+
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:70
+msgid "Made By"
+msgstr "Выполн"
+
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:151
+msgid "Make Another Payment"
+msgstr "Сделайте еще один платеж"
+
+#: ../hosted-payment-page/app/templates/fields.html:54
+msgid "No"
+msgstr "нет"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:128
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:49
+msgid "Password"
+msgstr "Пароль"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:267
+msgid "Pay with a new card"
+msgstr "Оплатить с помощью новой карты"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:248
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:96
+msgid "Payment Details"
+msgstr "Подробности Платежа"
+
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:83
+msgid "Payment Method"
+msgstr "Способ оплаты"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:177
+msgid "Phone"
+msgstr "Телефон"
+
+#: ../hosted-payment-page/dist/js/kit.js:3725
+msgid "Please confirm"
+msgstr "Прошу Вашего подтверждения."
+
+#: ../hosted-payment-page/dist/js/kit.js:3720
+#: ../hosted-payment-page/dist/js/kit.js:3756
+msgid "Please make a selection"
+msgstr "Пожалуйста, сделайте выбор"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:205
+msgid "Please provide a city"
+msgstr "Пожалуйста, укажите город"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:171
+msgid "Please provide a company name"
+msgstr "Укажите название компании"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:236
+msgid "Please provide a country"
+msgstr "Укажите страну"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:153
+msgid "Please provide a name"
+msgstr "Укажите название"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:179
+msgid "Please provide a phone"
+msgstr "Пожалуйста, предоставьте телефон"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:219
+msgid "Please provide a region / province"
+msgstr "Укажите регион / провинцию"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:213
+msgid "Please provide a state / province"
+msgstr "Укажите регион / провинцию"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:281
+msgid "Please provide a valid card number"
+msgstr "Укажите действительный номер карты"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:161
+msgid "Please provide a valid email address"
+msgstr "пожалуйста представьте действующий адрес электронной почты"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:292
+msgid "Please provide a valid expiration month"
+msgstr "Укажите действительный срок действия"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:301
+msgid "Please provide a valid expiration year"
+msgstr "Укажите действительный срок годности"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:309
+msgid "Please provide a valid security code"
+msgstr "Укажите действующий код безопасности"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:42
+#: ../hosted-payment-page/app/pages/review/review.html:39
+msgid "Please provide a value"
+msgstr "Укажите стоимость"
+
+#: ../hosted-payment-page/dist/js/kit.js:3715
+msgid "Please provide a value."
+msgstr "Укажите стоимость."
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:227
+msgid "Please provide a zip / postal code"
+msgstr "Укажите почтовый индекс"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:187
+#: ../hosted-payment-page/app/pages/pay/pay.html:195
+msgid "Please provide an address"
+msgstr "Укажите адрес"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:59
+msgid "Please provide an amount"
+msgstr "Укажите сумму"
+
+#: ../hosted-payment-page/dist/js/kit.js:1233
+msgid "Please provide an amount for your payment."
+msgstr "Укажите сумму платежа."
+
+#: ../hosted-payment-page/dist/js/kit.js:3765
+msgid "Please provide one of the available options"
+msgstr "Укажите один из доступных вариантов."
+
+#: ../hosted-payment-page/dist/js/kit.js:3748
+msgid "Please supply a number"
+msgstr "Пожалуйста, поставьте номер"
+
+#: ../hosted-payment-page/dist/js/kit.js:3741
+msgid "Please supply a number without decimals"
+msgstr "Пожалуйста, укажите число без десятичных знаков"
+
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:16
+msgid "Receipt"
+msgstr "Квитанция"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:217
+msgid "Region / Province"
+msgstr "Регион / Область"
+
+#: ../hosted-payment-page/app/pages/review/review.html:24
+msgid "Return to PayPal to try your payment again."
+msgstr "Возвратитесь к PayPal, чтобы снова попробовать оплату."
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:327
+#: ../hosted-payment-page/app/pages/review/review.html:87
+msgid "Review & Finish"
+msgstr "Обзор и окончание"
+
+#: ../hosted-payment-page/app/pages/review/review.html:15
+msgid "Review Your Payment"
+msgstr "Просмотрите свой платеж"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:316
+msgid "Save this card to my account"
+msgstr "Сохраните эту карту в моей учетной записи"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:307
+msgid "Security Code"
+msgstr "Код безопасности"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:75
+#: ../hosted-payment-page/app/pages/pay/pay.html:76
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:127
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:128
+#: ../hosted-payment-page/app/pages/review/review.html:118
+#: ../hosted-payment-page/app/pages/review/review.html:119
+msgid "Shipping"
+msgstr "Доставка "
+
+#: ../hosted-payment-page/app/pages/review/review.html:71
+msgid "Shipping Address"
+msgstr "Адрес Доставки "
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:112
+#: ../hosted-payment-page/app/pages/pay/pay.html:138
+msgid "Sign In"
+msgstr "Войти"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:144
+msgid "Sign out"
+msgstr "Выйти"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:211
+msgid "State / Province"
+msgstr "Область/край/республика"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:69
+#: ../hosted-payment-page/app/pages/pay/pay.html:70
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:121
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:122
+#: ../hosted-payment-page/app/pages/review/review.html:112
+#: ../hosted-payment-page/app/pages/review/review.html:113
+msgid "Subtotal"
+msgstr "Подитог(Subtotal)"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:81
+#: ../hosted-payment-page/app/pages/pay/pay.html:82
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:133
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:134
+#: ../hosted-payment-page/app/pages/review/review.html:124
+#: ../hosted-payment-page/app/pages/review/review.html:125
+msgid "Tax"
+msgstr "Налог"
+
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:146
+msgid "Thank you for your payment"
+msgstr "Спасибо вам за ваш платеж"
+
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:25
+msgid "Thank you! Your payment is complete."
+msgstr "Спасибо! Ваш платеж завершен."
+
+#: ../hosted-payment-page/dist/js/kit.js:4308
+msgid "The item you are trying to access could not be found."
+msgstr "Элемент, который вы пытаетесь получить, не найден."
+
+#: ../hosted-payment-page/dist/js/kit.js:3791
+msgid "The value must be at least one character"
+msgid_plural "The value must be at least {{$count}} characters"
+msgstr[0] "Значение должно быть не менее одного символа"
+msgstr[1] "Значение должно быть не менее одного символа"
+
+#: ../hosted-payment-page/dist/js/kit.js:3797
+msgid "The value must be less than one character"
+msgid_plural "The value must be less than {{$count}} characters"
+msgstr[0] "Значение должно быть меньше одного символа"
+msgstr[1] "Значение должно быть меньше одного символа"
+
+#: ../hosted-payment-page/dist/js/kit.js:3774
+msgid "The value you provide must be greater than {{$count}}"
+msgid_plural "The value you provide must be greater than {{$count}}"
+msgstr[0] "Значение, которое вы предоставляете, должно быть больше {{$ count}}"
+msgstr[1] "Значение, которое вы предоставляете, должно быть больше {{$ count}}"
+
+#: ../hosted-payment-page/dist/js/kit.js:3780
+msgid "The value you provide must be less than {{$count}}"
+msgid_plural "The value you provide must be less than {{$count}}"
+msgstr[0] "Значение, которое вы предоставляете, должно быть меньше {{$ count}}"
+msgstr[1] "Значение, которое вы предоставляете, должно быть меньше {{$ count}}"
+
+#: ../hosted-payment-page/dist/js/kit.js:1133
+#: ../hosted-payment-page/dist/js/kit.js:1217
+#: ../hosted-payment-page/dist/js/kit.js:1412
+msgid "There was a problem with some of the information you supplied. Please review for errors and try again."
+msgstr "Была проблема с некоторой информацией, которую вы предоставили. Проверьте ошибки и повторите попытку."
+
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:36
+msgid "To manage your account online, create an account."
+msgstr "Чтобы управлять своей учетной записью в Интернете, создайте учетную запись."
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:333
+#: ../hosted-payment-page/app/pages/pay/pay.html:334
+#: ../hosted-payment-page/app/pages/pay/pay.html:87
+#: ../hosted-payment-page/app/pages/pay/pay.html:88
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:139
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:140
+#: ../hosted-payment-page/app/pages/review/review.html:130
+#: ../hosted-payment-page/app/pages/review/review.html:131
+msgid "Total"
+msgstr "Вс"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:118
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:39
+msgid "Username"
+msgstr "Юзернейм"
+
+#: ../hosted-payment-page/app/templates/fields.html:52
+msgid "Yes"
+msgstr "Да"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:103
+msgid "Your Information"
+msgstr "Ваша информация"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:22
+msgid "Your Payment"
+msgstr "Ваш платеж"
+
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:64
+msgid "Your account has been created."
+msgstr "Ваш аккаунт был создан."
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:225
+msgid "Zip / Postal Code"
+msgstr "ZIP / Почтовый индекс"
+
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:102
+#: ../hosted-payment-page/app/pages/review/review.html:93
+msgid "{{ settings.app.reference_label || ('Reference' | translate)}}"
+msgstr "{{settings.app.reference_label || ('Ссылка' | перевод}}}"
+

@@ -1,0 +1,391 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Project-Id-Version: \n"
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:185
+msgid "Address"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:193
+msgid "Address 2"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:34
+#: ../hosted-payment-page/app/pages/pay/pay.html:56
+msgid "Amount"
+msgstr ""
+
+#: ../hosted-payment-page/dist/js/kit.js:4314
+msgid "An error occured while attempting to process your request. Please try your request again. If the problem persists, please contact support."
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/review/review.html:58
+msgid "Billing Address"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:137
+msgid "Cancel"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:276
+msgid "Card Number"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:253
+msgid "Choose a Payment Method"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:203
+msgid "City"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:169
+msgid "Company Name"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:340
+#: ../hosted-payment-page/app/pages/review/review.html:137
+msgid "Complete Payment"
+msgstr ""
+
+#: ../hosted-payment-page/index.html:76
+msgid "Copyright &copy; {{settings.account.year}} {{settings.app.company_name}}. All Rights Reserved."
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:234
+msgid "Country"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:58
+msgid "Create Account"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:29
+msgid "Date"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:33
+#: ../hosted-payment-page/app/pages/pay/pay.html:48
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:103
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:111
+#: ../hosted-payment-page/app/pages/review/review.html:102
+#: ../hosted-payment-page/app/pages/review/review.html:31
+#: ../hosted-payment-page/app/pages/review/review.html:45
+#: ../hosted-payment-page/app/pages/review/review.html:94
+msgid "Description"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:159
+msgid "Email"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:289
+msgid "Expiration Month"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:298
+msgid "Expiration Year"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:86
+msgid "Expires"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:151
+msgid "Full Name"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:111
+msgid "Have an account?"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:70
+msgid "Made By"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:151
+msgid "Make Another Payment"
+msgstr ""
+
+#: ../hosted-payment-page/app/templates/fields.html:54
+msgid "No"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:128
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:49
+msgid "Password"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:267
+msgid "Pay with a new card"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:248
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:96
+msgid "Payment Details"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:83
+msgid "Payment Method"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:177
+msgid "Phone"
+msgstr ""
+
+#: ../hosted-payment-page/dist/js/kit.js:3725
+msgid "Please confirm"
+msgstr ""
+
+#: ../hosted-payment-page/dist/js/kit.js:3720
+#: ../hosted-payment-page/dist/js/kit.js:3756
+msgid "Please make a selection"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:205
+msgid "Please provide a city"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:171
+msgid "Please provide a company name"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:236
+msgid "Please provide a country"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:153
+msgid "Please provide a name"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:179
+msgid "Please provide a phone"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:219
+msgid "Please provide a region / province"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:213
+msgid "Please provide a state / province"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:281
+msgid "Please provide a valid card number"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:161
+msgid "Please provide a valid email address"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:292
+msgid "Please provide a valid expiration month"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:301
+msgid "Please provide a valid expiration year"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:309
+msgid "Please provide a valid security code"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:42
+#: ../hosted-payment-page/app/pages/review/review.html:39
+msgid "Please provide a value"
+msgstr ""
+
+#: ../hosted-payment-page/dist/js/kit.js:3715
+msgid "Please provide a value."
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:227
+msgid "Please provide a zip / postal code"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:187
+#: ../hosted-payment-page/app/pages/pay/pay.html:195
+msgid "Please provide an address"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:59
+msgid "Please provide an amount"
+msgstr ""
+
+#: ../hosted-payment-page/dist/js/kit.js:1233
+msgid "Please provide an amount for your payment."
+msgstr ""
+
+#: ../hosted-payment-page/dist/js/kit.js:3765
+msgid "Please provide one of the available options"
+msgstr ""
+
+#: ../hosted-payment-page/dist/js/kit.js:3748
+msgid "Please supply a number"
+msgstr ""
+
+#: ../hosted-payment-page/dist/js/kit.js:3741
+msgid "Please supply a number without decimals"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:16
+msgid "Receipt"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:217
+msgid "Region / Province"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/review/review.html:24
+msgid "Return to PayPal to try your payment again."
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:327
+#: ../hosted-payment-page/app/pages/review/review.html:87
+msgid "Review & Finish"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/review/review.html:15
+msgid "Review Your Payment"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:316
+msgid "Save this card to my account"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:307
+msgid "Security Code"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:75
+#: ../hosted-payment-page/app/pages/pay/pay.html:76
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:127
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:128
+#: ../hosted-payment-page/app/pages/review/review.html:118
+#: ../hosted-payment-page/app/pages/review/review.html:119
+msgid "Shipping"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/review/review.html:71
+msgid "Shipping Address"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:112
+#: ../hosted-payment-page/app/pages/pay/pay.html:138
+msgid "Sign In"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:144
+msgid "Sign out"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:211
+msgid "State / Province"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:69
+#: ../hosted-payment-page/app/pages/pay/pay.html:70
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:121
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:122
+#: ../hosted-payment-page/app/pages/review/review.html:112
+#: ../hosted-payment-page/app/pages/review/review.html:113
+msgid "Subtotal"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:81
+#: ../hosted-payment-page/app/pages/pay/pay.html:82
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:133
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:134
+#: ../hosted-payment-page/app/pages/review/review.html:124
+#: ../hosted-payment-page/app/pages/review/review.html:125
+msgid "Tax"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:146
+msgid "Thank you for your payment"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:25
+msgid "Thank you! Your payment is complete."
+msgstr ""
+
+#: ../hosted-payment-page/dist/js/kit.js:4308
+msgid "The item you are trying to access could not be found."
+msgstr ""
+
+#: ../hosted-payment-page/dist/js/kit.js:3791
+msgid "The value must be at least one character"
+msgid_plural "The value must be at least {{$count}} characters"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../hosted-payment-page/dist/js/kit.js:3797
+msgid "The value must be less than one character"
+msgid_plural "The value must be less than {{$count}} characters"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../hosted-payment-page/dist/js/kit.js:3774
+msgid "The value you provide must be greater than {{$count}}"
+msgid_plural "The value you provide must be greater than {{$count}}"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../hosted-payment-page/dist/js/kit.js:3780
+msgid "The value you provide must be less than {{$count}}"
+msgid_plural "The value you provide must be less than {{$count}}"
+msgstr[0] ""
+msgstr[1] ""
+
+#: ../hosted-payment-page/dist/js/kit.js:1133
+#: ../hosted-payment-page/dist/js/kit.js:1217
+#: ../hosted-payment-page/dist/js/kit.js:1412
+msgid "There was a problem with some of the information you supplied. Please review for errors and try again."
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:36
+msgid "To manage your account online, create an account."
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:333
+#: ../hosted-payment-page/app/pages/pay/pay.html:334
+#: ../hosted-payment-page/app/pages/pay/pay.html:87
+#: ../hosted-payment-page/app/pages/pay/pay.html:88
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:139
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:140
+#: ../hosted-payment-page/app/pages/review/review.html:130
+#: ../hosted-payment-page/app/pages/review/review.html:131
+msgid "Total"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:118
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:39
+msgid "Username"
+msgstr ""
+
+#: ../hosted-payment-page/app/templates/fields.html:52
+msgid "Yes"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:103
+msgid "Your Information"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:22
+msgid "Your Payment"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:64
+msgid "Your account has been created."
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/pay/pay.html:225
+msgid "Zip / Postal Code"
+msgstr ""
+
+#: ../hosted-payment-page/app/pages/receipt/receipt.html:102
+#: ../hosted-payment-page/app/pages/review/review.html:93
+msgid "{{ settings.app.reference_label || ('Reference' | translate)}}"
+msgstr ""

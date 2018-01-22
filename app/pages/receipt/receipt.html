@@ -1,0 +1,160 @@
+﻿<div ng-controller="ReceiptController">
+
+    <form name="form" novalidate>
+
+
+        <div class="dropdown pull-right spacer-r10" uib-dropdown ng-if="settings.app.enable_languages">
+            <button class="btn btn-default btn-sm dropdown-toggle" type="button" uib-dropdown-toggle>
+                <i class="fa fa-globe"></i> <span class="pointer">{{language}}</span> <i class="caret"></i>
+            </button>
+            <ul class="dropdown-menu" language-select as-dropdown></ul>
+        </div>
+
+        <div class="row"></div>
+
+        <div class="page-header">
+            <h1 translate>Receipt</h1>
+        </div>
+
+        <div class="alert alert-danger" ng-if="data.error">
+            {{data.error.message}}
+        </div>
+
+        <div ng-if="data.payment">
+
+            <div class="spacer-b20"><strong translate>Thank you! Your payment is complete.</strong></div>
+
+            <div class="well header">
+                <div class="spacer-b10"><strong><span>Payment ID</span><span class="pull-right">{{data.payment.payment_id}}</span></strong><br /></div>
+                <span translate>Date</span><span class="pull-right">{{data.payment.date_created  | date:'short'}}</span>
+            </div>
+
+            <div create-account customer="data.payment.customer" options="options" error="data.error">
+
+                <div class="well header clearfix supply-credentials">
+
+                    <div class="spacer-b10" translate>To manage your account online, create an account.</div>
+                    <div class="col-xs-12 col-md-6" id="un">
+                        <div class="form-group">
+                            <label class="control-label" for="un" translate>Username</label>
+                            <div class="inner-addon left-addon">
+                                <i class="fa fa-user"></i>
+                                <input class="form-control create-account-username" name="un" type="text" value="{{data.payment.customer.email}}">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-md-6" id="pw">
+                        <div class="form-group">
+                            <label class="control-label" for="pw" translate>Password</label>
+                            <div class="inner-addon left-addon">
+                                <i class="fa fa-lock"></i>
+                                <input class="form-control create-account-password" name="pw" type="password">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 text-right">
+                        <button type="submit" class="btn btn-info btn-sm submit-create-account" error="data.error" translate>Create Account</button>
+                    </div>
+
+                </div>
+
+                <div class="alert alert-success account-created">
+                    <i class="fa fa-check-square-o fa-lg"></i> <span translate>Your account has been created.</span>
+                </div>
+
+            </div>
+
+            <div class="col-xs-12 col-sm-6 spacer-b20">
+                <span><strong translate>Made By</strong><br /></span>
+                <span ng-if="data.payment.customer.company_name">{{data.payment.customer.company_name}}<br /></span>
+                <span ng-if="data.payment.customer.name">{{data.payment.customer.name}}<br /></span>
+                <span ng-if="data.payment.customer.billing_address.address_1">{{data.payment.customer.billing_address.address_1}}<br /></span>
+                <span ng-if="data.payment.customer.billing_address.address_2">{{data.payment.customer.billing_address.address_2}}<br /></span>
+                <span ng-if="data.payment.customer.billing_address.city">{{data.payment.customer.billing_address.city}}</span>
+                <span ng-if="data.payment.customer.billing_address.state_prov">{{data.payment.customer.billing_address.state_prov}}</span>
+                <span ng-if="data.payment.customer.billing_address.postal_code">{{data.payment.customer.billing_address.postal_code}}</span><br />
+                <span ng-if="data.payment.customer.billing_address.country">{{data.payment.customer.billing_address.formatted.country}}<br /></span>
+                <span ng-if="data.payment.customer.email">{{data.payment.customer.email}}</span>
+            </div>
+
+            <div class="col-xs-12 col-sm-6 spacer-b20">
+                <span><strong translate>Payment Method</strong></span><br />
+                <div ng-if="data.payment.payment_method.type == 'credit_card'">
+                    {{data.payment.payment_method.data.type}} {{data.payment.payment_method.data.mask}}<br />
+                    <span translate>Expires</span>: {{data.payment.payment_method.data.exp_month}}/{{data.payment.payment_method.data.exp_year}}
+                </div>
+                <div ng-if="data.payment.payment_method.type == 'paypal'">
+                    PayPal<br />
+                </div>
+            </div>
+
+            <div class="row"></div>
+
+            <div class="section-header">
+                <span translate>Payment Details</span>
+            </div>
+
+            <table class="tight cart" ng-if="(settings.app.show_reference || settings.app.show_description) && (data.payment.reference || data.payment.description)">
+                <thead>
+                    <tr>
+                        <th ng-if="settings.app.show_reference">{{ settings.app.reference_label || ('Reference' | translate)}}</th>
+                        <th ng-if="settings.app.show_description" translate>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td ng-if="settings.app.show_reference" data-label="{{ settings.app.reference_label || ('Reference' | translate)}}">
+                            <span>{{data.payment.reference}}</span>
+                        </td>
+                        <td ng-if="settings.app.show_description" data-label="{{ 'Description' | translate}}">
+                            <span>{{data.payment.description}}</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="tight cart">
+                <tbody>
+                    <tr ng-show="data.payment.subtotal != data.payment.total">
+                        <td class="text-left hidden-xs" translate>Subtotal</td>
+                        <td class="text-right" data-label="{{ 'Subtotal' | translate}}"><span class="has-price">{{data.payment.formatted.subtotal}}</span></td>
+                    </tr>
+                </tbody>
+                <tbody ng-show="data.payment.shipping">
+                    <tr>
+                        <td class="text-left hidden-xs" translate>Shipping</td>
+                        <td class="text-right" data-label="{{ 'Shipping' | translate}}"><span class="has-price">{{data.payment.formatted.shipping}}</span></td>
+                    </tr>
+                </tbody>
+                <tbody ng-show="data.payment.tax">
+                    <tr>
+                        <td class="text-left hidden-xs" translate>Tax</td>
+                        <td class="text-right" data-label="{{ 'Tax' | translate}}"><span class="has-price">{{data.payment.formatted.tax}}</span></td>
+                    </tr>
+                </tbody>
+                <tbody>
+                    <tr>
+                        <td class="text-left text-lg hidden-xs"><strong translate>Total</strong></td>
+                        <td class="text-right text-lg" data-label="{{ 'Total' | translate}}"><span class="text-lg has-price">{{data.payment.formatted.total}} {{data.payment.currency}}</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="row">
+                <div class="col-xs-12 text-center"><h4 translate>Thank you for your payment</h4></div>
+            </div>
+
+            <!--Spacer-->
+            <div class="row spacer-t20" ng-if="settings.app.additional_payment_prompt">
+                <div class="text-center"><a href="#/pay"><span class="btn btn-success btn-lg" translate>Make Another Payment</span></a></div>
+            </div>
+
+            <!--Spacer-->
+            <div class="row">&nbsp;</div>
+
+        </div>
+
+    </form>
+</div>
