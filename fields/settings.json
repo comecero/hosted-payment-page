@@ -3,12 +3,12 @@
     "name": "company_name",
     "type": "string",
     "label": "Company Name",
-    "description": "The company name that will appear on your cart pages",
+    "description": "The company name that will appear on your payment pages",
     "section": "Design",
     "required": true,
     "default_value": "Your Company Name",
     "min_length": 1,
-    "max_length": 25
+    "max_length": 75
   },
   {
     "name": "logo",
@@ -103,11 +103,11 @@
   {
     "name": "reference_required",
     "type": "boolean",
-    "label": "Is the Reference Required?",
-    "description": "Indicates if the user must provide a payment reference to make a payment. If the reference is provided as a page paramter, the user will not be required to supply a value for the reference.",
+    "label": "Is the Reference required?",
+    "description": "Indicates if the user must provide a payment reference to make a payment. If the reference is provided as a page parameter, the user will not be required to supply a value for the reference.",
     "section": "Features",
     "required": true,
-    "default_value": true
+    "default_value": false
   },
   {
     "name": "reference_label",
@@ -133,7 +133,7 @@
     "description": "Upon completion of an order, indicates if the receipt should show a button to submit another payment.",
     "section": "Features",
     "required": true,
-    "default_value": true
+    "default_value": false
   },
   {
     "name": "exp_select",
@@ -177,5 +177,14 @@
     "description": "An array of custom field definitions (in JSON format) that allow you to place custom fields onto your order form.",
     "section": "Features",
     "required": false
+  },
+  {
+    "name": "enable_help_redirect",
+    "type": "boolean",
+    "label": "Enable Help Redirect",
+    "description": "When accessing the root of the app, show the Hosted Payment Page help documentation rather than redirecting to the Hosted Payment Page form.",
+    "section": "Other",
+    "required": true,
+    "default_value": true
   }
 ]

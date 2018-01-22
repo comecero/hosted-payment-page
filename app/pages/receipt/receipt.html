@@ -99,7 +99,7 @@
             <table class="tight cart" ng-if="(settings.app.show_reference || settings.app.show_description) && (data.payment.reference || data.payment.description)">
                 <thead>
                     <tr>
-                        <th ng-if="settings.app.show_reference" translate>{{ settings.app.reference_label || ('Reference' | translate)}}</th>
+                        <th ng-if="settings.app.show_reference">{{ settings.app.reference_label || ('Reference' | translate)}}</th>
                         <th ng-if="settings.app.show_description" translate>Description</th>
                     </tr>
                 </thead>

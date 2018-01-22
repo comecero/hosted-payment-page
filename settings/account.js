@@ -23,6 +23,7 @@ window.__settings.account = {
         "Diners Club",
         "Discover"
     ],
-    "date_utc": "2016-02-15T00:00:00Z"
+    "date_utc": "2016-02-15T00:00:00Z",
+    "support_url": "https://example.com/support"
 }
 

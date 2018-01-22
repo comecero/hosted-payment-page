@@ -1,0 +1,179 @@
+﻿<div class="row">
+    <div class="col-lg-12">
+        <div class="page-header">
+            <h1 id="typography">Hosted Payment Page Link Builder</h1>
+        </div>
+    </div>
+</div>
+
+
+<form name="form" ng-controller="LinkBuilderController" novalidate>
+
+    <p><i>Fill in the form below to generate a link to Hosted Payment Page to provide to a customer</i></p>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <strong>Payment Amount</strong><button class="btn btn-xs btn-danger pull-right" ng-click="functions.reset()">Reset</button>
+        </div>
+        <div class="panel-body">
+
+            <div class="col-xs-12">
+                <div class="form-group" show-errors>
+                    <label class="radio-group-label">Amount to Pay</label>
+                    <div class="radio-group inline spacer-b10">
+                        <input type="radio" id="amount-1" class="radio" name="amount" ng-model="options.amount" value="none" required>
+                        <label for="amount-1" class="radio-label">The user will provide the amount</label>
+                    </div>
+                    <div class="radio-group inline spacer-b10">
+                        <input type="radio" id="amount-2" class="radio" name="amount" ng-model="options.amount" value="editable" required>
+                        <label for="amount-2" class="radio-label">I will provide the amount and it <strong>will be</strong> editable by the user</label>
+                    </div>
+                    <div class="radio-group inline spacer-b10">
+                        <input type="radio" id="amount-3" class="radio" name="amount" ng-model="options.amount" value="not-editable" required>
+                        <label for="amount-3" class="radio-label">I will provide the amount and it <strong>will not be</strong> editable by the user</label>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-show="options.amount == 'not-editable'">
+                <div class="col-xs-12 col-md-4">
+                    <div class="form-group" show-errors>
+                        <label for="subtotal" class="control-label">Subtotal</label>
+                        <input type="text" class="form-control" name="subtotal" ng-model="link.subtotal" maxlength="15" required>
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-4">
+                    <div class="form-group" show-errors>
+                        <label for="shipping" class="control-label">Shipping</label>
+                        <input type="text" class="form-control" name="shipping" ng-model="link.shipping" maxlength="15" placeholder="Optional">
+                    </div>
+                </div>
+
+                <div class="col-xs-12 col-md-4">
+                    <div class="form-group" show-errors>
+                        <label for="tax" class="control-label">Tax</label>
+                        <input type="text" class="form-control" name="tax" ng-model="link.tax" maxlength="15" placeholder="Optional">
+                    </div>
+                </div>
+            </div>
+
+            <div ng-show="options.amount == 'editable'">
+                <div class="col-xs-12 col-md-4">
+                    <div class="form-group" show-errors>
+                        <label for="total" class="control-label">Total</label>
+                        <input type="text" class="form-control" name="total" ng-model="link.total" maxlength="15" required>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-12" ng-class="{'col-xs-12': options.amount == 'not-editable', 'col-xs-12 col-md-8': options.amount == 'editable'}" ng-show="options.amount != 'none'">
+                <div class="form-group" show-errors>
+                    <label for="total" class="control-label">Currency</label>
+                    <select class="form-control" name="currency" ng-model="link.currency" ng-options="currency.code as currency.code + ' - ' + currency.name for currency in data.options.currencies" required></select>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="panel-heading"><strong>Payment Details</strong></div>
+        <div class="panel-body">
+
+            <div class="col-xs-12 col-md-4">
+                <div class="form-group" show-errors>
+                    <label for="reference" class="control-label">{{ settings.app.reference_label || 'Reference'}}</label>
+                    <input type="text" class="form-control" name="reference" ng-model="link.reference" placeholder="Optional">
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-8">
+                <div class="form-group" show-errors>
+                    <label for="description" class="control-label">Description</label>
+                    <input type="text" class="form-control" name="description" ng-model="link.description" placeholder="Optional">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="panel-heading"><strong>Customer Info</strong></div>
+        <div class="panel-body">
+
+            <div class="col-xs-12 col-md-4">
+                <div class="form-group" show-errors>
+                    <label for="name" class="control-label">Customer Name</label>
+                    <input type="text" class="form-control" name="name" ng-model="link.name" placeholder="Optional">
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-4">
+                <div class="form-group" show-errors>
+                    <label for="email" class="control-label">Email</label>
+                    <input type="text" class="form-control" name="email" ng-model="link.email" placeholder="Optional">
+                </div>
+            </div>
+
+            <div class="col-xs-12 col-md-4">
+                <div class="form-group" show-errors>
+                    <label for="company_name" class="control-label">Company Name</label>
+                    <input type="text" class="form-control" name="company_name" ng-model="link.company_name" placeholder="Optional">
+                </div>
+            </div>
+
+        </div>
+
+        <div class="panel-heading"><strong>Custom Data</strong></div>
+        <div class="panel-body">
+
+            <div class="col-xs-12" style="margin-bottom: -15px;">
+                <p><i>Enter any custom values you would like to be recorded with the payment</i></p>
+            </div>
+
+            <div ng-repeat="item in meta">
+
+                <div class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        <label for="meta_name" class="control-label">Name</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="meta_name" ng-model="item.name">
+                            <span class="input-group-addon pointer" ng-click="functions.removeMeta($index)"><i class="fa fa-trash pointer text-default" title="Remove"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-xs-12">
+                    <div class="form-group">
+                        <label for="meta_value" class="control-label">Value</label>
+                        <input type="text" class="form-control" name="meta_value" ng-model="item.value">
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-xs-12">
+                <btn class="btn btn-info btn-xs" ng-click="meta.push({name: '', value: ''})">Add Custom Data</btn>
+            </div>
+
+        </div>
+
+        <div class="panel-heading"><strong>Get the Link</strong></div>
+        <div class="panel-body">
+
+            <div class="col-xs-12">
+                <btn class="btn btn-success" ng-click="functions.getLink()">Generate Link</btn>
+
+                <div class="row"></div>
+
+                <div class="input-group spacer-t20" ng-show="url">
+                    <input type="text" class="form-control" name="url" id="url" value="{{url}}" />
+                    <span class="input-group-btn">
+                        <button class="btn btn-info clipboard" data-clipboard-target="#url"><i class="fa fa-copy" aria-hidden="true"></i> Copy</button>
+                        <a ng-href="{{url}}" target="_blank" class="btn btn-primary"><i class="fa fa-external-link" aria-hidden="true"></i> Open</a>
+                    </span>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</form>

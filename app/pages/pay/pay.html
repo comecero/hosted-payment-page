@@ -2,7 +2,7 @@
 
     <form name="form" shipping-is-billing="data.shipping_is_billing" params="data.params" novalidate>
 
-        <div class="dropdown pull-right currency-button spacer-b10" uib-dropdown ng-if="settings.account.currencies.length > 1 && !data.payment.subtotal">
+        <div class="dropdown pull-right currency-button spacer-b10" uib-dropdown ng-show="settings.account.currencies.length > 1 && !data.payment.subtotal">
             <button class="btn btn-default btn-sm dropdown-toggle" type="button" uib-dropdown-toggle>
                 <span class="pointer">{{currency}}</span> <i class="caret"></i>
             </button>
@@ -29,15 +29,15 @@
         <table class="cart">
             <thead>
                 <tr>
-                    <th ng-if="settings.app.show_reference" translate>{{ settings.app.reference_label || ('Reference' | translate)}}</th>
-                    <th style="min-width:250px" ng-if="settings.app.show_description" translate>Description</th>
-                    <th style="max-width:140px" class="text-right" ng-if="!data.payment.subtotal"><span translate>Amount</span> <span style="font-weight: normal;">{{data.payment.currency}}</span></th>
+                    <th ng-if="settings.app.show_reference"><label ng-class="{required: settings.app.reference_required}">{{ settings.app.reference_label || ('Reference' | translate)}}</label></th>
+                    <th style="min-width:250px" ng-if="settings.app.show_description"><label translate>Description</label></th>
+                    <th style="max-width:140px" class="text-right" ng-if="!data.payment.subtotal"><label><span translate>Amount</span> <span style="font-weight: normal;">{{data.payment.currency}}</span></label></th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td data-label="{{ settings.app.reference_label || ('Reference' | translate)}}" show-errors  ng-if="settings.app.show_reference">
-                        <div class="form-group has-input" ng-if="data.referenceEditable">
+                    <td data-label="{{ settings.app.reference_label || ('Reference' | translate)}}" show-errors  ng-show="settings.app.show_reference">
+                        <div class="form-group has-input" ng-show="data.referenceEditable">
                             <input type="text" name="reference" ng-model="data.payment.reference" class="form-control" maxlength="75" ng-required="settings.app.reference_required" />
                             <p class="error-block hidden" translate>Please provide a value</p>
                         </div>
@@ -65,7 +65,7 @@
 
         <table class="tight cart">
             <tbody>
-                <tr ng-show="data.payment.subtotal && data.payment.subtotal != data.payment.total">
+                <tr ng-show="data.payment.subtotal && (data.payment.shipping || data.payment.tax) && data.payment.subtotal != data.payment.total">
                     <td class="text-left hidden-xs" translate>Subtotal</td>
                     <td class="text-right" data-label="{{ 'Subtotal' | translate}}"><span class="has-price">{{data.payment.subtotal | currency: geoService.getCurrencySymbol(data.payment.currency)}}</span></td>
                 </tr>
@@ -104,7 +104,8 @@
         </div>
 
         <!-- Login option -->
-        <div customer-signin customer="data.payment.customer" options="data.options" payment-method="data.card" error="data.error" params="data.params">
+
+        <div customer-signin customer="data.payment.customer" options="data.options" payment-method="data.card" on-signout-success="onSignOut" error="data.error" params="data.params">
 
             <div class="well header clearfix ask-signin">
                 <strong><span translate>Have an account?</span></strong>
@@ -253,7 +254,7 @@
 
             <div class="well clearfix" ng-repeat="method in data.payment.customer.payment_methods.data" ng-show="method.type == 'credit_card'">
                 <span class="radio-group inline" ng-if="method.type == 'credit_card'">
-                    <input type="radio" class="radio" name="payment_method" id="payment_method-{{method.payment_method_id}}" ng-model="data.card.payment_method_id" value="{{method.payment_method_id}}" ng-checked="data.card.payment_method_id == method.payment_method_id" />
+                    <input type="radio" class="radio" name="payment_method" id="payment_method-{{method.payment_method_id}}" ng-model="data.card.payment_method_id" value="{{method.payment_method_id}}" ng-checked="data.card.payment_method_id == method.payment_method_id" ng-click="resetPaymentMethod(method.payment_method_id)" />
                     <label for="payment_method-{{method.payment_method_id}}" class="radio-label strong">{{method.data.label}} (<span>exp.</span> {{method.data.exp_month}}/{{method.data.exp_year}})</label>
                     <span class="pull-right credit-card-image" credit-card-image="method.data.type"></span>
                 </span>
@@ -269,7 +270,7 @@
 
         </div>
 
-        <div ng-show="!data.card.payment_method_id">
+        <div ng-if="!data.card.payment_method_id">
             <div class="col-xs-12">
                 <div class="form-group" show-errors="data.options">
                     <label class="control-label required" for="card_number" translate>Card Number</label>
@@ -309,7 +310,7 @@
                 </div>
             </div>
 
-            <div class="col-xs-12" ng-show="settings.account.allow_save_cards == true && settings.app.ask_save_cards == true && data.payment.customer.username != null">
+            <div class="col-xs-12" ng-show="settings.account.allow_save_cards == true && settings.app.ask_save_cards == true">
                 <div class="form-group checkbox-group">
                     <input type="checkbox" id="save-card" class="checkbox" name="save-card" ng-model="data.card.save">
                     <label for="save-card" class="checkbox-label" translate>Save this card to my account</label>

@@ -1,0 +1,107 @@
+﻿<div ng-controller="DocsController">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="page-header">
+                <h1 id="typography">Using Hosted Payment Page</h1>
+            </div>
+        </div>
+    </div>
+
+    <p>Hosted Payment Page is an easy way to collect direct payments from your customers without a cart or invoice. Using Hosted Payment Page is easy!</p>
+
+    <div>
+        <h3>See an example</h3>
+        <hr />
+        <p>Click the button to see Hosted Payment Page in action. Keep reading for more details on how to customize it to meet your needs.</p>
+        <p class="text-center"><a ng-href="{{data.src}}/#/link?total=100" target="_blank"><button class="btn btn-success"><i class="fa fa-external-link" aria-hidden="true"></i> Open Hosted Payment Page</button></a></p>
+        <div ng-if="data.test">
+            <p>
+                To place a test payment, you can use the payment details below:
+                <ul>
+                    <li>Card number: 4444555566661111</li>
+                    <li>Expiration Date: (any future date)</li>
+                    <li>CVC: (any three digit number)</li>
+                    <li>Other details: Whatever you want. Make sure you use your own email address as a payment confirmation email will be sent if you're account is configured to send payment confirmations.</li>
+                </ul>
+            </p>
+        </div>
+    </div>
+
+    <div>
+        <h3>Creating Links to Hosted Payment Page</h3>
+        <hr />
+        <p>You can create links manually using the documentation provided below, or even easier, use the Link Builder tool.</p>
+        <p class="text-center"><a ng-href="#/link-builder"><button class="btn btn-info"><i class="fa fa-link" aria-hidden="true"></i> Open Link Builder</button></a></p>
+    </div>
+
+    <div>
+        <h3>Customization Options</h3>
+        <hr />
+        <p>Hosted Payment Page allows a number of customizations, such as:</p>
+        <ul class="spacer-b20">
+            <li>Full control over the design, colors, logo, etc.</li>
+            <li>Collect payment in multiple currencies</li>
+            <li>Multi-language order form</li>
+            <li>Payments by credit card or PayPal with others to be added in the future</li>
+            <li>Allow customers to save their payment method with a username and password for speedy future payments</li>
+            <li>Collect custom data from customers with custom fields that can be optional or required</li>
+            <li>Support for a custom payment reference (identifier) and / or description, either provided by you or requested from the customer</li>
+            <li>Support to pre-populate the payment amount, or have the customer provide the amount directly</li>
+            <li>Support to pre-populate shipping and tax amounts, for reporting and tracking</li>
+            <li>Provide additional custom data with the payment for your reference</li>
+        </ul>
+
+        <p>To set your preferences, login to your account, go to Apps> Hosted Payment Page. Click on the arrow next to "Launch" and select "Settings" and "Style"</p>
+
+    </div>
+
+    <div>
+        <h3>Creating Links Manually</h3>
+        <hr />
+
+        <p>Below are several examples, you can mix and match parameters to provide the options you want.</p>
+
+        <p>
+            <strong>A basic payment page where the customer supplies the amount and currency</strong><br />
+            <code>{{data.src}}/#/link</code><br />
+            <span class="help">This URL has no parameters and the user will be asked to supply the amount to pay directly.</span>
+        </p>
+
+        <p>
+            <strong>Supply the amount, allow the user to change the amount</strong><br />
+            <code>{{data.src}}/#/link?currency=USD&amp;total=100.00</code><br />
+            <span class="help">If you don't supply the currency, your account's default payment currency will be used.</span>
+        </p>
+
+        <p>
+            <strong>Supply the amount, don't allow the user to change the amount</strong><br />
+            <code>{{data.src}}/#/link?currency=USD&amp;subtotal=100.00</code><br />
+            <span class="help">By providing the amount as a subtotal, the amount on the page will not be editable by the user.</span>
+        </p>
+
+        <p>
+            <strong>Supply the amount, shipping and tax</strong><br />
+            <code>{{data.src}}/#/link?currency=USD&amp;subtotal=100.00&amp;shipping=5&amp;tax=7.97</code><br />
+            <span class="help">If you provide shipping and / or tax, subtotal is required. The total will be calculated and shown to the user.</span>
+        </p>
+
+        <p>
+            <strong>Supply the amount, payment reference and description</strong><br />
+            <code>{{data.src}}/#/link?currency=USD&amp;total=100.00&amp;reference=ABCD-1234&amp;description=July+Invoice+Payment</code><br />
+            <span class="help">The reference and description should be URL encoded.</span>
+        </p>
+
+        <p>
+            <strong>Supply the amount, and customer data</strong><br />
+            <code>{{data.src}}/#/link?currency=USD&amp;total=100.00&amp;name=John+Doe&amp;company_name=Acme+Inc</code><br />
+            <span class="help">You can provide <code>name</code>, <code>company_name</code> and <code>email</code></span>
+        </p>
+
+        <p>
+            <strong>Any other parameters you provide will be saved with the payment as meta data</strong><br />
+            <code>{{data.src}}/#/link?currency=USD&amp;total=100.00&amp;my-data=whatever&amp;this=that&amp;more=stuff</code><br />
+            <span class="help">The values you provide will be recorded and available for your records when you view the payment.</span>
+        </p>
+    </div>
+
+</div>

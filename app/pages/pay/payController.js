@@ -26,13 +26,18 @@
         }
     }
 
+    // Fix if the user has applied conflicting settings
+    if ($scope.settings.app.reference_required && !$scope.settings.app.show_reference) {
+        $scope.settings.app.reference_required = false;
+    }
+
     // Get the payment options
     PaymentService.getOptions().then(function (options) {
 
         $scope.data.options = options;
 
         // In the event that page parameters are not present, we'll look in the payment cache to help survive page reloads.
-        var paymentCache;
+        var paymentCache = $scope.data.payment; // Default if not provided
         if (StorageService.get("hpp_payment")) {
             paymentCache = JSON.parse(StorageService.get("hpp_payment"));
         }
@@ -40,66 +45,38 @@
         // Create a list of countries from the customer allowed country codes for the country drop down.
         $scope.data.countries = [];
         _.each(options.allowed_customer_countries, function (country) {
-            $scope.data.countries.push(_.findWhere($scope.geoService.getData().countries, { code: country }));
+            var find = _.findWhere($scope.geoService.getData().countries, { code: country });
+            if (find) {
+                $scope.data.countries.push(find);
+            }
         });
 
-        $scope.data.payment.currency = options.customer_default_currency;
+        // Sort by country name
+        $scope.data.countries = _.sortBy($scope.data.countries, "name");
 
-        // If the reference and description are not provided as params, the user can edit them.
-        if (!$location.search().reference) {
+        // Set the default country
+        $scope.data.payment.customer.billing_address.country = options.customer_default_country;
+
+        // If the reference and description are not provided in the payment cache, the user can edit them.
+        if (!paymentCache.reference) {
             $scope.data.referenceEditable = true;
         }
 
-        if (!$location.search().description) {
+        if (!paymentCache.description) {
             $scope.data.descriptionEditable = true;
         }
 
-        // Build up the payment from the query string, if provided. This loads in totals, currency and other data (such as customer name, email address) that may have been supplied through the query string. If nothing is provided in the query string, then no values are supplied to the payment.
-        $scope.data.payment = PaymentService.fromParams($scope.data.payment, $location);
+        // Set the payment data
+        $scope.data.payment = paymentCache;
 
-        // If there's no payment total, subtotal or shipping, load from app cache (used in the case of a page reload).
-        if (!$scope.data.payment.total && !$scope.data.payment.subtotal && !$scope.data.payment.shipping) {
-
-            if (paymentCache) {
-
-                // Set the payment currency as the default payment currency if not recorded in the cache.
-                $scope.data.payment.currency = paymentCache.currency || options.customer_default_currency;
-
-                if (paymentCache.total) {
-                    $scope.data.payment.total = paymentCache.total;
-                } else {
-                    $scope.data.payment.subtotal = paymentCache.subtotal;
-                    $scope.data.payment.shipping = paymentCache.shipping;
-                    $scope.data.payment.tax = paymentCache.tax;
-                }
-            }
-
-            // If no currency has been defined, set to the default for the account.
-            $scope.data.payment.currency = $scope.data.payment.currency || options.customer_default_currency;
-
-            // Tell the application the currency that is being used, which will pouplate the select menus.
-            CurrencyService.setCurrency($scope.data.payment.currency);
-
-        }
-
-        // Populate the reference and description from the cache if not already supplied.
-        if (!$scope.data.payment.reference && paymentCache && paymentCache.reference) {
-            $scope.data.payment.reference = paymentCache.reference;
-            $scope.data.referenceEditable = false;
-        }
-
-        if (!$scope.data.payment.description && paymentCache && paymentCache.description) {
-            $scope.data.payment.description = paymentCache.description;
-            $scope.data.descriptionEditable = false;
-        }
+        // Set the default currency, if not supplied.
+        $scope.data.payment.currency = $scope.data.payment.currency || options.customer_default_currency;
+        CurrencyService.setCurrency($scope.data.payment.currency);
 
         // Format the total since it will be provided in a user-editable input and will not be subject to display filters
         if ($scope.data.payment.total) {
             $scope.data.payment.total = utils.cleanPrice($scope.data.payment.total);
         }
-
-        // Set in the app cache to survive page reloads. We'll use a short expiration (one hour).
-        StorageService.set("hpp_payment", JSON.stringify({ currency: $scope.data.payment.currency, total: $scope.data.payment.total, subtotal: $scope.data.payment.subtotal, shipping: $scope.data.payment.shipping, tax: $scope.data.payment.tax, reference: $scope.data.payment.reference, description: $scope.data.payment.description }), 3600);
 
     }, function (error) {
         // Error getting the cart
@@ -133,6 +110,19 @@
                 $location.path("/receipt/" + payment.payment_id);
         }
 
+    }
+
+    $scope.resetPaymentMethod = function (id) {
+        // Remove the payment method data such as card number, expiration date, etc. This is used to flush the data when an existing payment method is selected from a logged-in customer.
+        $scope.data.card = { payment_method_id: id };
+    }
+
+    // If the user logs out
+    $scope.onSignOut = function () {
+        if ($scope.data.card) {
+            $scope.data.card.payment_method_id = null;
+            $scope.data.card.type = "credit_card";
+        }
     }
 
     // Watch for error to be populated, and if so, scroll to it.
