@@ -43,7 +43,7 @@ app.controller("PayController", ['$scope', '$location', 'PaymentService', 'GeoSe
     $scope.data.descriptionEditable = false;
 
     // Build your payment method models
-    $scope.data.card = { "type": "credit_card" };
+    $scope.data.payment_method = { "type": "credit_card" };
     $scope.data.paypal = {
         "type": "paypal",
         data: {
@@ -124,31 +124,34 @@ app.controller("PayController", ['$scope', '$location', 'PaymentService', 'GeoSe
     // Handle a successful payment
     $scope.onPaymentSuccess = function (payment) {
 
-        // Handle the payment response, depending on the type.
-        switch (payment.payment_method.type) {
-
-            case "paypal":
-                // Redirect to PayPal to make the payment.
-                window.location = payment.response_data.redirect_url;
-                break;
-
-            default:
-                // Redirect to the receipt.
-                $location.path("/receipt/" + payment.payment_id);
+        // If PayPal and status is initiated, redirect to PayPal for approval.
+        if (payment.payment_method.type == "paypal" && payment.status == "initiated") {
+            window.location = payment.response_data.redirect_url;
+        } else {
+            $location.path("/receipt/" + payment.payment_id);
         }
 
     }
 
-    $scope.resetPaymentMethod = function (id) {
-        // Remove the payment method data such as card number, expiration date, etc. This is used to flush the data when an existing payment method is selected from a logged-in customer.
-        $scope.data.card = { payment_method_id: id };
+    $scope.setPaymentMethod = function (id, type) {
+
+        // Remove all data from the payment method
+        $scope.data.payment_method = {};
+
+        // If a payment_method_id or type is provided, set it.
+        if (id)
+            $scope.data.payment_method.payment_method_id = id;
+
+        if (type)
+            $scope.data.payment_method.type = type;
+
     }
 
     // If the user logs out
     $scope.onSignOut = function () {
-        if ($scope.data.card) {
-            $scope.data.card.payment_method_id = null;
-            $scope.data.card.type = "credit_card";
+        if ($scope.data.payment_method) {
+            $scope.data.payment_method.payment_method_id = null;
+            $scope.data.payment_method.type = "credit_card";
         }
     }
 
