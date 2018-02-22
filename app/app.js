@@ -8,6 +8,7 @@ app.config(['$httpProvider', '$routeProvider', '$locationProvider', '$provide', 
     $routeProvider.when("/review/:id", { templateUrl: "app/pages/review/review.html" });
     $routeProvider.when("/receipt/:id", { templateUrl: "app/pages/receipt/receipt.html" });
 
+    // Handle root conditionally based on settings
     if (window.__settings.app.enable_help_redirect) {
         $routeProvider.when("/", {
             redirectTo: function () {
@@ -17,17 +18,6 @@ app.config(['$httpProvider', '$routeProvider', '$locationProvider', '$provide', 
     } else {
         $routeProvider.when("/", { redirectTo: "/link" });
     }
-
-    //// Handle root conditionally based on settings
-    //$routeProvider.when("/", {
-    //    redirectTo: function () {
-    //        if (window.__settings.app.enable_help_redirect) {
-    //            window.location.replace("getting-started/#/docs");
-    //        } else {
-    //             window.location.replace("#/link");
-    //        }
-    //    }
-    //});
 
     // Non-handled routes.
     var notFoundUrl = window.__settings.app.not_found_url;
@@ -82,18 +72,62 @@ app.run(['$rootScope', 'SettingsService', 'tmhDynamicLocale', 'StorageService', 
             {
                 code: "en",
                 name: "English"
+            },        
+            {
+                code: "cs",
+                name: "čeština"
             },
             {
-                code: "fr",
-                name: "français"
+                code: "de",
+                name: "Deutsche"
+            },
+            {
+                code: "el",
+                name: "Ελληνικά"
             },
             {
                 code: "es",
                 name: "Español"
+            },                
+            {
+                code: "fi",
+                name: "Suomalainen"
+            },
+            {
+                code: "fr",
+                name: "français"
+            },            
+            {
+                code: "it",
+                name: "italiano"
+            },
+            {
+                code: "ja",
+                name: "日本語"
+            },
+            {
+                code: "ko",
+                name: "한국어"
+            },
+            {
+                code: "nl",
+                name: "Nederlands"
+            },
+            {
+                code: "pl",
+                name: "Polskie"
+            },
+            {
+                code: "pt",
+                name: "Português"
             },
             {
                 code: "ru",
                 name: "русский"
+            },            
+            {
+                code: "sv",
+                name: "svenska"
             }
         ]
     }
