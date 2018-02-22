@@ -29,7 +29,7 @@
         <table class="cart">
             <thead>
                 <tr>
-                    <th ng-if="settings.app.show_reference"><label ng-class="{required: settings.app.reference_required}">{{ settings.app.reference_label || ('Reference' | translate)}}</label></th>
+                    <th ng-if="settings.app.show_reference"><label ng-class="{required: settings.app.reference_required}"><span ng-if="settings.app.reference_label">{{settings.app.reference_label}}</span><span ng-if="!settings.app.reference_label">{{'Reference'|translate}}</span></label></th>
                     <th style="min-width:250px" ng-if="settings.app.show_description"><label translate>Description</label></th>
                     <th style="max-width:140px" class="text-right" ng-if="!data.payment.subtotal"><label><span translate>Amount</span> <span style="font-weight: normal;">{{data.payment.currency}}</span></label></th>
                 </tr>
@@ -252,7 +252,7 @@
         <div ng-show="data.payment.customer.payment_methods.data.length > 0">
             <h4 translate>Choose a Payment Method</h4>
 
-            <div class="well clearfix" ng-repeat="method in data.payment.customer.payment_methods.data" ng-show="method.type == 'credit_card' || method.type == 'paypal'">
+            <div class="well clearfix" ng-repeat="method in data.payment.customer.payment_methods.data" ng-show="method.type == 'credit_card' || method.type == 'paypal' || method.type == 'amazon_pay'">
 
                 <span class="radio-group inline" ng-if="method.type == 'credit_card'">
                     <input type="radio" class="radio" name="payment_method" id="payment_method-{{method.payment_method_id}}" ng-model="data.payment_method.payment_method_id" value="{{method.payment_method_id}}" ng-checked="data.payment_method.payment_method_id == method.payment_method_id" ng-click="setPaymentMethod(method.payment_method_id, method.type)" />
@@ -260,10 +260,14 @@
                     <span class="pull-right credit-card-image" credit-card-image="method.data.type"></span>
                 </span>
 
-                <span class="radio-group inline" ng-if="method.type == 'paypal'">
+                <span class="radio-group inline" ng-if="method.type != 'credit_card'">
                     <input type="radio" class="radio" name="payment_method" id="payment_method-{{method.payment_method_id}}" ng-model="data.payment_method.payment_method_id" value="{{method.payment_method_id}}" ng-checked="data.payment_method.payment_method_id == method.payment_method_id" ng-click="setPaymentMethod(method.payment_method_id, method.type)" />
-                    <label for="payment_method-{{method.payment_method_id}}" class="radio-label strong">PayPal</label>
-                    <span class="pull-right credit-card-image" credit-card-image="'paypal'"></span>
+                    <label for="payment_method-{{method.payment_method_id}}" class="radio-label strong">
+                        <span ng-show="method.type == 'paypal'">PayPal</span>
+                        <span ng-show="method.type == 'amazon_pay'">Amazon Pay</span>
+                    </label>
+                    <span class="pull-right credit-card-image" credit-card-image="'paypal'" ng-show="method.type == 'paypal'"></span>
+                    <span class="pull-right credit-card-image" credit-card-image="'amazon_pay'" ng-show="method.type == 'amazon_pay'"></span>
                 </span>
 
             </div>
@@ -331,7 +335,7 @@
 
         <!--Payment Info-->
         <div class="section-header">
-            <span translate>Review & Finish</span>
+            <span translate>Review &amp; Finish</span>
         </div>
 
         <table class="tight cart" ng-show="data.payment.total || data.payment.subtotal">

@@ -27,7 +27,7 @@
         <table class="cart">
             <thead>
                 <tr>
-                    <th ng-show="settings.app.show_reference"><label ng-class="{required: settings.app.reference_required}">{{ settings.app.reference_label || ('Reference' | translate)}}</label></th>
+                    <th ng-show="settings.app.show_reference"><label ng-class="{required: settings.app.reference_required}"><span ng-if="settings.app.reference_label">{{settings.app.reference_label}}</span><span ng-if="!settings.app.reference_label">{{'Reference'|translate}}</span></label></th>
                     <th style="min-width:250px" ng-show="settings.app.show_description" translate>Description</th>
                 </tr>
             </thead>
