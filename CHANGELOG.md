@@ -1,4 +1,10 @@
-﻿<a name="1.0.1"></a>
+﻿<a name="1.0.2"></a>
+# 1.0.2
+
+- Remove third party CDNs and replace with Comecero CDN
+- Update language files with latest translations
+
+<a name="1.0.1"></a>
 # 1.0.1
 
 - Add support for the following languages: Czech, German, Greek, Spanish, Finnish, French, Italian, Japanese, Korean, Dutch, Polish, Portuguese, Russian, Swedish
