@@ -1,5 +1,5 @@
 /*
-Comecero Kit version: ﻿1.0.6
+Comecero Kit version: ﻿1.0.9
 https://comecero.com
 https://github.com/comecero/kit
 Copyright Comecero and other contributors. Released under MIT license. See LICENSE for details.
@@ -108,7 +108,7 @@ var utils = (function () {
         a = /\+/g,  // Regex for replacing addition symbol with a space
         r = /([^&;=]+)=?([^&;]*)/g,
         d = function (s) { return decodeURIComponent(s.replace(a, " ")); }
-        var queryParameters = {};
+        queryParameters = {};
 
         while (e = r.exec(query))
             queryParameters[d(e[1])] = d(e[2]);
@@ -275,8 +275,8 @@ var utils = (function () {
         value = value.replace(/\D/g, "");
 
         for (var n = value.length - 1; n >= 0; n--) {
-            var cDigit = value.charAt(n),
-                nDigit = parseInt(cDigit, 10);
+            var cDigit = value.charAt(n);
+            nDigit = parseInt(cDigit, 10);
 
             if (bEven) {
                 if ((nDigit *= 2) > 9) nDigit -= 9;
@@ -439,21 +439,6 @@ var utils = (function () {
         return (RightTrimIf(LeftTrimIf(str, char), char));
     }
     
-    function getLocale(language) {
-        
-        // Array of supported locales
-        var locales = [];
-        locales.push("af-na", "af-za", "af", "ar-ae", "ar-bh", "ar-dj", "ar-dz", "ar-eg", "ar-eh", "ar-er", "ar-il", "ar-iq", "ar-jo", "ar-km", "ar-kw", "ar-lb", "ar-ly", "ar-ma", "ar-mr", "ar-om", "ar-ps", "ar-qa", "ar-sa", "ar-sd", "ar-so", "ar-ss", "ar-sy", "ar-td", "ar-tn", "ar-ye", "ar", "az-cyrl-az", "az-cyrl", "az-latn-az", "az-latn", "az", "bg-bg", "bg", "bo-cn", "bo-in", "bo", "cs-cz", "cs", "da-dk", "da-gl", "da", "dav-ke", "dav", "de-at", "de-be", "de-ch", "de-de", "de-li", "de-lu", "de", "el-cy", "el-gr", "el", "en-ag", "en-ai", "en-as", "en-au", "en-bb", "en-be", "en-bm", "en-bs", "en-bw", "en-bz", "en-ca", "en-cc", "en-ck", "en-cm", "en-cx", "en-dg", "en-dm", "en-dsrt-us", "en-dsrt", "en-er", "en-fj", "en-fk", "en-fm", "en-gb", "en-gd", "en-gg", "en-gh", "en-gi", "en-gm", "en-gu", "en-gy", "en-hk", "en-ie", "en-im", "en-in", "en-io", "en-iso", "en-je", "en-jm", "en-ke", "en-ki", "en-kn", "en-ky", "en-lc", "en-lr", "en-ls", "en-mg", "en-mh", "en-mo", "en-mp", "en-ms", "en-mt", "en-mu", "en-mw", "en-na", "en-nf", "en-ng", "en-nr", "en-nu", "en-nz", "en-pg", "en-ph", "en-pk", "en-pn", "en-pr", "en-pw", "en-rw", "en-sb", "en-sc", "en-sd", "en-sg", "en-sh", "en-sl", "en-ss", "en-sx", "en-sz", "en-tc", "en-tk", "en-to", "en-tt", "en-tv", "en-tz", "en-ug", "en-um", "en-us", "en-vc", "en-vg", "en-vi", "en-vu", "en-ws", "en-za", "en-zm", "en-zw", "en", "es-ar", "es-bo", "es-cl", "es-co", "es-cr", "es-cu", "es-do", "es-ea", "es-ec", "es-es", "es-gq", "es-gt", "es-hn", "es-ic", "es-mx", "es-ni", "es-pa", "es-pe", "es-ph", "es-pr", "es-py", "es-sv", "es-us", "es-uy", "es-ve", "es", "et-ee", "et", "eu-es", "eu", "fa-af", "fa-ir", "fa", "fi-fi", "fi", "fil-ph", "fil", "fr-be", "fr-bf", "fr-bi", "fr-bj", "fr-bl", "fr-ca", "fr-cd", "fr-cf", "fr-cg", "fr-ch", "fr-ci", "fr-cm", "fr-dj", "fr-dz", "fr-fr", "fr-ga", "fr-gf", "fr-gn", "fr-gp", "fr-gq", "fr-ht", "fr-km", "fr-lu", "fr-ma", "fr-mc", "fr-mf", "fr-mg", "fr-ml", "fr-mq", "fr-mr", "fr-mu", "fr-nc", "fr-ne", "fr-pf", "fr-pm", "fr-re", "fr-rw", "fr-sc", "fr-sn", "fr-sy", "fr-td", "fr-tg", "fr-tn", "fr-vu", "fr-wf", "fr-yt", "fr", "hi-in", "hi", "hr-ba", "hr-hr", "hr", "hu-hu", "hu", "hy-am", "hy", "is-is", "is", "it-ch", "it-it", "it-sm", "it", "ja-jp", "ja", "ka-ge", "ka", "kab-dz", "kab", "kam-ke", "kam", "kk-cyrl-kz", "kk-cyrl", "kk", "kkj-cm", "kkj", "kl-gl", "kl", "kln-ke", "kln", "km-kh", "km", "ko-kp", "ko-kr", "ko", "kok-in", "kok", "lo-la", "lo", "lt-lt", "lt", "mg-mg", "mg", "mgh-mz", "mgh", "mgo-cm", "mgo", "mk-mk", "mk", "mn-cyrl-mn", "mn-cyrl", "mn", "ms-bn", "ms-latn-bn", "ms-latn-my", "ms-latn-sg", "ms-latn", "ms-my", "ms", "mt-mt", "mt", "ne-in", "ne-np", "ne", "nl-aw", "nl-be", "nl-bq", "nl-cw", "nl-nl", "nl-sr", "nl-sx", "nl", "no-no", "no", "pl-pl", "pl", "pt-ao", "pt-br", "pt-cv", "pt-gw", "pt-mo", "pt-mz", "pt-pt", "pt-st", "pt-tl", "pt", "ro-md", "ro-ro", "ro", "rof-tz", "rof", "ru-by", "ru-kg", "ru-kz", "ru-md", "ru-ru", "ru-ua", "ru", "shi-latn-ma", "shi-latn", "shi-tfng-ma", "shi-tfng", "shi", "sk-sk", "sk", "sl-si", "sl", "sq-al", "sq-mk", "sq-xk", "sq", "sr-cyrl-ba", "sr-cyrl-me", "sr-cyrl-rs", "sr-cyrl-xk", "sr-cyrl", "sr-latn-ba", "sr-latn-me", "sr-latn-rs", "sr-latn-xk", "sr-latn", "sr", "sv-ax", "sv-fi", "sv-se", "sv", "th-th", "th", "tl", "to-to", "to", "tr-cy", "tr-tr", "tr", "uk-ua", "uk", "uz-arab-af", "uz-arab", "uz-cyrl-uz", "uz-cyrl", "uz-latn-uz", "uz-latn", "uz", "vi-vn", "vi", "zh-cn", "zh-hans-cn", "zh-hans-hk", "zh-hans-mo", "zh-hans-sg", "zh-hans", "zh-hant-hk", "zh-hant-mo", "zh-hant-tw", "zh-hant", "zh-hk", "zh-tw", "zh");
-        
-        // If their locale exists in the locale list, use it. Otherwise, use the locale from their selected language.
-        if (locales.indexOf(localStorage.getItem("locale")) >= 0) {
-            return localStorage.getItem("locale");
-        } else {
-            return language;
-        }
-
-    }
-
     function cleanPrice(price) {
         // Strip everything except numbers and decimals
 
@@ -505,7 +490,6 @@ var utils = (function () {
         repeat: repeat,
         mergeParams: mergeParams,
         deDuplicateCsv: deDuplicateCsv,
-        getLocale: getLocale,
         cleanPrice: cleanPrice
     };
 
@@ -519,42 +503,416 @@ String.prototype.replaceAll = function (f, r) {
 // The following code needs to run after app.js and after utilities.js are loaded but before any directive, controller, etc. are run. This bootstraps the app at run time with the initial settings and configurations.
 
 app.run(['$rootScope', '$http', 'SettingsService', 'StorageService', 'LanguageService', 'ApiService', function ($rootScope, $http, SettingsService, StorageService, LanguageService, ApiService) {
-        
-        // Get the settings
-        var settings = SettingsService.get();
-        
-        // Enable CORS when running in development environments.
-        if (settings.config.development) {
-            $http.defaults.useXDomain = true;
-        }
-               
+
+    // Get the settings
+    var settings = SettingsService.get();
+
+    // Enable CORS when running in development environments.
+    if (settings.config.development) {
+        $http.defaults.useXDomain = true;
+    }
+
     // Establish the app language
-        LanguageService.establishLanguage($rootScope.languagesPath);
-        
-        // Establish the pageview load code. This is used to send Analytics data to the platform.
-        var loadPageview = function () {
-            
-            // Find the pageview script in the DOM. If present, append the pageview analytics source to the page. Replace any previous to not pollute the page with each pageview.
-            var app_pageview = document.getElementById("app_pageview");
-            
-            if (app_pageview && settings.config.development != true) {
-                var head = document.getElementsByTagName("head")[0];
-                var js = document.createElement("script");
-                js.id = "app_pageviewload";
-                js.type = "text/javascript";
-                js.src = "analytics/pageview.js";
-                
-                // Remove any existing
-                if (document.getElementById("app_pageviewload") != null) {
-                    head.removeChild(document.getElementById("app_pageviewload"));
-                }
-                
-                // Add again to force reload.
-                head.appendChild(js);
+    LanguageService.establishLanguage($rootScope.languagesPath);
+
+    // Establish the pageview load code. This is used to send Analytics data to the platform.
+    var loadPageview = function () {
+
+        // Find the pageview script in the DOM. If present, append the pageview analytics source to the page. Replace any previous to not pollute the page with each pageview.
+        var app_pageview = document.getElementById("app_pageview");
+
+        if (app_pageview && settings.config.development != true) {
+            var head = document.getElementsByTagName("head")[0];
+            var js = document.createElement("script");
+            js.id = "app_pageviewload";
+            js.type = "text/javascript";
+            js.src = "analytics/pageview.js";
+
+            // Remove any existing
+            if (document.getElementById("app_pageviewload") != null) {
+                head.removeChild(document.getElementById("app_pageviewload"));
             }
+
+            // Add again to force reload.
+            head.appendChild(js);
         }
-        
-    }]);
+    }
+
+}]);
+var amazonPay = (function () {
+
+    var url = "https://static-na.payments-amazon.com/OffAmazonPayments/us/js/Widgets.js";
+    if (window.__settings.account.test) {
+        url = "https://static-na.payments-amazon.com/OffAmazonPayments/us/sandbox/js/Widgets.js";
+    }
+
+    var access_token = null;
+    var order_reference_id = null;
+    var billing_agreement_id = null;
+    var loaded = false;
+    var consent_status = false;
+
+    var address_book;
+
+    // Load the Amazon Pay SDK, if available for this account.
+    if (isAvailable()) {
+        loadScript(url, function () {
+            loaded = true;
+        });
+    }
+
+    function createPaymentButton(client_id, seller_id, target_id, type, color, size, callback) {
+
+        // client_id: The Amazon Pay client ID
+        // seller_id: The Amazon Pay seller ID
+        // target_id: The id of the HTML element the button should be placed within
+        // type, color, size: Button customizations, see function code for possibilities
+        // callback(error, data): The function that is called when the button is created, data returns the access_token, which needs to be passed to the API when submitting the payment.
+
+        // Load the SDK, if not already loaded.
+        if (!loaded) {
+            loadScript(url, function () {
+                loaded = true;
+            });
+        }
+
+        // Run now if ready, otherwise wait till ready.
+        if (!window.amazon) {
+            window.onAmazonLoginReady = function () {
+                _createPaymentButton(target_id, type, color, size, callback);
+            }
+        } else {
+            _createPaymentButton(target_id, type, color, size, callback);
+        }
+
+        function _createPaymentButton(target_id, type, color, size, callback) {
+
+            // Set the ids
+            amazon.Login.setClientId(client_id);
+            amazon.Login.setUseCookie(true);
+
+            // Create the payment button
+            OffAmazonPayments.Button(target_id, seller_id, {
+
+                // https://pay.amazon.com/us/developer/documentation/lpwa/201953980
+                type: type || "PwA", // "PwA", "Pay", "A"
+                color: color || "Gold", // "Gold", "LightGray", "DarkGray"
+                size: size || "medium", // "small", "medium", "large", "x-large"
+                authorization: function () {
+                    var loginOptions = { scope: 'profile payments:widget payments:shipping_address' };
+                    authRequest = amazon.Login.authorize(loginOptions, function (response) {
+                        access_token = response.access_token;
+                    });
+                },
+                onSignIn: function (orderReferenece) {
+
+                    // Return the order reference and the access token that was previously generated
+                    if (callback) {
+                        callback(null, { access_token: access_token, order_reference_id: null, billing_agreement_id: null, seller_id: seller_id });
+                    }
+                },
+                onError: function (error) {
+                    callback("There was a problem attempting to load the Amazon Pay button.");
+                    console.log(error.getErrorMessage());
+                }
+
+            });
+        }
+    }
+
+    function loadWidgets(client_id, seller_id, requires_billing_agreement, address_id, wallet_id, consent_id, onAddressSelect, onPaymentMethodSelect, onConsentChange, design_mode, display_mode, callback) {
+
+        // client_id: The Amazon Pay client ID
+        // seller_id: The Amazon Pay seller ID
+        // requires_billing_agreement: indicates if the transaction requires establishing a billing agreement, which will generate a consent box for the user to select
+        // address_id: The id of the HTML element (div) that will hold the address widget
+        // wallet_id: The id of the HTML element (div) that will hold the wallet widget
+        // consent_id: The id of the HTML element (div) that will hold the consent widget in the case of establishing a billing agreement
+        // onAddressSelect: Fires when an address has been selected by the user
+        // onPaymentMethodSelect: Fires when a payment method has been selected by the user
+        // onConsentChange: Fires when the consent has been toggled by the user. A callback parameter of 'status' true / false indicates the state of the conset checkbox
+        // design_mode: Indicates the design mode of the widgets, 'responsive' is used if not provided.
+        // callback(error, data): The function that is called when the button is created, data returns an object that contains the access_token and the order_reference_id or billing_agreement_id, depending on establishment of a billing agreement
+
+        if (requires_billing_agreement) {
+            loadWidgetsWithBillingAgreement(seller_id, address_id, wallet_id, consent_id, design_mode, display_mode)
+        } else {
+            billing_agreement_id = null;
+            loadWidgetsWithoutBillingAgreement(seller_id, address_id, wallet_id, design_mode, display_mode)
+        }
+
+        function loadWidgetsWithoutBillingAgreement(seller_id, address_id, wallet_id, design_mode, display_mode) {
+            address_book = new OffAmazonPayments.Widgets.AddressBook({
+                sellerId: seller_id,
+                onOrderReferenceCreate: function (orderReference) {
+                    order_reference_id = orderReference.getAmazonOrderReferenceId();
+                },
+                onAddressSelect: function (data) {
+                    if (onAddressSelect) {
+                        onAddressSelect();
+                    }
+                },
+                display_mode: display_mode || "Edit",
+                design: { designMode: design_mode || "responsive" },
+                onReady: function (orderReference) {
+                    callback(null, { access_token: access_token, order_reference_id: order_reference_id, billing_agreement_id: null, seller_id: seller_id });
+                },
+                onError: function (error) {
+                    callback("There was a problem attempting to load the Amazon Pay address book.");
+                    console.log(error.getErrorMessage());
+                }
+            }).bind(address_id);
+            wallet = new OffAmazonPayments.Widgets.Wallet({
+                sellerId: seller_id,
+                onPaymentSelect: function () {
+                    if (onPaymentMethodSelect) {
+                        onPaymentMethodSelect();
+                    }
+                },
+                display_mode: display_mode || "Edit",
+                design: {
+                    designMode: design_mode || "responsive"
+                },
+                onError: function (error) {
+                    callback("There was a problem attempting to load the Amazon Pay wallet.");
+                    console.log(error.getErrorMessage());
+                }
+            }).bind(wallet_id);
+        }
+
+        function loadWidgetsWithBillingAgreement(seller_id, address_id, wallet_id, consent_id, design_mode, display_mode) {
+
+            var payload = {
+                sellerId: seller_id,
+                agreementType: "BillingAgreement",
+                onReady: function (billingAgreement) {
+                    billing_agreement_id = billingAgreement.getAmazonBillingAgreementId();
+                    wallet = new OffAmazonPayments.Widgets.Wallet({
+                        sellerId: seller_id,
+                        amazonBillingAgreementId: billing_agreement_id,
+                        onReady: function () {
+                            callback(null, { access_token: access_token, billing_agreement_id: billing_agreement_id, seller_id: seller_id });
+                        },
+                        onPaymentSelect: function (billingAgreement) {
+                            if (onPaymentMethodSelect) {
+                                onPaymentMethodSelect();
+                            }
+                            consent = new OffAmazonPayments.Widgets.Consent({
+                                sellerId: seller_id,
+                                amazonBillingAgreementId: billing_agreement_id,
+                                design: { designMode: design_mode || "responsive" },
+                                onReady: function (billingAgreementConsentStatus) {
+                                    if (billingAgreementConsentStatus.getConsentStatus) {
+                                        if (consent_status !== utils.stringToBool(billingAgreementConsentStatus.getConsentStatus())) {
+                                            consent_status = !consent_status;
+                                            if (onConsentChange) {
+                                                onConsentChange(consent_status);
+                                            }
+                                        }
+                                    }
+                                },
+                                onConsent: function (billingAgreementConsentStatus) {
+                                    if (consent_status !== utils.stringToBool(billingAgreementConsentStatus.getConsentStatus())) {
+                                        consent_status = !consent_status;
+                                        if (onConsentChange) {
+                                            onConsentChange(consent_status);
+                                        }
+                                    }
+                                },
+                                onError: function (error) {
+                                    callback("There was a problem attempting to load the Amazon Pay wallet.");
+                                    console.log(error.getErrorMessage());
+                                }
+                            }).bind(consent_id);
+                        },
+                        display_mode: display_mode || "Edit",
+                        design: { designMode: design_mode || "responsive" },
+                        onError: function (error) {
+                            callback("There was a problem attempting to load the Amazon Pay wallet.");
+                            console.log(error.getErrorMessage());
+                        }
+                    }).bind(wallet_id);
+                },
+                onAddressSelect: function (billingAgreement) {
+                    if (onAddressSelect) {
+                        onAddressSelect();
+                    }
+                },
+                display_mode: display_mode || "Edit",
+                design: { designMode: design_mode || "responsive" },
+                onError: function (error) {
+                    callback("There was a problem attempting to load the Amazon Pay wallet.");
+                    console.log(error.getErrorMessage());
+                }
+            };
+            address_book = new OffAmazonPayments.Widgets.AddressBook(payload).bind(address_id);
+
+        }
+
+    }
+
+    function reRenderWidgets(client_id, seller_id, order_reference_id, billing_agreement_id, wallet_id, onPaymentMethodSelect, design_mode, callback) {
+
+        // seller_id: The Amazon Pay seller ID
+        // order_reference_id: The order_reference_id for the transaction. Required if billing_agreement_id is null.
+        // billing_agreement_id: The billing_agreement_id for the transaction. Required if order_reference_id is null.
+        // wallet_id: The id of the HTML element (div) that will hold the wallet widget.
+        // onPaymentMethodSelect: Fires when a payment method has been selected by the user.
+        // design_mode: Indicates the design mode of the widgets, 'responsive' is used if not provided.
+        // callback(error): The function that is called when the widget is refreshed, including a parameter 'error' that is populated if an error occurs when refreshing the widget.
+
+        amazon.Login.setClientId(client_id);
+        amazon.Login.setUseCookie(true);
+
+        if (billing_agreement_id) {
+            reRenderWidgetsWithBillingAgreement(seller_id, billing_agreement_id, wallet_id, onPaymentMethodSelect, callback);
+        } else {
+            reRenderWidgetsWithoutBillingAgreement(seller_id, order_reference_id, wallet_id, onPaymentMethodSelect, callback);
+        }
+
+        function reRenderWidgetsWithoutBillingAgreement(seller_id, order_reference_id, wallet_id, onPaymentMethodSelect, callback) {
+
+            new OffAmazonPayments.Widgets.Wallet({
+                sellerId: seller_id,
+
+                amazonOrderReferenceId: order_reference_id,
+
+                onPaymentSelect: function (orderReference) {
+                    if (onPaymentMethodSelect) {
+                        onPaymentMethodSelect();
+                    }
+                },
+                design: {
+                    designMode: design_mode || "responsive"
+                },
+
+                onError: function (error) {
+                    callback("There was a problem attempting to load the Amazon Pay wallet.");
+                    console.log(error.getErrorMessage());
+                }
+            }).bind(wallet_id);
+
+        }
+
+        function reRenderWidgetsWithBillingAgreement(seller_id, billing_agreement_id, wallet_id, onPaymentMethodSelect, callback) {
+
+            new OffAmazonPayments.Widgets.Wallet({
+                sellerId: seller_id,
+
+                billingAgreementId: billing_agreement_id,
+
+                onPaymentSelect: function (orderReference) {
+                    if (onPaymentMethodSelect) {
+                        onPaymentMethodSelect();
+                    }
+                },
+                design: {
+                    designMode: design_mode || "responsive"
+                },
+
+                onError: function (error) {
+                    callback("There was a problem attempting to load the Amazon Pay wallet.");
+                    console.log(error.getErrorMessage());
+                }
+            }).bind(wallet_id);
+
+        }
+    }
+
+    function logout() {
+        access_token = null;
+        order_reference_id = null;
+        billing_agreement_id = null;
+
+        if (amazon) {
+            amazon.Login.logout();
+        }
+    }
+
+    function loadScript(url, callback) {
+        // Appends a script to the DOM
+        var head = document.getElementsByTagName("head")[0], done = false;
+        var script = document.createElement("script");
+        script.src = url;
+        script.type = "text/javascript";
+        script.async = 1;
+        // Attach handlers for all browsers
+        script.onload = script.onreadystatechange = function () {
+            if (!done && (!this.readyState || this.readyState === "loaded" || this.readyState === "complete")) {
+                done = true;
+                // Initialize
+                if (typeof callback === 'function') callback();
+            }
+        };
+        head.appendChild(script);
+    }
+
+    function isAvailable() {
+        // Indicates if Amazon Pay is an available payment method
+        if (window.__settings && window.__settings.account && window.__settings.account.payment_method_types.indexOf("amazon_pay") > -1) {
+            return true;
+        }
+        return false;
+    }
+
+    function showWidgets(address_id, wallet_id, consent_id, recurring) {
+
+        // Show the widgets
+        var addressWidget = document.getElementById(address_id);
+        var walletWidget = document.getElementById(wallet_id);
+        var consentWidget = document.getElementById(consent_id);
+
+        if (addressWidget)
+            addressWidget.style.display = null;
+
+        if (walletWidget)
+            walletWidget.style.display = null;
+
+        if (consentWidget && recurring)
+            consentWidget.style.display = null;
+    }
+
+    function hideWidgets(address_id, wallet_id, consent_id) {
+
+        // Hide the widgets
+        var addressWidget = document.getElementById(address_id);
+        var walletWidget = document.getElementById(wallet_id);
+        var consentWidget = document.getElementById(consent_id);
+
+        // Destroy the contents of each and then hide the element
+        if (addressWidget) {
+            addressWidget.style.display = "none";
+            addressWidget.innerHTML = "";
+        }
+
+        if (walletWidget) {
+            walletWidget.style.display = "none";
+            walletWidget.innerHTML = "";
+        }
+
+        if (consentWidget) {
+            consentWidget.style.display = "none";
+            consentWidget.innerHTML = "";
+        }
+
+    }
+
+    function getConsentStatus() {
+        return consent_status;
+    }
+
+    // Public API
+    return {
+        createPaymentButton: createPaymentButton,
+        loadWidgets: loadWidgets,
+        showWidgets: showWidgets,
+        hideWidgets: hideWidgets,
+        reRenderWidgets: reRenderWidgets,
+        logout: logout,
+        getConsentStatus: getConsentStatus
+    };
+
+})();
 /* FileSaver.js
  * A saveAs() FileSaver implementation.
  * 1.3.0
@@ -1181,7 +1539,14 @@ app.directive('submitPayment', ['CartService', 'InvoiceService', 'PaymentService
     // onSubmit: A function that will be called from scope when a payment is submitted.
     // onSuccess: A function that will be called from scope when the payment is successfully completed. Will include the response payment object as a parameter.
     // onError: A function that will be called from scope when the payment fails. Will include the (failed) response payment object as a parameter.
+
+    // Shared scope that are specific to different payment methods:
+
+    // Credit Card
     // shippingIsBilling: A flag to indicate if the billing address and shipping address are the same. If so, the shipping address will be removed.
+
+    // Amazon Pay
+    // getConsentStatus: Pass in a function that allows you get the status of the Amazon Pay consent checkbox. This function you pass in is provided by the amazonPayButton directive.
 
     // Attributes
     // params: An object that supplies a list of parameters to send to the api, such as show, hide, formatted, etc. Used to customize the response object.
@@ -1199,7 +1564,8 @@ app.directive('submitPayment', ['CartService', 'InvoiceService', 'PaymentService
             onSubmit: '=?',
             onSuccess: '=?',
             onError: '=?',
-            shippingIsBilling: '=?'
+            shippingIsBilling: '=?',
+            getConsentStatus: '=?'
         },
         link: function (scope, elem, attrs, ctrl) {
 
@@ -1210,40 +1576,87 @@ app.directive('submitPayment', ['CartService', 'InvoiceService', 'PaymentService
                     scope.onSubmit();
                 }
 
-                // Data is not validated with PayPal since the customer data will come from the response.
-                if (ctrl.$invalid == true && scope.paymentMethod.type != "paypal") {
+                // Validation functions. 
+                function validateFormData() {
 
-                    scope.$apply(function () {
-                        scope.error = { type: "bad_request", reference: "kI1ETNz", code: "invalid_input", message: gettextCatalog.getString("There was a problem with some of the information you supplied. Please review for errors and try again."), status: 400 };
-                    });
+                    var error = null;
 
-                    // Fire the error event
-                    if (scope.onError) {
-                        scope.onError(error);
+                    if (ctrl.$invalid == true) {
+                        error = { type: "bad_request", reference: "kI1ETNz", code: "invalid_input", message: gettextCatalog.getString("There was a problem with some of the information you supplied. Please review for errors and try again."), status: 400 };
                     }
 
-                    return;
+                    return error;
+
                 }
 
-                // If a direct payment (i.e. hosted payment page - no cart or invoice) and PayPal, total, subtotal and / or shipping must be provided.
-                if (scope.paymentMethod.type == "paypal" && !scope.cart && !scope.invoice) {
+                function validateAmountIsProvided() {
+
+                    var error = null;
 
                     if (!scope.payment.total && !scope.payment.subtotal && !scope.payment.shipping) {
-                        scope.$apply(function () {
-                            scope.error = { type: "bad_request", reference: "eiptRbg", code: "invalid_input", message: gettextCatalog.getString("Please provide an amount for your payment."), status: 400 };
-                        });
-
-                        // Fire the error event
-                        if (scope.onError) {
-                            scope.onError(error);
-                        }
-
-                        return;
+                        error = { type: "bad_request", reference: "eiptRbg", code: "invalid_input", message: gettextCatalog.getString("Please provide an amount for your payment."), status: 400 };
                     }
+
+                    return error;
 
                 }
 
-                // Make sure numeric values, if supplied, are not strings. This ensures that the JSON sent to the API will be in numeric format and not string, which the API will reject as invalid.
+                // Perform validatations, depending on payment method type
+                var error = null;
+                switch (scope.paymentMethod.type) {
+
+                    case "credit_card":
+
+                        // Wallet providers such as PayPal and Amazon Pay provide customer data as a callback so no need to collect from the user directly.
+                        error = validateFormData();
+
+                        if (error) {
+                            scope.$apply(function () {
+                                scope.error = error;
+                            });
+                            return;
+                        }
+
+                        break;
+
+                    case "paypal":
+
+                        // We skip validating form data for this payment method as customer data is provided by the provider. If a direct payment, we need to validate that an amount is provided.
+                        if (!scope.cart && !scope.invoice) {
+                            error = validateAmountIsProvided();
+                        }
+
+                        if (error) {
+                            scope.$apply(function () {
+                                scope.error = error;
+                            });
+                            return;
+                        }
+
+                    case "amazon_pay":
+
+                        // If the payment method contains a billing agreement ID or the payment is marked to be saved and the user has not given consent, return an error.
+                        if ((scope.paymentMethod.data.billing_agreement_id || scope.paymentMethod.save) && !scope.getConsentStatus()) {
+                            error = { type: "bad_request", reference: "nauRcF8", code: "invalid_input", message: gettextCatalog.getString("Please check the box to provide consent to save your payment method for future payments."), status: 400 };
+                        }
+
+                        // We skip validating form data for this payment method as customer data is provided by the provider. If a direct payment, we need to validate that an amount is provided.
+                        if (!scope.cart && !scope.invoice) {
+                            error = validateAmountIsProvided();
+                        }
+
+                        if (error) {
+                            scope.$apply(function () {
+                                scope.error = error;
+                            });
+                            return;
+                        }
+
+                        break;
+
+                }
+
+                // For direct payments, amounts are provided by form input. If supplied, make sure the values are numbers and not strings. This ensures that the JSON sent to the API will be in numeric format and not string, which the API will reject as invalid.
                 if (scope.payment) {
                     if (scope.payment.total)
                         scope.payment.total = Number(scope.payment.total);
@@ -3840,6 +4253,273 @@ app.directive('cleanPrice', [function () {
     };
 }]);
 
+app.directive('amazonPayButton', ['gettextCatalog', function (gettextCatalog) {
+
+    // Shared scope:
+    // paymentMethod: Provide the payment method object that will hold the Amazon Pay settings that are returned from the Amazon Pay button and widgets.
+    // options: The cart, invoice or payment options, from which the Amazon Pay client and seller settings will be obtained.
+    // items: The cart or invoice items, if applicable, to determine if the order contains subscription products and a billing agreemement should be established for the customer.
+    // onLoaded: A function that will be called when the Amazon Pay button has been loaded.
+    // onAddressSelect: A function that will be called when the customer selects an address from their Amazon Pay address book.
+    // onPaymentMethodSelect: A function that will be called when the customer selects a payment method from their Amazon Pay wallet.
+    // onConsentChange: A function that will be called when the user toggles the Amazon Pay consent checkbox. Returns the status of the consent checkbox as a parameter.
+    // getConsentStatus: A function that is set by the directive and can be called to get the status of the Amazon Pay consent checkbox.
+    // error: The error object to communicate errors.
+    // onError: A function that will be called from scope when the payment fails. Will include the (failed) response payment object as a parameter.
+
+    // Attributes
+    // params: An object that supplies a list of parameters to send to the api, such as show, hide, formatted, etc. Used to customize the response object.
+    // amazonPayAddressId: The ID of the HTML element that will hold the Amazon Pay address widget
+    // amazonPayWalletId: The ID of the HTML element that will hold the Amazon Pay wallet widget
+    // amazonPayConsentId: The ID of the HTML element that will hold the Amazon Pay consent widget (used when the payment method will be stored)
+    // amazonPayDesignMode: Provides the Amazon Pay design mode, the only current value seems to be "responsive". If nothing is provided, "responsive" will be provided automatically. See https://pay.amazon.com/us/developer/documentation/lpwa/201952070.
+    // amazonPayType: The type of button, "PwA", "Pay", "A"
+    // amazonPayColor: The color of the button, "Gold", "LightGray", "DarkGray"
+    // amazonPayButtonSize: The size of the button, "small", "medium", "large", "x-large"
+
+    return {
+        restrict: 'A',
+        scope: {
+            paymentMethod: '=?',
+            options: '=?',
+            items: '=?',
+            params: '=?',
+            onLoaded: '=?',
+            onAddressSelect: '=?',
+            onPaymentMethodSelect: '=?',
+            onConsentChange: '=?',
+            getConsentStatus: '=?',
+            error: '=?',
+            onError: '=?'
+        },
+        link: function (scope, elem, attrs, ctrl) {
+
+            var client_id = null;
+            var seller_id = null;
+
+            // Watch options and set Amazon Pay parameters if provided.
+            scope.$watch("options", function (newValue, oldValue) {
+
+                if (newValue && newValue != oldValue) {
+
+                    // Check if it has Amazon Pay
+                    var ap = _.findWhere(newValue.payment_methods, { payment_method_type: "amazon_pay" });
+                    if (ap) {
+
+                        // Only create the button if the client_id or seller_id have changed.
+                        if (ap.amazon_pay_client_id != client_id || ap.amazon_pay_seller_id != seller_id) {
+
+                            // Hide any widgets and logout
+                            amazonPay.hideWidgets(attrs.amazonPayAddressId, attrs.amazonPayWalletId, attrs.amazonPayConsentId);
+
+                            // If these values currently aren't null, that means the values have changed. Log the customer out of any previous session.
+                            if (client_id || seller_id) {
+                                logout();
+                            }
+
+                            // Set the new ids.
+                            client_id = ap.amazon_pay_client_id;
+                            seller_id = ap.amazon_pay_seller_id;
+
+                            // Create the button
+                            createAmazonPayButton(client_id, seller_id);
+                        }
+
+                    } else {
+
+                        // Hide the widgets
+                        amazonPay.hideWidgets(attrs.amazonPayAddressId, attrs.amazonPayWalletId, attrs.amazonPayConsentId);
+                    }
+                }
+
+            });
+
+            // This function can be used by the user of the directive to get the consent status. It is typically passed into the submit-payment directive so it can error check the status of the checkbox.
+            scope.getConsentStatus = function () {
+                return amazonPay.getConsentStatus();
+            }
+
+            function createAmazonPayButton(client_id, seller_id) {
+
+                // Create the button
+                amazonPay.createPaymentButton(client_id, seller_id, attrs.id, attrs.amazonPayType, attrs.amazonPayColor, attrs.amazonPayButtonSize, function (error, data) {
+
+                    if (error) {
+                        setError("external_server_error", "remote_server_error", error, 502);
+                        return;
+                    }
+
+                    // Set the data on the payment method
+                    scope.$apply(function () {
+                        setPaymentMethodData(data.access_token, data.order_reference_id, data.billing_agreement_id, seller_id);
+                    });
+
+                    // Determine if a billing agreement is required.
+                    var recurring = requiresBillingAgreement(scope.items, scope.paymentMethod.save);
+
+                    // Show the widgets
+                    amazonPay.showWidgets(attrs.amazonPayAddressId, attrs.amazonPayWalletId, attrs.amazonPayConsentId, recurring);
+
+                    amazonPay.loadWidgets(client_id, seller_id, recurring, attrs.amazonPayAddressId, attrs.amazonPayWalletId, attrs.amazonPayConsentId, scope.onAddressSelect, scope.onPaymentMethodSelect, scope.onConsentChange, attrs.amazonPayDesignMode, "Edit", function (error, data) {
+
+                        if (error) {
+                            setError("external_server_error", "remote_server_error", error, 502);
+                            return;
+                        }
+
+                        // Set the data on the payment method
+                        scope.$apply(function () {
+                            setPaymentMethodData(data.access_token, data.order_reference_id, data.billing_agreement_id, data.seller_id);
+                        });
+
+                    });
+                });
+            }
+
+            function requiresBillingAgreement(items, save) {
+                var recurring = false
+                for (var item_id in scope.items) {
+                    if (scope.items[item_id].subscription_plan) {
+                        return true;
+                    }
+                }
+
+                if (scope.paymentMethod.save) {
+                    return true;
+                }
+
+                return false;
+            }
+
+            function logout() {
+                client_id = null;
+                seller_id = null;
+                setPaymentMethodData(null, null, null, null);
+                amazonPay.logout();
+            }
+
+            function setPaymentMethodData(access_token, order_reference_id, billing_agreement_id, seller_id) {
+
+                // If no access token, order reference or billing agreement, revmove the object to completely reset it.
+                if (!access_token && !order_reference_id && !billing_agreement_id) {
+                    if (scope.paymentMethod.data) {
+                        delete scope.paymentMethod.data;
+                    }
+                    return;
+                }
+
+                scope.paymentMethod.data = { access_token: access_token, order_reference_id: order_reference_id, billing_agreement_id: billing_agreement_id, seller_id: seller_id };
+            }
+
+            function setError(type, code, message, status) {
+                scope.$apply(function () {
+                    scope.error = { type: type, reference: "MmJAvA8", code: code, message: message, status: status };
+                    if (scope.onError) {
+                        scope.onError(error);
+                    }
+                });
+            }
+
+        }
+    };
+}]);
+
+app.directive('amazonPayReset', ['gettextCatalog', function (gettextCatalog) {
+
+    // Shared scope:
+    // paymentMethod: Provide the payment method object that will hold the Amazon Pay settings that are returned from the Amazon Pay button and widgets.
+
+    return {
+        restrict: 'A',
+        scope: {
+            paymentMethod: '=?'
+        },
+        link: function (scope, elem, attrs, ctrl) {
+
+            elem.bind("click", function () {
+
+                // Reset the payment method data
+                scope.$apply(function () {
+                    delete scope.paymentMethod.data;
+                });
+
+                // Hide the widgets
+                amazonPay.hideWidgets(attrs.amazonPayAddressId, attrs.amazonPayWalletId, attrs.amazonPayConsentId);
+
+            });
+        }
+    };
+}]);
+
+app.directive('amazonPayWidgetRefresh', ['gettextCatalog', function (gettextCatalog) {
+
+    // Shared scope:
+    // paymentError: The payment object of the failed payment that requires the widgets to be refreshed.
+    // options: The cart, invoice or payment options, from which the Amazon Pay client and seller settings will be obtained.
+    // onPaymentMethodSelect: A function that will be called when the customer selects a payment method from their Amazon Pay wallet.
+    // error: The error object to communicate errors.
+    // onError: A function that will be called from scope when the payment fails. Will include the (failed) response payment object as a parameter.
+
+    // Attributes
+    // params: An object that supplies a list of parameters to send to the api, such as show, hide, formatted, etc. Used to customize the response object.
+    // amazonPayWalletId: The ID of the HTML element that will hold the Amazon Pay wallet widget
+    // amazonPayDesignMode: Provides the Amazon Pay design mode, the only current value seems to be "responsive". If nothing is provided, "responsive" will be provided automatically. See https://pay.amazon.com/us/developer/documentation/lpwa/201952070.
+
+    return {
+        restrict: 'A',
+        scope: {
+            paymentError: '=?',
+            options: '=?',
+            params: '=?',
+            onLoaded: '=?',
+            onPaymentMethodSelect: '=?',
+            error: '=?',
+            onError: '=?'
+        },
+        link: function (scope, elem, attrs, ctrl) {
+
+
+            scope.$watchGroup(["paymentError", 'options'], function (newValues, oldValues) {
+
+                if (newValues && newValues != oldValues) {
+
+                    var paymentError = newValues[0];
+                    var options = newValues[1];
+
+                    if (paymentError && options) {
+
+                        var data = paymentError.payment_method.data;
+                        var ap = _.findWhere(options.payment_methods, { payment_method_type: "amazon_pay" });
+                        var recurring = data.billing_agreement_id != null;
+
+                        amazonPay.reRenderWidgets(ap.amazon_pay_client_id, ap.amazon_pay_seller_id, data.order_reference_id, data.billing_agreement_id, attrs.amazonPayWalletId, scope.onPaymentMethodSelect, attrs.amazonPayDesignMode, function (error, data) {
+
+                            if (error) {
+                                setError("external_server_error", "remote_server_error", error, 502);
+                                return;
+                            }
+
+                            // Show the widgets
+                            amazonPay.showWidgets(null, attrs.amazonPayWalletId, null, false);
+
+                        });
+                    }
+                }
+            });
+
+            function setError(type, code, message, status) {
+                scope.$apply(function () {
+                    scope.error = { type: type, reference: "MmJAvA8", code: code, message: message, status: status };
+                    if (scope.onError) {
+                        scope.onError(error);
+                    }
+                });
+            }
+
+        }
+    };
+}]);
+
 
 app.factory('appCache', ['$cacheFactory', function ($cacheFactory) {
         return $cacheFactory('appCache');
@@ -3868,7 +4548,7 @@ app.filter('range', function () {
         return input;
     };
 });
-app.service("ApiService", ['$http', '$q', '$location', 'SettingsService', 'HelperService', 'StorageService', '$rootScope', 'gettextCatalog', function ($http, $q, $location, SettingsService, HelperService, StorageService, $rootScope, gettextCatalog) {
+app.service("ApiService", ['$http', '$q', 'SettingsService', 'HelperService', 'StorageService', 'LanguageService', 'gettextCatalog', function ($http, $q, SettingsService, HelperService, StorageService, LanguageService, gettextCatalog) {
 
     // Return public API.
     return {
@@ -3878,8 +4558,6 @@ app.service("ApiService", ['$http', '$q', '$location', 'SettingsService', 'Helpe
         update: update,
         remove: remove,
         getItemPdf: getItemPdf,
-        getToken: getToken,
-        getTokenExpiration: getTokenExpiration
     };
 
     function getTokenExpiration(expiresInSeconds) {
@@ -3910,11 +4588,14 @@ app.service("ApiService", ['$http', '$q', '$location', 'SettingsService', 'Helpe
         }
 
         // The account_id is only needed in development environments. The hosted environment can call this endpoint without the account_id and it will be determined on the api side from the hostname.
-        var parameters = { browser_info: true };
         var settings = SettingsService.get();
+        var parameters = {};
+
+        // Pass in the user's language selection.
+        parameters.user_locale = LanguageService.getLocale();
 
         if (settings.account.account_id && settings.config.development == true) {
-            parameters = { account_id: settings.account.account_id };
+            parameters = _.extend(parameters, { account_id: settings.account.account_id });
         }
 
         // Prepare the url
@@ -3935,8 +4616,6 @@ app.service("ApiService", ['$http', '$q', '$location', 'SettingsService', 'Helpe
         request.then(function (response) {
 
             StorageService.set("token", response.data.token, response.headers("X-Token-Expires-In-Seconds"));
-            StorageService.set("locale", response.data.browser_info.locale);
-            StorageService.set("language", response.data.browser_info.language);
 
             // If you got a new token, delete any cart_id or invoice_id cookie. The new token won't be bound to them and letting them remain will cause a conflict when the new token tries to access a cart_id that it's not associated with.
             StorageService.remove("cart_id");
@@ -3944,7 +4623,7 @@ app.service("ApiService", ['$http', '$q', '$location', 'SettingsService', 'Helpe
 
             deferred.resolve(response.data.token);
         }, function (error) {
-            deferred.reject({ type: "internal_server_error", reference: "6lnOOW1", code: "unspecified_error", message: "There was a problem obtaining authorization for this session. Please reload the page to try your request again.", status: error.status });
+            deferred.reject({ type: "internal_server_error", reference: "6lnOOW1", code: "unspecified_error", message: gettextCatalog.getString("There was a problem obtaining authorization for this session. Please reload the page to try your request again."), status: error.status });
         });
 
         return deferred.promise;
@@ -3953,6 +4632,10 @@ app.service("ApiService", ['$http', '$q', '$location', 'SettingsService', 'Helpe
     function create(data, url, parameters, quiet) {
 
         var deferred = $q.defer();
+
+        // Pass in the user's language selection.
+        parameters = parameters || {};
+        parameters.user_locale = LanguageService.getLocale();
 
         getToken().then(function (token) {
 
@@ -3994,6 +4677,10 @@ app.service("ApiService", ['$http', '$q', '$location', 'SettingsService', 'Helpe
 
         var deferred = $q.defer();
 
+        // Pass in the user's language selection.
+        parameters = parameters || {};
+        parameters.user_locale = LanguageService.getLocale();
+
         getToken().then(function (token) {
 
             // Get the settings
@@ -4027,6 +4714,10 @@ app.service("ApiService", ['$http', '$q', '$location', 'SettingsService', 'Helpe
     function getList(url, parameters, quiet) {
 
         var deferred = $q.defer();
+
+        // Pass in the user's language selection.
+        parameters = parameters || {};
+        parameters.user_locale = LanguageService.getLocale();
 
         getToken().then(function (token) {
 
@@ -4080,6 +4771,10 @@ app.service("ApiService", ['$http', '$q', '$location', 'SettingsService', 'Helpe
 
         var deferred = $q.defer();
 
+        // Pass in the user's language selection.
+        parameters = parameters || {};
+        parameters.user_locale = LanguageService.getLocale();
+
         getToken().then(function (token) {
 
             // Get the settings
@@ -4119,6 +4814,10 @@ app.service("ApiService", ['$http', '$q', '$location', 'SettingsService', 'Helpe
 
         var deferred = $q.defer();
 
+        // Pass in the user's language selection.
+        parameters = parameters || {};
+        parameters.user_locale = LanguageService.getLocale();
+
         getToken().then(function (token) {
 
             // Get the settings
@@ -4152,6 +4851,10 @@ app.service("ApiService", ['$http', '$q', '$location', 'SettingsService', 'Helpe
     function getItemPdf(url, parameters, quiet) {
 
         var deferred = $q.defer();
+
+        // Pass in the user's language selection.
+        parameters = parameters || {};
+        parameters.user_locale = LanguageService.getLocale();
 
         getToken().then(function (token) {
 
@@ -4328,7 +5031,7 @@ app.service("ApiService", ['$http', '$q', '$location', 'SettingsService', 'Helpe
 
 }]);
 
-app.service("CartService", ['$http', '$q', '$rootScope', 'ApiService', 'PaymentService', 'SettingsService', 'HelperService', 'StorageService', function ($http, $q, $rootScope, ApiService, PaymentService, SettingsService, HelperService, StorageService) {
+app.service("CartService", ['$http', '$q', '$rootScope', 'ApiService', 'PaymentService', 'SettingsService', 'HelperService', 'StorageService', 'LanguageService', function ($http, $q, $rootScope, ApiService, PaymentService, SettingsService, HelperService, StorageService, LanguageService) {
 
     // Return public API.
     return {
@@ -4778,6 +5481,11 @@ app.service("CartService", ['$http', '$q', '$rootScope', 'ApiService', 'PaymentS
             delete cart.customer;
         }
 
+        if (params.language) {
+            LanguageService.setLanguage(params.language);
+            location.search("language", null);
+        }
+
         // Append any other parameters as meta
         params = location.search();
 
@@ -4826,7 +5534,7 @@ app.service("CartService", ['$http', '$q', '$rootScope', 'ApiService', 'PaymentS
 
 }]);
 
-app.service("InvoiceService", ['$http', '$q', '$rootScope', 'ApiService', 'PaymentService', 'SettingsService', 'HelperService', 'StorageService', function ($http, $q, $rootScope, ApiService, PaymentService, SettingsService, HelperService, StorageService) {
+app.service("InvoiceService", ['$http', '$q', '$rootScope', 'ApiService', 'PaymentService', 'SettingsService', 'HelperService', 'StorageService', '$location', function ($http, $q, $rootScope, ApiService, PaymentService, SettingsService, HelperService, StorageService, $location) {
 
     // Return public API.
     return {
@@ -4839,13 +5547,19 @@ app.service("InvoiceService", ['$http', '$q', '$rootScope', 'ApiService', 'Payme
 
         var deferred = $q.defer();
         parameters = setDefaultParameters(parameters);
-        var invoice_id = StorageService.get("invoice_id");
+
+        // Get the invoice ID
+        var invoice_id = $location.search().invoice_id;
+        if (!invoice_id) {
+            invoice_id = StorageService.get("invoice_id");
+        }
 
         var url = "/invoices/" + invoice_id;
 
         ApiService.getItem(url, parameters, quiet).then(function (response) {
 
             var invoice = response.data;
+            StorageService.set("invoice_id", invoice.invoice_id);
 
             // In case it changed, sync the currency
             syncCurrency(invoice.currency);
@@ -4854,9 +5568,11 @@ app.service("InvoiceService", ['$http', '$q', '$rootScope', 'ApiService', 'Payme
 
         }, function (error) {
 
-            // If 404, perform a session reset.
+            // If 404, perform a redirect to base entry page. Don't perform a hard reset, just delete the invoice ID from storage and redirect. Also remove from the query string, if provided.
             if (error.status == 404) {
-                HelperService.newSessionRedirect(true, "Performing a session reset due to an invalid invoice_id in the cookie / request. (404 - invoice not found)");
+                $location.search("invoice_id", null);
+                StorageService.remove("invoice_id");
+                HelperService.newSessionRedirect(false, "Performing a redirect due to an invalid invoice_id in the cookie / request. (404 - invoice not found)");
             }
 
             deferred.reject(error);
@@ -4961,7 +5677,7 @@ app.service("InvoiceService", ['$http', '$q', '$rootScope', 'ApiService', 'Payme
 
 }]);
 
-app.service("PaymentService", ['$http', '$q', 'ApiService', 'SettingsService', 'StorageService', function ($http, $q, ApiService, SettingsService, StorageService) {
+app.service("PaymentService", ['$http', '$q', 'ApiService', 'SettingsService', 'StorageService', 'LanguageService', function ($http, $q, ApiService, SettingsService, StorageService, LanguageService) {
 
     // Return public API.
     return {
@@ -5174,6 +5890,11 @@ app.service("PaymentService", ['$http', '$q', 'ApiService', 'SettingsService', '
         if (params.referrer) {
             payment.referrer = params.referrer;
             delete params.referrer;
+        }
+
+        if (params.language) {
+            LanguageService.setLanguage(params.language);
+            location.search("language", null);
         }
 
         // Append any other parameters as meta
@@ -5486,7 +6207,7 @@ app.service("CurrencyService", ['$q', '$rootScope', 'SettingsService', 'CartServ
 
 }]);
 
-app.service("LanguageService", ['$q', '$rootScope', 'SettingsService', 'StorageService', 'gettextCatalog', 'ApiService', function ($q, $rootScope, SettingsService, StorageService, gettextCatalog, ApiService) {
+app.service("LanguageService", ['$q', '$rootScope', 'SettingsService', 'StorageService', 'gettextCatalog', function ($q, $rootScope, SettingsService, StorageService, gettextCatalog) {
 
     // Angular gettext https://angular-gettext.rocketeer.be/ Used to provide application translations. Translation files are located in the languages folder.
 
@@ -5495,7 +6216,8 @@ app.service("LanguageService", ['$q', '$rootScope', 'SettingsService', 'StorageS
         getSelectedLanguage: getSelectedLanguage,
         getLanguages: getLanguages,
         setLanguage: setLanguage,
-        establishLanguage: establishLanguage
+        establishLanguage: establishLanguage,
+        getLocale: getLocale
     };
 
     function getLanguages() {
@@ -5540,74 +6262,80 @@ app.service("LanguageService", ['$q', '$rootScope', 'SettingsService', 'StorageS
             return;
         }
 
-        if (language != null) {
-            StorageService.set("language", language);
-            gettextCatalog.setCurrentLanguage(language);
+        StorageService.set("language", language);
+        gettextCatalog.setCurrentLanguage(language);
 
-            // Emit the change
-            $rootScope.$emit("languageChanged", language);
+        // Emit the change
+        $rootScope.$emit("languageChanged", language);
 
-            // English does not need to be loaded since it's embedded in the HTML.
-            if (language != "en") {
-                // Load the language configuration file.
-                gettextCatalog.loadRemote((languagesPath || "languages/") + language + "/" + language + ".json");
-            }
+        // English does not need to be loaded since it's embedded in the HTML.
+        if (language != "en") {
+            // Load the language configuration file.
+            gettextCatalog.loadRemote((languagesPath || "languages/") + language + "/" + language + ".json");
         }
-
-    }
-
-    function getUserLanguage() {
-
-        var deferred = $q.defer();
-
-        // Check if languages are provided. If not, just return english and don't bother fetching the user's language from the server.
-        if (!$rootScope.languages) {
-            deferred.resolve("en");
-            return deferred.promise;
-        }
-
-        // If a language is already set and it's valid, just return that language.
-        var language = getSelectedLanguage();
-
-        if (language.code) {
-
-            // We already have a language set, return it.
-            deferred.resolve(language.code);
-
-        } else {
-
-            // Determine the user's language from the server, which is the most reliable way to get browser language settings into JavaScript.
-            var settings = SettingsService.get();
-            ApiService.getItem("/browser_info", null, true).then(function (response) {
-
-                // The value returned in language will either be a valid two-character language code or null.
-                deferred.resolve(response.data.language);
-
-            }, function (error) {
-                // We always resolve the promise, just with null in the case of error.
-                deferred.resolve(null);
-            });
-
-        }
-
-        return deferred.promise;
 
     }
 
     function establishLanguage(languagesPath) {
 
-        // This called when the app is intially bootstrapped and sets the language according to the user's preference, auto-detected language or default language.
-        getUserLanguage().then(function (language) {
+        // If a language has already been selected, use it.
+        var selectedLanguage = getSelectedLanguage();
+        if (selectedLanguage.code && isSupportedLanguage(selectedLanguage.code)) {
+            setLanguage(selectedLanguage.code, languagesPath);
+            return;
+        }
 
-            // If null, set the default
-            if (language == null) {
-                language = "en";
+        var locale = null, language = null;
+        if (SettingsService.get().account.browser_info) {
+
+            // Check for an exact match on the locale, such as fr-CA.
+            locale = SettingsService.get().account.browser_info.locale;
+            if (isSupportedLanguage(locale)) {
+                setLanguage(locale, languagesPath);
+                return;
             }
 
-            // Set the language
-            setLanguage(language, languagesPath);
+            // Check for an exact match on the langauge, such as fr.
+            language = SettingsService.get().account.browser_info.language;
+            if (isSupportedLanguage(language)) {
+                setLanguage(language, languagesPath);
+                return;
+            }
 
-        });
+            // Check for a language that starts with the same language as the user language
+            // This is helpful in cases where the user's language is zh and we don't have zh but we do have zh-CN.
+            var result = _.find(getLanguages(), function (i) { return i.code.substring(0, 2) == language });
+            if (result) {
+                setLanguage(result.code, languagesPath);
+                return;
+            }
+
+        }
+
+    }
+
+    function getLocale() {
+
+        // If the language portion of the user's locale (for example: fr-ca, es-MX) is the same as the selected app language (for example: fr, es), use the full locale.
+        // Otherwise, if there is a mismatch between the language portion of the user's locale and the selected app language (for example: en-US, es), use the language code as the locale.
+
+        // The locale determines things such as number formatting, so if it important to send in the full locale, if possible. Otherwise the user will end up with default number formatting for the language, rather than for the specific locale.
+        // However, if the selected app language conflicts with the user locale, you can't send it or the API response text will be returned in the locale's language.
+
+        var locale = null;
+        if (SettingsService.get().account.browser_info) {
+            locale = SettingsService.get().account.browser_info.locale;
+        }
+
+        var language = getSelectedLanguage().code;
+
+        if (locale && locale.length >= 2 && language && language.length >= 2) {
+            if (locale.substring(0, 2).toLowerCase() == language.substring(0, 2).toLowerCase()) {
+                return locale;
+            }
+        }
+
+        return language;
 
     }
 
