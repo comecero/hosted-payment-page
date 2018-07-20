@@ -17,7 +17,7 @@ msgstr ""
 msgid "Amount"
 msgstr ""
 
-#: ./dist/js/kit.js:4314
+#: ./dist/js/kit.js:5017
 msgid "An error occured while attempting to process your request. Please try your request again. If the problem persists, please contact support."
 msgstr ""
 
@@ -29,7 +29,7 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: ./app/pages/pay/pay.html:283
+#: ./app/pages/pay/pay.html:287
 msgid "Card Number"
 msgstr ""
 
@@ -45,11 +45,12 @@ msgstr ""
 msgid "Company Name"
 msgstr ""
 
-#: ./app/pages/pay/pay.html:347
+#: ./app/pages/pay/pay.html:351
 #: ./app/pages/review/review.html:137
 msgid "Complete Payment"
 msgstr ""
 
+#: ./index.html:59
 #: ./index.html:76
 msgid "Copyright &copy; {{settings.account.year}} {{settings.app.company_name}}. All Rights Reserved."
 msgstr ""
@@ -81,11 +82,11 @@ msgstr ""
 msgid "Email"
 msgstr ""
 
-#: ./app/pages/pay/pay.html:296
+#: ./app/pages/pay/pay.html:300
 msgid "Expiration Month"
 msgstr ""
 
-#: ./app/pages/pay/pay.html:305
+#: ./app/pages/pay/pay.html:309
 msgid "Expiration Year"
 msgstr ""
 
@@ -118,7 +119,7 @@ msgstr ""
 msgid "Password"
 msgstr ""
 
-#: ./app/pages/pay/pay.html:274
+#: ./app/pages/pay/pay.html:278
 msgid "Pay with a new card"
 msgstr ""
 
@@ -135,12 +136,16 @@ msgstr ""
 msgid "Phone"
 msgstr ""
 
-#: ./dist/js/kit.js:3725
+#: ./dist/js/kit.js:1640
+msgid "Please check the box to provide consent to save your payment method for future payments."
+msgstr ""
+
+#: ./dist/js/kit.js:4138
 msgid "Please confirm"
 msgstr ""
 
-#: ./dist/js/kit.js:3720
-#: ./dist/js/kit.js:3756
+#: ./dist/js/kit.js:4133
+#: ./dist/js/kit.js:4169
 msgid "Please make a selection"
 msgstr ""
 
@@ -172,7 +177,7 @@ msgstr ""
 msgid "Please provide a state / province"
 msgstr ""
 
-#: ./app/pages/pay/pay.html:288
+#: ./app/pages/pay/pay.html:292
 msgid "Please provide a valid card number"
 msgstr ""
 
@@ -180,25 +185,22 @@ msgstr ""
 msgid "Please provide a valid email address"
 msgstr ""
 
-#: ./app/pages/pay/pay.html:299
+#: ./app/pages/pay/pay.html:303
 msgid "Please provide a valid expiration month"
 msgstr ""
 
-#: ./app/pages/pay/pay.html:308
+#: ./app/pages/pay/pay.html:312
 msgid "Please provide a valid expiration year"
 msgstr ""
 
-#: ./app/pages/pay/pay.html:316
+#: ./app/pages/pay/pay.html:320
 msgid "Please provide a valid security code"
 msgstr ""
 
 #: ./app/pages/pay/pay.html:42
 #: ./app/pages/review/review.html:39
+#: ./dist/js/kit.js:4128
 msgid "Please provide a value"
-msgstr ""
-
-#: ./dist/js/kit.js:3715
-msgid "Please provide a value."
 msgstr ""
 
 #: ./app/pages/pay/pay.html:227
@@ -214,24 +216,29 @@ msgstr ""
 msgid "Please provide an amount"
 msgstr ""
 
-#: ./dist/js/kit.js:1233
+#: ./dist/js/kit.js:1597
 msgid "Please provide an amount for your payment."
 msgstr ""
 
-#: ./dist/js/kit.js:3765
+#: ./dist/js/kit.js:4178
 msgid "Please provide one of the available options"
 msgstr ""
 
-#: ./dist/js/kit.js:3748
+#: ./dist/js/kit.js:4161
 msgid "Please supply a number"
 msgstr ""
 
-#: ./dist/js/kit.js:3741
+#: ./dist/js/kit.js:4154
 msgid "Please supply a number without decimals"
 msgstr ""
 
 #: ./app/pages/receipt/receipt.html:16
 msgid "Receipt"
+msgstr ""
+
+#: ./app/pages/pay/pay.html:32
+#: ./app/pages/review/review.html:30
+msgid "Reference"
 msgstr ""
 
 #: ./app/pages/pay/pay.html:217
@@ -242,8 +249,11 @@ msgstr ""
 msgid "Return to PayPal to try your payment again."
 msgstr ""
 
-#: ./app/pages/pay/pay.html:334
 #: ./app/pages/review/review.html:87
+msgid "Review & Finish"
+msgstr ""
+
+#: ./app/pages/pay/pay.html:338
 msgid "Review &amp; Finish"
 msgstr ""
 
@@ -251,11 +261,11 @@ msgstr ""
 msgid "Review Your Payment"
 msgstr ""
 
-#: ./app/pages/pay/pay.html:323
+#: ./app/pages/pay/pay.html:327
 msgid "Save this card to my account"
 msgstr ""
 
-#: ./app/pages/pay/pay.html:314
+#: ./app/pages/pay/pay.html:318
 msgid "Security Code"
 msgstr ""
 
@@ -311,37 +321,41 @@ msgstr ""
 msgid "Thank you! Your payment is complete."
 msgstr ""
 
-#: ./dist/js/kit.js:4308
+#: ./dist/js/kit.js:5011
 msgid "The item you are trying to access could not be found."
 msgstr ""
 
-#: ./dist/js/kit.js:3791
+#: ./dist/js/kit.js:4204
 msgid "The value must be at least one character"
 msgid_plural "The value must be at least {{$count}} characters"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ./dist/js/kit.js:3797
+#: ./dist/js/kit.js:4210
 msgid "The value must be less than one character"
 msgid_plural "The value must be less than {{$count}} characters"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ./dist/js/kit.js:3774
+#: ./dist/js/kit.js:4187
 msgid "The value you provide must be greater than {{$count}}"
 msgid_plural "The value you provide must be greater than {{$count}}"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ./dist/js/kit.js:3780
+#: ./dist/js/kit.js:4193
 msgid "The value you provide must be less than {{$count}}"
 msgid_plural "The value you provide must be less than {{$count}}"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ./dist/js/kit.js:1133
-#: ./dist/js/kit.js:1217
-#: ./dist/js/kit.js:1412
+#: ./dist/js/kit.js:4626
+msgid "There was a problem obtaining authorization for this session. Please reload the page to try your request again."
+msgstr ""
+
+#: ./dist/js/kit.js:1491
+#: ./dist/js/kit.js:1585
+#: ./dist/js/kit.js:1825
 msgid "There was a problem with some of the information you supplied. Please review for errors and try again."
 msgstr ""
 
@@ -349,8 +363,8 @@ msgstr ""
 msgid "To manage your account online, create an account."
 msgstr ""
 
-#: ./app/pages/pay/pay.html:340
-#: ./app/pages/pay/pay.html:341
+#: ./app/pages/pay/pay.html:344
+#: ./app/pages/pay/pay.html:345
 #: ./app/pages/pay/pay.html:87
 #: ./app/pages/pay/pay.html:88
 #: ./app/pages/receipt/receipt.html:139
