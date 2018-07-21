@@ -20,6 +20,8 @@ app.config(['$httpProvider', '$routeProvider', '$locationProvider', '$provide', 
         favicon.setAttribute("href", "../images/default_favicon.png");
     }
 
+    document.head.appendChild(favicon);
+
 }]);
 
 app.run(['$rootScope', function ($rootScope) {
