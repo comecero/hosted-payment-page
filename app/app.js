@@ -72,10 +72,10 @@ app.run(['$rootScope', 'SettingsService', 'tmhDynamicLocale', 'StorageService', 
             {
                 code: "en",
                 name: "English"
-            },        
+            },
             {
                 code: "cs",
-                name: "čeština"
+                name: "Čeština"
             },
             {
                 code: "de",
@@ -88,18 +88,18 @@ app.run(['$rootScope', 'SettingsService', 'tmhDynamicLocale', 'StorageService', 
             {
                 code: "es",
                 name: "Español"
-            },                
+            },
             {
                 code: "fi",
                 name: "Suomalainen"
             },
             {
                 code: "fr",
-                name: "français"
-            },            
+                name: "Français"
+            },
             {
                 code: "it",
-                name: "italiano"
+                name: "Italiano"
             },
             {
                 code: "ja",
@@ -123,11 +123,15 @@ app.run(['$rootScope', 'SettingsService', 'tmhDynamicLocale', 'StorageService', 
             },
             {
                 code: "ru",
-                name: "русский"
-            },            
+                name: "Русский"
+            },
             {
                 code: "sv",
-                name: "svenska"
+                name: "Svenska"
+            },
+            {
+                code: "zh-CN",
+                name: "中文"
             }
         ]
     }
@@ -138,20 +142,6 @@ app.run(['$rootScope', 'SettingsService', 'tmhDynamicLocale', 'StorageService', 
             window.__pageview.recordPageLoad();
         }
     });
-
-    // Define default locale
-    var language = "en-US";
-
-    // See if we have the user's locale in the browser info and if so, set it on the app.
-    try {
-        var locale = StorageService.get("locale");
-        if (locale && locale != "en-US") {
-            tmhDynamicLocale.set(locale.toLowerCase());
-        }
-    }
-    catch (err) {
-        console.log("Could not parse browser info, using the default locale.");
-    }
 
     // If the app is configured to redirect calls to root to the docs, do so here.
     $rootScope.$on("$routeChangeStart", function (event, next, current) {
