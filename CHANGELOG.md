@@ -1,4 +1,10 @@
-﻿<a name="1.0.2"></a>
+﻿<a name="1.0.3"></a>
+# 1.0.3
+
+- Add support for the following language: Chinese (Simplified)
+- Integrate kit 1.0.9. See kit changelog for details.
+
+<a name="1.0.2"></a>
 # 1.0.2
 
 - Remove third party CDNs and replace with Comecero CDN
