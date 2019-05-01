@@ -79,7 +79,7 @@ app.run(['$rootScope', 'SettingsService', 'tmhDynamicLocale', 'StorageService', 
             },
             {
                 code: "de",
-                name: "Deutsche"
+                name: "Deutsch"
             },
             {
                 code: "el",
