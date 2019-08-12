@@ -1,6 +1,6 @@
 {
   "name": "comecero-hosted-payment-page",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "An application to allow users to easily make direct payments",
   "main": "index.html",
   "repository": {
