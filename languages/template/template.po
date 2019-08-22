@@ -17,7 +17,7 @@ msgstr ""
 msgid "Amount"
 msgstr ""
 
-#: ./dist/js/kit.js:5017
+#: ./dist/js/kit.js:6312
 msgid "An error occured while attempting to process your request. Please try your request again. If the problem persists, please contact support."
 msgstr ""
 
@@ -52,7 +52,7 @@ msgstr ""
 
 #: ./index.html:59
 #: ./index.html:76
-msgid "Copyright &copy; {{settings.account.year}} {{settings.app.company_name}}. All Rights Reserved."
+msgid "Copyright {{symbol}} {{year}} {{companyName}}. All Rights Reserved."
 msgstr ""
 
 #: ./app/pages/pay/pay.html:234
@@ -102,16 +102,16 @@ msgstr ""
 msgid "Have an account?"
 msgstr ""
 
-#: ./app/pages/receipt/receipt.html:70
-msgid "Made By"
-msgstr ""
-
 #: ./app/pages/receipt/receipt.html:151
 msgid "Make Another Payment"
 msgstr ""
 
 #: ./app/templates/fields.html:54
 msgid "No"
+msgstr ""
+
+#: ./app/pages/receipt/receipt.html:70
+msgid "Paid By"
 msgstr ""
 
 #: ./app/pages/pay/pay.html:128
@@ -136,16 +136,16 @@ msgstr ""
 msgid "Phone"
 msgstr ""
 
-#: ./dist/js/kit.js:1640
+#: ./dist/js/kit.js:2805
 msgid "Please check the box to provide consent to save your payment method for future payments."
 msgstr ""
 
-#: ./dist/js/kit.js:4138
+#: ./dist/js/kit.js:5339
 msgid "Please confirm"
 msgstr ""
 
-#: ./dist/js/kit.js:4133
-#: ./dist/js/kit.js:4169
+#: ./dist/js/kit.js:5334
+#: ./dist/js/kit.js:5370
 msgid "Please make a selection"
 msgstr ""
 
@@ -199,7 +199,7 @@ msgstr ""
 
 #: ./app/pages/pay/pay.html:42
 #: ./app/pages/review/review.html:39
-#: ./dist/js/kit.js:4128
+#: ./dist/js/kit.js:5329
 msgid "Please provide a value"
 msgstr ""
 
@@ -216,19 +216,19 @@ msgstr ""
 msgid "Please provide an amount"
 msgstr ""
 
-#: ./dist/js/kit.js:1597
+#: ./dist/js/kit.js:2762
 msgid "Please provide an amount for your payment."
 msgstr ""
 
-#: ./dist/js/kit.js:4178
+#: ./dist/js/kit.js:5379
 msgid "Please provide one of the available options"
 msgstr ""
 
-#: ./dist/js/kit.js:4161
+#: ./dist/js/kit.js:5362
 msgid "Please supply a number"
 msgstr ""
 
-#: ./dist/js/kit.js:4154
+#: ./dist/js/kit.js:5355
 msgid "Please supply a number without decimals"
 msgstr ""
 
@@ -249,16 +249,13 @@ msgstr ""
 msgid "Return to PayPal to try your payment again."
 msgstr ""
 
-#: ./app/pages/review/review.html:87
-msgid "Review & Finish"
+#: ./app/pages/review/review.html:15
+msgid "Review Your Payment"
 msgstr ""
 
 #: ./app/pages/pay/pay.html:338
-msgid "Review &amp; Finish"
-msgstr ""
-
-#: ./app/pages/review/review.html:15
-msgid "Review Your Payment"
+#: ./app/pages/review/review.html:87
+msgid "Review {{ampersandSymbol}} Finish"
 msgstr ""
 
 #: ./app/pages/pay/pay.html:327
@@ -321,41 +318,41 @@ msgstr ""
 msgid "Thank you! Your payment is complete."
 msgstr ""
 
-#: ./dist/js/kit.js:5011
+#: ./dist/js/kit.js:6306
 msgid "The item you are trying to access could not be found."
 msgstr ""
 
-#: ./dist/js/kit.js:4204
+#: ./dist/js/kit.js:5405
 msgid "The value must be at least one character"
 msgid_plural "The value must be at least {{$count}} characters"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ./dist/js/kit.js:4210
+#: ./dist/js/kit.js:5411
 msgid "The value must be less than one character"
 msgid_plural "The value must be less than {{$count}} characters"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ./dist/js/kit.js:4187
+#: ./dist/js/kit.js:5388
 msgid "The value you provide must be greater than {{$count}}"
 msgid_plural "The value you provide must be greater than {{$count}}"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ./dist/js/kit.js:4193
+#: ./dist/js/kit.js:5394
 msgid "The value you provide must be less than {{$count}}"
 msgid_plural "The value you provide must be less than {{$count}}"
 msgstr[0] ""
 msgstr[1] ""
 
-#: ./dist/js/kit.js:4626
+#: ./dist/js/kit.js:5921
 msgid "There was a problem obtaining authorization for this session. Please reload the page to try your request again."
 msgstr ""
 
-#: ./dist/js/kit.js:1491
-#: ./dist/js/kit.js:1585
-#: ./dist/js/kit.js:1825
+#: ./dist/js/kit.js:2656
+#: ./dist/js/kit.js:2750
+#: ./dist/js/kit.js:3000
 msgid "There was a problem with some of the information you supplied. Please review for errors and try again."
 msgstr ""
 

@@ -2,6 +2,8 @@
 window.__settings.account = {
     "account_id": "KO0000",
     "test": true,
+    "development": true,
+    "api_host": "api-dev.comecero.com",
     "allow_save_cards": true,
     "global_footer_html": null,
     "currencies": [

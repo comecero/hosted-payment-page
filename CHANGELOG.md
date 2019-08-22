@@ -1,4 +1,9 @@
-﻿<a name="1.0.3"></a>
+﻿<a name="1.0.4"></a>
+# 1.0.4
+
+- Integrate kit 1.0.15. See kit changelog for details.
+
+<a name="1.0.3"></a>
 # 1.0.3
 
 - Add support for the following language: Chinese (Simplified)
